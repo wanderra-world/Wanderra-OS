@@ -4,8 +4,8 @@ The single entry point to the Atlas architecture documentation.
 
 **Owner:** Atlas Architecture Council  
 **Current phase:** Phase 2 — Atlas Core  
-**Status:** Formal H0 Exit accepted; H1-01 complete; remaining H1 decomposition proposed
-**Last updated:** July 29, 2026
+**Status:** Formal H0 Exit accepted; H1-01 accepted; H1-02 pending review
+**Last updated:** July 30, 2026
 
 ## Core principle
 
@@ -56,6 +56,9 @@ workflow run are recorded in
 H1-01 has implemented the additive organization and workspace schema expansion behind
 unused runtime paths. Current implementation details are recorded in
 [PROJECT_STATUS.md](PROJECT_STATUS.md).
+
+The H1 decomposition is accepted. H1-02 implements the canonical identity and external
+identity schema on a review branch without changing authentication behavior.
 
 ## Recommended reading order
 
@@ -248,7 +251,8 @@ Defines the proposed canonical H1 production slice decomposition:
 - H1-02 through H1-10 objectives, dependencies, acceptance criteria, and exclusions;
 - the integrated Formal H1 Exit slice.
 
-This proposal requires architecture review before H1-02 becomes authorized.
+This specification is accepted. Each production slice still requires explicit
+authorization and predecessor acceptance.
 
 ## Architecture document hierarchy
 
@@ -415,10 +419,9 @@ enforcement is owned by `IMPLEMENTATION_GUIDE.md`.
 | [ROADMAP.md](ROADMAP.md) | Delivery sequence |
 | [IMPLEMENTATION_GUIDE.md](IMPLEMENTATION_GUIDE.md) | Normative engineering contract |
 | [H0_FOUNDATION_SPEC.md](H0_FOUNDATION_SPEC.md) | Normative P0 contracts and H0 evidence |
-| [H1_PLATFORM_SPEC.md](H1_PLATFORM_SPEC.md) | Proposed H1 slice decomposition |
+| [H1_PLATFORM_SPEC.md](H1_PLATFORM_SPEC.md) | Accepted H1 slice decomposition |
 
 ## Next action
 
-Review and approve or revise
-[H1_PLATFORM_SPEC.md](H1_PLATFORM_SPEC.md). H1-02 is not authorized until that
-specification is accepted. No subsequent H1 production slice has been started.
+Review and accept the H1-02 pull request. H1-03 is not authorized and no subsequent H1
+production slice has been started.
