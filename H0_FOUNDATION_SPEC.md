@@ -383,7 +383,7 @@ unresolved critical threat, and the
 passed Architecture Fitness, Regression Tests, Docker Build and Smoke, and H0 Required
 Gate. Branch protection requires the strict `H0 Required Gate` check before merge.
 
-## 18. Pull-request sequence
+## 18. Handoff to production implementation
 
 The first H0 validation pull request is:
 
@@ -393,11 +393,6 @@ It contains no production feature. It establishes dependency rules, a disposable
 PostgreSQL schema with composite tenant keys and forced RLS, transaction-local
 workspace context, pool-reuse attack tests, and P0.1/P0.14 evidence links.
 
-The first production pull request after H0 passes is:
-
-> **H1-01: Add organization and workspace schema expansion**
-
-It is additive and introduces organizations, workspaces, placement metadata, and
-default Phase 1 ownership records behind unused paths. It includes composite tenant
-keys, forced RLS, migration compatibility tests, audit/outbox integration, and no
-user-facing behavior change.
+H1 production decomposition is owned by
+[H1_PLATFORM_SPEC.md](H1_PLATFORM_SPEC.md). H1 scope does not belong to this H0
+specification.

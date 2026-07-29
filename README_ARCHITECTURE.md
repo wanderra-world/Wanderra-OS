@@ -4,7 +4,7 @@ The single entry point to the Atlas architecture documentation.
 
 **Owner:** Atlas Architecture Council  
 **Current phase:** Phase 2 — Atlas Core  
-**Status:** Architecture approved; Formal H0 Exit accepted; H1 authorized
+**Status:** Formal H0 Exit accepted; H1-01 complete; remaining H1 decomposition proposed
 **Last updated:** July 29, 2026
 
 ## Core principle
@@ -239,6 +239,17 @@ migration rehearsal, recovery targets, and H0 acceptance evidence.
 This specification authorizes H0 validation work. Its evidence matrix is the source of
 truth for H0 exit status.
 
+### 12. [H1_PLATFORM_SPEC.md](H1_PLATFORM_SPEC.md)
+
+Defines the proposed canonical H1 production slice decomposition:
+
+- mandatory H1 boundaries and cross-slice constraints;
+- H1-01 completion context;
+- H1-02 through H1-10 objectives, dependencies, acceptance criteria, and exclusions;
+- the integrated Formal H1 Exit slice.
+
+This proposal requires architecture review before H1-02 becomes authorized.
+
 ## Architecture document hierarchy
 
 When documents conflict, apply the following precedence:
@@ -277,6 +288,7 @@ non-overlapping canonical responsibility.
 | `ROADMAP.md` | Atlas Product and Engineering Leadership | Strategic phase outcomes beyond the H0–H8 implementation sequence |
 | `IMPLEMENTATION_GUIDE.md` | Atlas Engineering | Engineering rules, readiness, completion, stage execution gates, tests, migrations, approvals, and pull-request contract |
 | `H0_FOUNDATION_SPEC.md` | Atlas Core | Implementable P0 contracts, threat register, targets, and H0 evidence status |
+| `H1_PLATFORM_SPEC.md` | Atlas Core | H1 slice sequence, slice objectives, boundaries, dependencies, and acceptance criteria |
 
 A document may summarize another document only for navigation or context and must link
 to the canonical owner. Summaries are non-normative and must not restate detailed
@@ -290,6 +302,7 @@ requirements, decision rules, enumerations, or acceptance criteria.
 - H0–H8 purpose and ordering exist only in `ARCHITECTURE_HARDENING.md`.
 - H0–H8 engineering prerequisites, deliverables, tests, and exit criteria exist only in
   `IMPLEMENTATION_GUIDE.md`.
+- H1 slice-level decomposition exists only in `H1_PLATFORM_SPEC.md`.
 - Strategic phase outcomes exist only in `ROADMAP.md`.
 - Engineering workflow and quality rules exist only in `IMPLEMENTATION_GUIDE.md`.
 - Current implementation claims exist only in `PROJECT_STATUS.md`.
@@ -402,8 +415,10 @@ enforcement is owned by `IMPLEMENTATION_GUIDE.md`.
 | [ROADMAP.md](ROADMAP.md) | Delivery sequence |
 | [IMPLEMENTATION_GUIDE.md](IMPLEMENTATION_GUIDE.md) | Normative engineering contract |
 | [H0_FOUNDATION_SPEC.md](H0_FOUNDATION_SPEC.md) | Normative P0 contracts and H0 evidence |
+| [H1_PLATFORM_SPEC.md](H1_PLATFORM_SPEC.md) | Proposed H1 slice decomposition |
 
 ## Next action
 
-**H1-01: Add organization and workspace schema expansion** is complete. No subsequent
-H1 slice has been started.
+Review and approve or revise
+[H1_PLATFORM_SPEC.md](H1_PLATFORM_SPEC.md). H1-02 is not authorized until that
+specification is accepted. No subsequent H1 production slice has been started.

@@ -176,6 +176,9 @@ only when H0 explicitly requires them; they are not production implementation.
 **Architecture purpose:**
 [Stage H1](ARCHITECTURE_HARDENING.md#stage-h1-platform-skeleton)
 
+**Slice decomposition:**
+[H1 Platform Skeleton Specification](H1_PLATFORM_SPEC.md)
+
 **Prerequisites**
 
 - H0 exit criteria are met.
