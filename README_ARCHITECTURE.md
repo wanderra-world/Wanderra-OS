@@ -4,7 +4,7 @@ The single entry point to the Atlas architecture documentation.
 
 **Owner:** Atlas Architecture Council  
 **Current phase:** Phase 2 — Atlas Core  
-**Status:** Architecture approved; H0 validation authorized  
+**Status:** Architecture approved; Formal H0 Exit accepted; H1 authorized
 **Last updated:** July 29, 2026
 
 ## Core principle
@@ -42,13 +42,20 @@ The Google Workspace Foundation is implemented and validated end to end:
 
 See [PROJECT_STATUS.md](PROJECT_STATUS.md) for the detailed implementation status.
 
-### Phase 2 — H0 authorized
+### Phase 2 — H1 in progress
 
-The architecture phase is complete and H0 validation may begin. Broad production
-feature implementation remains prohibited until the H0 exit gate passes.
+The architecture phase and Formal H0 Exit are complete. H1 production implementation
+is authorized in the canonical sequence defined by the hardening plan and engineering
+contract.
 
-The P0 contracts and superseding ADRs are approved. H0 must now produce executable
-prototype and fitness-test evidence for every gate item before H1 production work.
+All P0 contracts and superseding ADRs are approved, P0.1–P0.14 evidence is accepted,
+and the merge-blocking H0 Required Gate protects `master`. The accepted evidence and
+workflow run are recorded in
+[H0_FOUNDATION_SPEC.md](H0_FOUNDATION_SPEC.md#17-h0-approval-and-exit-evidence).
+
+H1-01 has implemented the additive organization and workspace schema expansion behind
+unused runtime paths. Current implementation details are recorded in
+[PROJECT_STATUS.md](PROJECT_STATUS.md).
 
 ## Recommended reading order
 
@@ -326,10 +333,10 @@ text and status remain canonical only in `DECISIONS.md`.
 
 ## P0 Architecture Gate
 
-The **H0 entry gate is satisfied**: the P0 contracts, threat register, initial targets,
-scope constraints, and superseding ADRs are approved. The **H0 exit gate is not yet
-satisfied**: executable evidence remains pending and production H1 work is still
-blocked.
+The **H0 entry and exit gates are satisfied**. The P0 contracts, threat register,
+initial targets, scope constraints, superseding ADRs, executable evidence, CI fitness
+gate, and branch protection are accepted. Production H1 work is authorized in the
+canonical sequence.
 
 P0 priority, problem, risk, dependency, and effort classification is owned by
 [ARCHITECTURE_HARDENING.md](ARCHITECTURE_HARDENING.md#p0--must-fix-before-implementation).
@@ -398,8 +405,5 @@ enforcement is owned by `IMPLEMENTATION_GUIDE.md`.
 
 ## Next action
 
-The next authorized work is **H0-01: Architecture fitness-test harness and tenancy
-isolation prototype**.
-
-Production Atlas Core implementation remains prohibited until every item in the H0
-exit matrix is accepted and the Architecture Hardening Gate passes.
+**H1-01: Add organization and workspace schema expansion** is complete. No subsequent
+H1 slice has been started.

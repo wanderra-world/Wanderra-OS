@@ -1,7 +1,7 @@
 # Atlas Architecture Hardening Plan
 
 **Owner:** Atlas Architecture Council  
-**Status:** H0 validation authorized; executable gate evidence pending  
+**Status:** Formal H0 Exit accepted; H1 authorized
 **Source:** `ARCHITECTURE_REVIEW.md`  
 **Planning horizon:** Phase 2 foundation through future platform evolution
 

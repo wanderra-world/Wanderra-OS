@@ -11,11 +11,25 @@ FastAPI service backed by PostgreSQL, with OpenAI-powered chat and durable memor
 working Google integrations for Gmail, Calendar, and Drive.
 
 The local Docker deployment is operational. Database migrations are at
-`0005_add_drive_integration`, Gmail/Calendar/Drive authorization has been completed for
-the current Wanderra user, and live end-to-end verification has succeeded for email,
-calendar events, and the full Drive file lifecycle.
+`0006_h1_org_workspaces`. Formal H0 Exit is accepted, and H1-01 has added the
+organization and workspace schema foundation without changing Phase 1 runtime paths.
+Gmail/Calendar/Drive authorization has been completed for the current Wanderra user,
+and live end-to-end verification has succeeded for email, calendar events, and the
+full Drive file lifecycle.
 
 ## Implemented capabilities
+
+### Atlas Core H1-01
+
+- Primary placement cell metadata.
+- Mandatory business or personal organization records.
+- Organization ownership records with deferred last-owner enforcement.
+- Workspace records with immutable organization ownership during Phase 2.
+- Forced workspace RLS on workspaces, audit events, and outbox events.
+- Deterministic default personal organization/workspace backfill for existing Phase 1
+  users.
+- Immutable workspace-creation audit records and transactional outbox records.
+- Fully reversible additive migration; Phase 1 tables and runtime routes are unchanged.
 
 ### Atlas and memory
 
@@ -76,7 +90,8 @@ FastAPI /api/v1
 PostgreSQL
   |-- Atlas users/projects/conversations/memory
   |-- OAuth state and encrypted credentials per integration
-  `-- synchronized Drive metadata
+  |-- synchronized Drive metadata
+  `-- H1 organization/workspace placement, audit, and outbox foundation
 ```
 
 The three Google integrations reuse one OAuth client configuration and the callback
@@ -110,6 +125,12 @@ The Docker Compose stack contains:
 | `drive_credentials` | Encrypted per-user Drive credential |
 | `drive_oauth_states` | Expiring Drive OAuth state and PKCE verifier |
 | `drive_file_metadata` | Per-user cached Drive metadata keyed by Google file ID |
+| `cells` | Workspace placement targets; H1 currently seeds one primary cell |
+| `organizations` | Mandatory business or personal workspace owner |
+| `organization_memberships` | Administrative owners and administrators; no implicit workspace access |
+| `workspaces` | Primary tenant boundary with organization and cell placement |
+| `audit_events` | Immutable workspace-scoped accountability records |
+| `outbox_events` | Workspace-scoped transactional domain-event records |
 
 `drive_file_metadata` stores the file name, MIME type, size, modification time, view
 link, MD5 checksum, parent IDs, the normalized provider payload, and synchronization
@@ -168,7 +189,7 @@ Interactive OpenAPI documentation is available at `/docs`.
 
 ## Test coverage
 
-The current automated suite contains 19 passing tests:
+The current automated suite contains 248 passing tests:
 
 - Health and Atlas chat API behavior.
 - Gmail MIME construction and message parsing.
@@ -179,6 +200,11 @@ The current automated suite contains 19 passing tests:
 - Drive search escaping and metadata normalization.
 - Drive MIME dispatch regression coverage.
 - PDF and DOCX extraction helpers.
+- H0 architecture fitness, threat, isolation, authorization, encryption, custody,
+  provider-conflict, lineage, AI security, entity integrity, and replay evidence.
+- H1-01 model registration, composite tenant keys, PostgreSQL migration and rollback,
+  deterministic ownership backfill, forced RLS, last-owner enforcement, transfer
+  prohibition, and audit immutability.
 
 Live integration verification has additionally covered:
 
@@ -194,6 +220,9 @@ The test run currently emits one non-blocking Starlette/httpx deprecation warnin
 
 - `X-User-ID` is trusted directly; there is no authenticated user/session layer or
   authorization policy.
+- H1-01 schema paths are intentionally unused by production requests. Request context,
+  memberships, sessions, commands, repositories, and provider migration remain later
+  H1/H2 slices.
 - The shared Google callback remains under the Gmail URL for compatibility with the
   currently registered OAuth client. A neutral callback path would be clearer.
 - The Drive integration uses the broad `drive` scope. Production deployments should
