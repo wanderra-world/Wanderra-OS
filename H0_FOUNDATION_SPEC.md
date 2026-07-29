@@ -2,16 +2,15 @@
 
 Normative specification for the Atlas Architecture Hardening stage.
 
-**Status:** Approved for H0 validation  
+**Status:** Formal H0 Exit accepted
 **Scope:** P0.1–P0.14  
 **Owner:** Atlas Core  
 **Architecture entry point:** [README_ARCHITECTURE.md](README_ARCHITECTURE.md)  
 **Decision record:** [DECISIONS.md](DECISIONS.md#h0-superseding-decisions)
 
 This document owns the implementable P0 contracts. Other architecture documents link
-to it instead of repeating these details. Approval authorizes H0 prototypes and
-architecture fitness tests. It does not authorize production Phase 2 schemas or
-features before the H0 exit evidence in section 17 is accepted.
+to it instead of repeating these details. Formal H0 Exit is accepted and H1 production
+work is authorized in the canonical sequence.
 
 ## 1. H0 scope and non-goals
 
@@ -358,25 +357,31 @@ H0 validation may begin when this specification and its superseding ADRs are acc
 each P0 item has an assigned evidence requirement, and target documents have no
 conflicting definition. The evidence itself is required to exit H0.
 
-| P0 | Specification | Required evidence | Status |
+| P0 | Specification | Accepted evidence | Status |
 |---|---|---|---|
-| P0.1 | Section 2 | PostgreSQL key/RLS/pool prototype and attack tests | Pending H0 |
-| P0.2 | Section 3 | Ownership state-machine review and invariant tests | Pending H0 |
-| P0.3 | Section 4 | Session/revocation prototype and lifecycle matrix | Pending H0 |
-| P0.4 | Section 5 | Policy prototype and authorization matrix | Pending H0 |
-| P0.5 | Section 6 | Threat review with no unaccepted critical risk | Pending H0 |
-| P0.6 | Section 7 | KMS rotation prototype and failure tests | Pending H0 |
-| P0.7 | Section 8 | Custody prototype and quarantine/deletion tests | Pending H0 |
-| P0.8 | Section 9 | Google/mock-provider conflict tests | Pending H0 |
-| P0.9 | Section 10 | Derivative deletion simulation | Pending H0 |
-| P0.10 | Section 11 | AI egress/red-team test-plan review | Pending H0 |
-| P0.11 | Section 12 | Entity/projection prototype and integrity tests | Pending H0 |
-| P0.12 | Section 13 | Dependency/scope fitness test | Pending H0 |
-| P0.13 | Section 14 | Event/replay prototype and failure tests | Pending H0 |
-| P0.14 | Section 15 | Executable CI fitness-test harness | Pending H0 |
+| P0.1 | Section 2 | [PostgreSQL key/RLS/pool attack tests](tests/architecture/test_tenancy_isolation.py) | Accepted |
+| P0.2 | Section 3 | [Ownership lifecycle and invariant tests](tests/architecture/test_ownership_lifecycle.py) | Accepted |
+| P0.3 | Section 4 | [Identity, session, recovery, and revocation tests](tests/architecture/test_identity_lifecycle.py) | Accepted |
+| P0.4 | Section 5 | [Policy and authorization matrix tests](tests/architecture/test_authorization_policy.py) | Accepted |
+| P0.5 | Section 6 | [Threat-specific T01–T14 review](tests/architecture/test_threat_review.py) | Accepted |
+| P0.6 | Section 7 | [Envelope-encryption rotation and failure tests](tests/architecture/test_encryption_rotation.py) | Accepted |
+| P0.7 | Section 8 | [Custody, quarantine, and deletion tests](tests/architecture/test_document_custody.py) | Accepted |
+| P0.8 | Section 9 | [Provider synchronization conflict tests](tests/architecture/test_provider_conflicts.py) | Accepted |
+| P0.9 | Section 10 | [Derivative-lineage deletion tests](tests/architecture/test_derivative_deletion.py) | Accepted |
+| P0.10 | Section 11 | [AI egress and prompt-injection review tests](tests/architecture/test_ai_security_review.py) | Accepted |
+| P0.11 | Section 12 | [Entity/projection integrity tests](tests/architecture/test_entity_projection_integrity.py) | Accepted |
+| P0.12 | Section 13 | [Canonical-scope fitness tests](tests/architecture/test_scope_fitness.py) | Accepted |
+| P0.13 | Section 14 | [Event idempotency, concurrency, and replay tests](tests/architecture/test_event_replay.py) | Accepted |
+| P0.14 | Section 15 | [Merge-blocking CI fitness gate](.github/workflows/h0-required.yml) and [gate tests](tests/architecture/test_ci_gate.py) | Accepted |
 
-H0 passes only when every status is `Accepted`, evidence is linked, and no critical
-threat remains unaccepted. The Architecture Index then authorizes H1 production work.
+**Formal H0 Exit:** Accepted on July 29, 2026 at commit
+`c46d28af1ba82ef3f088624d6947cc8e4b97d058`.
+
+Every P0 status is accepted, all evidence is linked, the threat review confirms no
+unresolved critical threat, and the
+[H0 Required workflow](https://github.com/wanderra-world/Wanderra-OS/actions/runs/30470904550)
+passed Architecture Fitness, Regression Tests, Docker Build and Smoke, and H0 Required
+Gate. Branch protection requires the strict `H0 Required Gate` check before merge.
 
 ## 18. Pull-request sequence
 
