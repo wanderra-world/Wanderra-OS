@@ -2,7 +2,7 @@
 
 **Owner:** Atlas Platform Engineering
 
-Last updated: 29 July 2026
+Last updated: 30 July 2026
 
 ## Summary
 
@@ -11,11 +11,12 @@ FastAPI service backed by PostgreSQL, with OpenAI-powered chat and durable memor
 working Google integrations for Gmail, Calendar, and Drive.
 
 The local Docker deployment is operational. Database migrations are at
-`0006_h1_org_workspaces`. Formal H0 Exit is accepted, and H1-01 has added the
-organization and workspace schema foundation without changing Phase 1 runtime paths.
-Gmail/Calendar/Drive authorization has been completed for the current Wanderra user,
-and live end-to-end verification has succeeded for email, calendar events, and the
-full Drive file lifecycle.
+`0007_h1_canonical_identity`. Formal H0 Exit and H1-01 are accepted. H1-02 adds the
+canonical identity and external-login identity schema without changing Phase 1 user
+IDs, integration references, or authentication behavior. Gmail/Calendar/Drive
+authorization has been completed for the current Wanderra user, and live end-to-end
+verification has succeeded for email, calendar events, and the full Drive file
+lifecycle.
 
 ## Implemented capabilities
 
@@ -30,6 +31,20 @@ full Drive file lifecycle.
   users.
 - Immutable workspace-creation audit records and transactional outbox records.
 - Fully reversible additive migration; Phase 1 tables and runtime routes are unchanged.
+
+### Atlas Core H1-02
+
+- Canonical global `User` model owned by the Identity bounded context.
+- Lifecycle status, verification provenance, timestamps, and optimistic version.
+- External identity links unique by issuer and subject.
+- Duplicate verified email addresses remain distinct identities and never merge
+  automatically.
+- Existing Phase 1 user UUIDs and Gmail, Calendar, Drive, project, and conversation
+  foreign keys are preserved.
+- Atomic identity-migration audit and outbox evidence.
+- Safe downgrade when no external links or duplicate emails exist; otherwise the
+  migration requires an explicit reviewed forward fix.
+- No session, invitation, recovery, MFA, membership, permission, or login behavior.
 
 ### Atlas and memory
 
@@ -131,6 +146,7 @@ The Docker Compose stack contains:
 | `workspaces` | Primary tenant boundary with organization and cell placement |
 | `audit_events` | Immutable workspace-scoped accountability records |
 | `outbox_events` | Workspace-scoped transactional domain-event records |
+| `external_identity_links` | Canonical login identities keyed by issuer and subject |
 
 `drive_file_metadata` stores the file name, MIME type, size, modification time, view
 link, MD5 checksum, parent IDs, the normalized provider payload, and synchronization
@@ -189,7 +205,7 @@ Interactive OpenAPI documentation is available at `/docs`.
 
 ## Test coverage
 
-The current automated suite contains 248 passing tests:
+The current automated suite contains 256 passing tests:
 
 - Health and Atlas chat API behavior.
 - Gmail MIME construction and message parsing.
@@ -205,6 +221,8 @@ The current automated suite contains 248 passing tests:
 - H1-01 model registration, composite tenant keys, PostgreSQL migration and rollback,
   deterministic ownership backfill, forced RLS, last-owner enforcement, transfer
   prohibition, and audit immutability.
+- H1-02 canonical identity compatibility, duplicate-email safety, issuer/subject
+  uniqueness, migration idempotency, atomic rollback, and forward-fix safeguards.
 
 Live integration verification has additionally covered:
 
@@ -220,9 +238,9 @@ The test run currently emits one non-blocking Starlette/httpx deprecation warnin
 
 - `X-User-ID` is trusted directly; there is no authenticated user/session layer or
   authorization policy.
-- H1-01 schema paths are intentionally unused by production requests. Request context,
-  memberships, sessions, commands, repositories, and provider migration remain later
-  H1/H2 slices.
+- H1-01 and H1-02 schema paths are intentionally unused by production authentication
+  requests. Request context, memberships, sessions, commands, repositories, and
+  provider migration remain later H1/H2 slices.
 - The shared Google callback remains under the Gmail URL for compatibility with the
   currently registered OAuth client. A neutral callback path would be clearer.
 - The Drive integration uses the broad `drive` scope. Production deployments should

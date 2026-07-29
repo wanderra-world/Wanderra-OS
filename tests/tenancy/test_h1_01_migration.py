@@ -100,7 +100,7 @@ async def test_h1_01_upgrade_backfill_isolation_invariants_and_rollback() -> Non
         finally:
             await database.close()
 
-        _run_migration(database_name, "head")
+        _run_migration(database_name, "0006_h1_org_workspaces")
         database = await asyncpg.connect(_database_url(database_name))
         try:
             assert await database.fetchval(

@@ -3,7 +3,7 @@
 Canonical implementation decomposition for Atlas Phase 2 Stage H1.
 
 **Owner:** Atlas Core
-**Status:** Proposed for architecture review
+**Status:** Accepted
 **Stage:** H1 — Platform skeleton
 **Architecture entry point:** [README_ARCHITECTURE.md](README_ARCHITECTURE.md)
 **Engineering gate:** [IMPLEMENTATION_GUIDE.md](IMPLEMENTATION_GUIDE.md#h1)
@@ -81,8 +81,8 @@ architecture fitness rules.
 
 | Slice | Name | Status | Primary outcome |
 |---|---|---|---|
-| H1-01 | Organization and workspace schema expansion | Implemented; PR #1 pending review | Additive organization, ownership, workspace, placement, audit, and outbox foundation |
-| H1-02 | Canonical identity and external identity schema | Proposed | Global users and issuer/subject identity links with safe migration |
+| H1-01 | Organization and workspace schema expansion | Accepted; merged in PR #1 | Additive organization, ownership, workspace, placement, audit, and outbox foundation |
+| H1-02 | Canonical identity and external identity schema | Implemented; pending pull-request review | Global users and issuer/subject identity links with safe migration |
 | H1-03 | Revocable session and identity lifecycle | Proposed | Server-side sessions, invitations, recovery, strong-authentication state, and revocation |
 | H1-04 | Workspace memberships and fixed roles | Proposed | Workspace access lifecycle and versioned fixed-role assignments |
 | H1-05 | Deterministic authorization boundary | Proposed | Deny-first policy decisions with reason codes and obligations |
@@ -100,8 +100,7 @@ early, but cannot be represented as production completion.
 
 ### H1-01: Organization and workspace schema expansion
 
-**Status:** Implemented on
-`codex/h1-01-organization-workspace-schema`; pull request #1 awaits review.
+**Status:** Accepted; merged in pull request #1.
 
 **Objective**
 
@@ -126,6 +125,9 @@ foundation, including deterministic default ownership for existing Phase 1 users
 - Existing Phase 1 runtime behavior remains unchanged.
 
 ### H1-02: Canonical identity and external identity schema
+
+**Status:** Implemented on `codex/h1-02-canonical-identity`; pending pull-request
+review.
 
 **Objective**
 
@@ -168,6 +170,12 @@ Phase 1 users for safe canonical identity use.
 - Identity state, audit, and outbox writes are atomic.
 - Migration is idempotent and passes empty, single-user, and multi-user fixtures.
 - No production authentication behavior changes.
+
+**Acceptance evidence**
+
+- [Canonical identity model tests](tests/identity/test_h1_02_models.py)
+- [PostgreSQL compatibility, atomicity, idempotency, and rollback tests](tests/identity/test_h1_02_migration.py)
+- [Additive H1-02 migration](alembic/versions/0007_add_canonical_identity.py)
 
 ### H1-03: Revocable session and identity lifecycle
 
@@ -540,6 +548,6 @@ Architecture reviewers must explicitly accept or revise:
 6. the H1-09 limitation to H1-owned recovery and closure;
 7. the requirement that H1-10, rather than an implementation slice, authorizes H2.
 
-Once approved, the Architecture Index status changes from `Proposed` to `Accepted`,
-H1-02 becomes the next authorized production slice, and each later slice becomes
-eligible only after its predecessor is accepted.
+This specification was accepted through pull request #2. Each later slice becomes
+eligible only after its predecessor is accepted and the user explicitly authorizes
+that slice.

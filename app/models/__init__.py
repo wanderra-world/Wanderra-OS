@@ -3,10 +3,11 @@
 Import every model here to make it discoverable by Alembic migrations.
 """
 
+from app.identity.models import ExternalIdentityLink, User
 from app.models.calendar import CalendarCredential, CalendarOAuthState
 from app.models.drive import DriveCredential, DriveFileMetadata, DriveOAuthState
 from app.models.gmail import GmailCredential, GmailOAuthState
-from app.models.memory import Conversation, ConversationMessage, Project, User
+from app.models.memory import Conversation, ConversationMessage, Project
 from app.tenancy.models import (
     AuditEvent,
     Cell,
@@ -26,6 +27,7 @@ __all__ = [
     "DriveCredential",
     "DriveFileMetadata",
     "DriveOAuthState",
+    "ExternalIdentityLink",
     "GmailCredential",
     "GmailOAuthState",
     "Organization",
