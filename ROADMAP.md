@@ -246,5 +246,7 @@ The canonical H0–H8 ordering and purpose are owned by
 [ARCHITECTURE_HARDENING.md](ARCHITECTURE_HARDENING.md#revised-phase-2-implementation-sequence).
 Engineering gates and pull-request rules are owned by
 [IMPLEMENTATION_GUIDE.md](IMPLEMENTATION_GUIDE.md#3-canonical-implementation-order).
-The accepted H0 evidence status and authorized next implementation slice are owned by
+Accepted H0 evidence is owned by
 [H0_FOUNDATION_SPEC.md](H0_FOUNDATION_SPEC.md#17-h0-approval-and-exit-evidence).
+The proposed H1 implementation decomposition is owned by
+[H1_PLATFORM_SPEC.md](H1_PLATFORM_SPEC.md).
