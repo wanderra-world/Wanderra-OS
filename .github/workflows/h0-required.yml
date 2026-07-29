@@ -1,0 +1,112 @@
+name: H0 Required
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: h0-required-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  architecture:
+    name: Architecture Fitness
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: atlas_ci
+          POSTGRES_PASSWORD: atlas_ci
+          POSTGRES_DB: atlas_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U atlas_ci -d atlas_ci"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      H0_TEST_DATABASE_URL: postgresql://atlas_ci:atlas_ci@localhost:5432/atlas_ci
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install verification dependencies
+        run: python -m pip install --upgrade pip && python -m pip install -e ".[dev]"
+      - name: Lint architecture evidence
+        run: ruff check tests/architecture
+      - name: Run complete architecture suite with PostgreSQL and RLS
+        run: pytest -q tests/architecture
+
+  regression:
+    name: Regression Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: atlas_ci
+          POSTGRES_PASSWORD: atlas_ci
+          POSTGRES_DB: atlas_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U atlas_ci -d atlas_ci"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      H0_TEST_DATABASE_URL: postgresql://atlas_ci:atlas_ci@localhost:5432/atlas_ci
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install verification dependencies
+        run: python -m pip install --upgrade pip && python -m pip install -e ".[dev]"
+      - name: Run all non-architecture regression tests
+        run: pytest -q tests --ignore=tests/architecture
+
+  docker:
+    name: Docker Build and Smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build production image
+        run: docker build --tag atlas-h0-ci .
+      - name: Smoke-test production application
+        run: >-
+          docker run --rm --entrypoint python atlas-h0-ci
+          -c "from app.main import app; assert app.title"
+
+  required:
+    name: H0 Required Gate
+    if: always()
+    needs:
+      - architecture
+      - regression
+      - docker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enforce every H0 verification result
+        env:
+          ARCHITECTURE_RESULT: ${{ needs.architecture.result }}
+          REGRESSION_RESULT: ${{ needs.regression.result }}
+          DOCKER_RESULT: ${{ needs.docker.result }}
+        run: |
+          test "$ARCHITECTURE_RESULT" = "success"
+          test "$REGRESSION_RESULT" = "success"
+          test "$DOCKER_RESULT" = "success"
