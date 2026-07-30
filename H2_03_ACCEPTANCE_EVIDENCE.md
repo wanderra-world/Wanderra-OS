@@ -90,8 +90,7 @@ FastAPI application, H2-03 service, and ORM model imported successfully
 The complete local inventory is **390 passing tests**. The merge-blocking Ruff scope
 and every H2-03 changed Python file pass. A diagnostic repository-wide Ruff run also
 reports the accepted legacy Phase 1 formatting baseline outside the required workflow;
-H2-03 adds no new violation. Protected GitHub results are appended after the dedicated
-pull request is verified.
+H2-03 adds no new violation.
 
 ## Compatibility and open findings
 
@@ -104,3 +103,17 @@ pull request is verified.
 - Production migration count becomes 16 after deployment.
 
 No unresolved H2-03 critical or high finding is known. H2-04 has not started.
+
+## Pull-request gate
+
+Dedicated pull request:
+[PR #16 — Implement H2-03 OAuth transaction boundary](https://github.com/wanderra-world/Wanderra-OS/pull/16)
+
+The protected workflow passed for the implementation commit:
+
+- `H0 Required / Architecture Fitness` — passed;
+- `H0 Required / Regression Tests` — passed;
+- `H0 Required / Docker Build and Smoke` — passed;
+- `H0 Required / H0 Required Gate` — passed.
+
+H2-03 remains pending formal acceptance and merge. H2-04 has not started.
