@@ -57,9 +57,9 @@ H1-01 has implemented the additive organization and workspace schema expansion b
 unused runtime paths. Current implementation details are recorded in
 [PROJECT_STATUS.md](PROJECT_STATUS.md).
 
-The H1 decomposition is accepted. H1-01 through H1-05 are merged. H1-06 implements the
-typed execution-context and context-bound repository plumbing on a review branch
-without changing Phase 1 request behavior.
+The H1 decomposition is accepted. H1-01 through H1-06 are merged. H1-07 implements
+managed per-record envelope encryption and additive credential shadow-migration
+tooling on a review branch without changing Phase 1 request behavior.
 
 ## Recommended reading order
 
@@ -424,5 +424,5 @@ enforcement is owned by `IMPLEMENTATION_GUIDE.md`.
 
 ## Next action
 
-Review and accept the H1-06 pull request. H1-07 is not authorized and no subsequent H1
+Review and accept the H1-07 pull request. H1-08 is not authorized and no subsequent H1
 production slice has been started.
