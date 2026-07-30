@@ -2,7 +2,7 @@
 
 **Owner:** Atlas Platform Engineering
 
-Last updated: 30 July 2026
+Last updated: 31 July 2026
 
 ## Summary
 
@@ -11,9 +11,9 @@ FastAPI service backed by PostgreSQL, with OpenAI-powered chat and durable memor
 working Google integrations for Gmail, Calendar, and Drive.
 
 The local Docker deployment is operational. Database migrations are at
-`0014_h2_connections`. Formal H0 Exit and Formal H1 Exit are accepted. H1-01 through
-H1-10 are merged. The H2 platform specification is accepted, and H2-01 is implemented
-on a dedicated branch pending pull-request acceptance.
+`0015_h2_credentials`. Formal H0 Exit and Formal H1 Exit are accepted. H1-01 through
+H1-10 and H2-01 are merged. The H2 platform specification is accepted, and H2-02 is
+implemented on a dedicated branch pending pull-request acceptance.
 Gmail/Calendar/Drive authorization has been completed for the current Wanderra user,
 and live end-to-end verification has succeeded for email, calendar events, and the
 full Drive file lifecycle.
@@ -192,6 +192,27 @@ full Drive file lifecycle.
 - No credential, OAuth, mirror, provider client, route, API, backfill, cutover, or
   H2-02 functionality.
 
+### Atlas Core H2-02
+
+- Provider-neutral connection credential metadata references the accepted H1 managed
+  encrypted-envelope boundary.
+- Authenticated encryption context binds workspace, connection, provider, credential
+  kind, record identity, format, and credential generation.
+- Deterministic Phase 1 inventory records row identity, ciphertext checksum, normalized
+  scope inventory, eligibility, attempts, exceptions, and verification state.
+- PostgreSQL advisory transaction locks and source uniqueness make concurrent shadow
+  migration idempotent, resumable, and replay safe.
+- Canonical JSON comparison proves semantic equivalence before a shadow is marked
+  verified.
+- Rotation, revocation, reauthorization-required, expiry metadata, and emergency
+  disable states are transactionally audited and emitted through the outbox.
+- Forced PostgreSQL RLS, composite tenant foreign keys, immutable envelope context,
+  workspace write freezing, and guarded rollback protect custody metadata.
+- The migration-only Phase 1 linker writes envelope checksum and verification evidence
+  while leaving legacy ciphertext and `envelope_cutover = false`.
+- No OAuth transaction, callback routing, provider capability, adapter execution,
+  mirror, API, cutover, or H2-03 functionality is present.
+
 ### Atlas and memory
 
 - Atlas chat endpoint backed by the configured OpenAI model.
@@ -299,6 +320,8 @@ The Docker Compose stack contains:
 | `connection_kind_capabilities` | Capabilities allowed for each connection kind |
 | `connections` | Canonical workspace-owned provider account connections |
 | `connection_capability_grants` | Workspace-owned versioned connection capability grants |
+| `connection_credentials` | Connection-bound encrypted credential generation metadata |
+| `credential_migration_inventory` | Idempotent Phase 1 credential inventory and shadow-verification evidence |
 
 `drive_file_metadata` stores the file name, MIME type, size, modification time, view
 link, MD5 checksum, parent IDs, the normalized provider payload, and synchronization
@@ -357,7 +380,7 @@ Interactive OpenAPI documentation is available at `/docs`.
 
 ## Test coverage
 
-The current PostgreSQL-backed automated suite contains 350 passing tests:
+The current PostgreSQL-backed automated suite contains 365 passing tests:
 
 - Health and Atlas chat API behavior.
 - Gmail MIME construction and message parsing.
@@ -408,6 +431,10 @@ The current PostgreSQL-backed automated suite contains 350 passing tests:
   placement integrity, forced RLS, cross-workspace denial, optimistic concurrency,
   atomic audit/outbox evidence, migration rehearsal, guarded rollback, and strict
   H2-02+ slice isolation.
+- H2-02 credential context binding, redaction, semantic equivalence, inventory
+  checksums, shadow replay, concurrent migration serialization, managed-key failures,
+  rotation, emergency disable, forced RLS, migration rollback, and strict H2-03+
+  slice isolation.
 
 Live integration verification has additionally covered:
 
@@ -425,8 +452,9 @@ The test run currently emits one non-blocking Starlette/httpx deprecation warnin
   is intentionally not wired into production request authentication yet.
 - H1 runtime paths remain intentionally unused by Phase 1 requests. Provider migration
   and Phase 1 cutover remain in later approved H2 slices.
-- H2-01 connection records are intentionally not wired to Phase 1 credentials,
-  callbacks, APIs, or provider routes; H2-02 through H2-09 own that staged migration.
+- H2 connection and shadow credential records are intentionally not wired to Phase 1
+  runtime reads, callbacks, APIs, or provider routes; H2-03 through H2-09 own the
+  remaining staged migration and cutover.
 - The shared Google callback remains under the Gmail URL for compatibility with the
   currently registered OAuth client. A neutral callback path would be clearer.
 - The Drive integration uses the broad `drive` scope. Production deployments should

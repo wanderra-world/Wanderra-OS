@@ -167,6 +167,12 @@ class Connection(Base):
             "connection_kind_version",
             name="uq_connections_id_kind",
         ),
+        UniqueConstraint(
+            "workspace_id",
+            "id",
+            "provider_key",
+            name="uq_connections_id_provider",
+        ),
         CheckConstraint(
             "status IN ('pending', 'active', 'degraded', "
             "'reauthorization_required', 'revoked', 'closed')",
