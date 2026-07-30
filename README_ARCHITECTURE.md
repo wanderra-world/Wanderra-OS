@@ -4,7 +4,7 @@ The single entry point to the Atlas architecture documentation.
 
 **Owner:** Atlas Architecture Council  
 **Current phase:** Phase 2 — Atlas Core  
-**Status:** Formal H0 Exit accepted; H1-01 through H1-04 accepted; H1-05 pending review
+**Status:** Formal H0 Exit accepted; Formal H1 Exit accepted
 **Last updated:** July 30, 2026
 
 ## Core principle
@@ -42,25 +42,23 @@ The Google Workspace Foundation is implemented and validated end to end:
 
 See [PROJECT_STATUS.md](PROJECT_STATUS.md) for the detailed implementation status.
 
-### Phase 2 — H1 in progress
+### Phase 2 — H1 accepted
 
-The architecture phase and Formal H0 Exit are complete. H1 production implementation
-is authorized in the canonical sequence defined by the hardening plan and engineering
-contract.
+The architecture phase, Formal H0 Exit, and Formal H1 Exit are complete. H1-01
+through H1-10 are accepted and merged.
 
 All P0 contracts and superseding ADRs are approved, P0.1–P0.14 evidence is accepted,
 and the merge-blocking H0 Required Gate protects `master`. The accepted evidence and
 workflow run are recorded in
 [H0_FOUNDATION_SPEC.md](H0_FOUNDATION_SPEC.md#17-h0-approval-and-exit-evidence).
 
-H1-01 has implemented the additive organization and workspace schema expansion behind
-unused runtime paths. Current implementation details are recorded in
+The accepted H1 baseline includes organizations and workspaces, canonical identity,
+revocable sessions, memberships and fixed roles, deterministic authorization,
+execution context and forced RLS, managed envelope encryption, immutable audit and
+transactional messaging, recovery and closure controls, and the synthetic-tenant
+vertical-slice evidence. See
+[H1_FORMAL_EXIT_REPORT.md](H1_FORMAL_EXIT_REPORT.md) and
 [PROJECT_STATUS.md](PROJECT_STATUS.md).
-
-The H1 decomposition is accepted. H1-01 through H1-07 are merged. H1-08 implements
-immutable audit chaining and transactional outbox/inbox, idempotency, sequencing,
-quarantine, and authorized replay on a review branch without changing Phase 1
-request behavior.
 
 ## Recommended reading order
 
@@ -422,8 +420,9 @@ enforcement is owned by `IMPLEMENTATION_GUIDE.md`.
 | [IMPLEMENTATION_GUIDE.md](IMPLEMENTATION_GUIDE.md) | Normative engineering contract |
 | [H0_FOUNDATION_SPEC.md](H0_FOUNDATION_SPEC.md) | Normative P0 contracts and H0 evidence |
 | [H1_PLATFORM_SPEC.md](H1_PLATFORM_SPEC.md) | Accepted H1 slice decomposition |
+| [H1_FORMAL_EXIT_REPORT.md](H1_FORMAL_EXIT_REPORT.md) | Formal H1 acceptance decision and evidence |
 
 ## Next action
 
-Review and accept the H1-08 pull request. H1-09 is not authorized and no subsequent H1
-production slice has been started.
+Phase H1 is closed. H2 remains unstarted and requires separate authorization under the
+approved implementation sequence.

@@ -37,4 +37,4 @@ def test_h1_10_does_not_authorize_or_implement_h2() -> None:
     evidence = EVIDENCE.read_text().lower()
     assert "h2 status: not started" in evidence
     assert "provider migration: not performed" in evidence
-    assert "formal h1 exit candidate" in evidence
+    assert "formal h1 exit is accepted" in evidence
