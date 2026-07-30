@@ -11,8 +11,8 @@ FastAPI service backed by PostgreSQL, with OpenAI-powered chat and durable memor
 working Google integrations for Gmail, Calendar, and Drive.
 
 The local Docker deployment is operational. Database migrations are at
-`0012_h1_audit_messaging`. Formal H0 Exit and H1-01 through H1-07 are accepted. H1-08
-adds immutable audit chaining and transactional messaging state without changing
+`0013_h1_recovery_closure`. Formal H0 Exit and H1-01 through H1-08 are accepted. H1-09
+adds H1-owned backup, restore, export, retention, and closure controls without changing
 Phase 1 request behavior or provider credential reads.
 Gmail/Calendar/Drive authorization has been completed for the current Wanderra user,
 and live end-to-end verification has succeeded for email, calendar events, and the
@@ -142,6 +142,25 @@ full Drive file lifecycle.
 - Additive, rehearsed migration with guarded rollback after H1-08 state is created.
 - No broker, worker, scheduler, provider effects, timeline, memory, search, or H1-09
   functionality.
+
+### Atlas Core H1-09
+
+- Managed-key AES-256-GCM encryption for PostgreSQL backup artifacts.
+- Fail-closed KMS recovery and authenticated backup integrity verification.
+- Isolated restore evidence with exact H1 row-count and digest comparison.
+- Instrumented 15-minute PostgreSQL RPO and four-hour core RTO targets.
+- Versioned, idempotent synthetic export manifests limited to H1-owned workspace data.
+- Explicitly authorized workspace closure with immediate access revocation and
+  ordinary H1 write freezing.
+- Legal-hold and minimum-retention precedence over erasure.
+- Eligible H1 session, token, notification, encryption, command, inbox, consumer, and
+  quarantine erasure.
+- Immutable closure receipts, recovery evidence, and export manifests.
+- Explicit preservation of Phase 1 provider data with provider reconciliation recorded
+  as an H2 dependency.
+- Additive migration, forced RLS, rollback rehearsal, and guarded forward-fix behavior.
+- No provider deletion, document lineage, content export, workspace transfer, cell
+  migration, or H1-10 functionality.
 
 ### Atlas and memory
 
@@ -302,7 +321,7 @@ Interactive OpenAPI documentation is available at `/docs`.
 
 ## Test coverage
 
-The current PostgreSQL-backed automated suite contains 314 passing tests:
+The current PostgreSQL-backed automated suite contains 324 passing tests:
 
 - Health and Atlas chat API behavior.
 - Gmail MIME construction and message parsing.
@@ -341,6 +360,10 @@ The current PostgreSQL-backed automated suite contains 314 passing tests:
   concurrency, duplicate suppression, schema and poison quarantine, sequence-gap
   handling, authorized replay, forced RLS, tamper detection, migration rehearsal, and
   guarded rollback.
+- H1-09 encrypted backup authentication, KMS failure, RPO/RTO enforcement, isolated
+  restore equivalence, H1-only export manifests, explicit closure authorization,
+  access revocation, legal-hold precedence, write freezing, eligible erasure, Phase 1
+  provider preservation, receipt immutability, forced RLS, and guarded rollback.
 
 Live integration verification has additionally covered:
 

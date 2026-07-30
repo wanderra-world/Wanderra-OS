@@ -24,6 +24,12 @@ from app.models.calendar import CalendarCredential, CalendarOAuthState
 from app.models.drive import DriveCredential, DriveFileMetadata, DriveOAuthState
 from app.models.gmail import GmailCredential, GmailOAuthState
 from app.models.memory import Conversation, ConversationMessage, Project
+from app.recovery.models import (
+    RecoveryEvidence,
+    WorkspaceClosure,
+    WorkspaceDataGovernance,
+    WorkspaceExport,
+)
 from app.tenancy.models import (
     AuditEvent,
     Cell,
@@ -63,8 +69,12 @@ __all__ = [
     "Permission",
     "Role",
     "RolePermission",
+    "RecoveryEvidence",
     "SecurityNotification",
     "User",
     "Workspace",
+    "WorkspaceClosure",
+    "WorkspaceDataGovernance",
+    "WorkspaceExport",
     "WorkspaceMembership",
 ]
