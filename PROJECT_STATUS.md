@@ -11,11 +11,11 @@ FastAPI service backed by PostgreSQL, with OpenAI-powered chat and durable memor
 working Google integrations for Gmail, Calendar, and Drive.
 
 The local Docker deployment is operational. Database migrations are at
-`0010_h1_authorization`. Formal H0 Exit and H1-01 through H1-04 are accepted. H1-05
-adds the deterministic fixed-role authorization boundary without changing Phase 1
-request behavior. Gmail/Calendar/Drive authorization has been completed for the
-current Wanderra user, and live end-to-end verification has succeeded for email,
-calendar events, and the full Drive file lifecycle.
+`0010_h1_authorization`. Formal H0 Exit and H1-01 through H1-05 are accepted. H1-06
+adds typed execution-context plumbing without changing Phase 1 request behavior or
+the H1-05 authorization decision. Gmail/Calendar/Drive authorization has been
+completed for the current Wanderra user, and live end-to-end verification has
+succeeded for email, calendar events, and the full Drive file lifecycle.
 
 ## Implemented capabilities
 
@@ -87,6 +87,24 @@ calendar events, and the full Drive file lifecycle.
 - Guarded rollback that refuses to remove mutated catalogs or recorded decisions.
 - No custom roles, inheritance, ABAC, APIs, provider access, agents, workflows,
   notifications, search, memory, or H1-06 context plumbing.
+
+### Atlas Core H1-06
+
+- Immutable, versioned request, actor, tenant, delegation, and correlation context.
+- Request-scoped context binding with nested-scope isolation and guaranteed reset.
+- Placement validation against canonical Organization, Workspace, and Cell records.
+- Transaction-local PostgreSQL workspace, actor, session, membership, authorization
+  decision, request, and correlation settings.
+- Context-required repository base contract that rejects missing, mismatched, and
+  cross-workspace execution.
+- Safe audit/outbox trace references without session or membership identifier leakage.
+- Forced-RLS validation under non-owner, non-bypass runtime roles.
+- Pool reuse and deterministic replay tests proving context never leaks between
+  transactions.
+- Schema-free delivery with H1-05 downgrade/upgrade rehearsal; production remains at
+  migration `0010_h1_authorization`.
+- No Phase 1 route wiring, authorization changes, policy changes, providers, agents,
+  jobs, workflows, notifications, search, memory, or H1-07 functionality.
 
 ### Atlas and memory
 
@@ -247,7 +265,8 @@ Interactive OpenAPI documentation is available at `/docs`.
 
 ## Test coverage
 
-The current automated suite contains 283 passing tests:
+The current automated suite contains 289 passing tests, with four
+environment-dependent tests skipped:
 
 - Health and Atlas chat API behavior.
 - Gmail MIME construction and message parsing.
@@ -276,6 +295,9 @@ The current automated suite contains 283 passing tests:
   decisions, unknown-permission denial, workspace mismatch denial, immediate
   revocation, forced-RLS permission joins, redacted audit/outbox evidence, migration
   rehearsal, and guarded rollback.
+- H1-06 immutable execution contracts, request-scope reset, placement validation,
+  transaction-local propagation, context-bound repositories, forced-RLS runtime
+  roles, pool reset, deterministic replay, and schema-free rollback rehearsal.
 
 Live integration verification has additionally covered:
 

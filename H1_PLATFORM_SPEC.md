@@ -85,8 +85,8 @@ architecture fitness rules.
 | H1-02 | Canonical identity and external identity schema | Accepted; merged in PR #3 | Global users and issuer/subject identity links with safe migration |
 | H1-03 | Revocable session and identity lifecycle | Accepted; merged in PR #4 | Server-side sessions, invitations, recovery, strong-authentication state, and revocation |
 | H1-04 | Workspace memberships and fixed roles | Accepted; merged in PR #5 | Workspace access lifecycle and versioned fixed-role assignments |
-| H1-05 | Deterministic authorization boundary | Implemented; pending pull-request review | Deny-first fixed-role decisions with reason codes |
-| H1-06 | Request, actor, tenant, and repository context | Proposed | Typed execution context, transaction-local PostgreSQL context, runtime roles, and repository enforcement |
+| H1-05 | Deterministic authorization boundary | Accepted; merged in PR #6 | Deny-first fixed-role decisions with reason codes |
+| H1-06 | Request, actor, tenant, and repository context | Implemented; pending pull-request review | Typed execution context, transaction-local PostgreSQL context, runtime roles, and repository enforcement |
 | H1-07 | Managed envelope encryption foundation | Proposed | KMS-backed per-record encryption and safe Phase 1 credential migration tooling |
 | H1-08 | Immutable audit and transactional messaging | Proposed | Production audit writer, outbox/inbox, idempotency, sequencing, and tamper-evidence baseline |
 | H1-09 | Foundation recovery, restore, and closure rehearsal | Proposed | Backup/restore, tenant-foundation deletion, closure receipts, and recovery evidence |
@@ -324,6 +324,8 @@ and query.
 
 ### H1-06: Request, actor, tenant, and repository context
 
+**Status:** Implemented; pending pull-request review.
+
 **Objective**
 
 Carry authenticated actor and workspace authority from the application boundary into
@@ -364,6 +366,14 @@ transactions, repositories, audit, events, and future job envelopes.
   job envelopes fail.
 - Correlation and authorization decision references reach audit and outbox records.
 - Existing Phase 1 routes remain unchanged.
+
+**Acceptance evidence**
+
+- [Immutable execution-context and repository-contract tests](tests/execution_context/test_h1_06_context.py)
+- [PostgreSQL, RLS, role, replay, pool-reset, and rollback tests](tests/execution_context/test_h1_06_postgres.py)
+- [H1-06 slice-isolation architecture fitness tests](tests/architecture/test_h1_06_execution_context_scope.py)
+- H1-06 is schema-free: it reuses migration `0010_h1_authorization`, and rollback
+  rehearsal proves the existing H1-05 boundary remains reversible.
 
 ### H1-07: Managed envelope encryption foundation
 
