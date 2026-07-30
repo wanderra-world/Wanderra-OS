@@ -11,9 +11,9 @@ FastAPI service backed by PostgreSQL, with OpenAI-powered chat and durable memor
 working Google integrations for Gmail, Calendar, and Drive.
 
 The local Docker deployment is operational. Database migrations are at
-`0011_h1_envelopes`. Formal H0 Exit and H1-01 through H1-06 are accepted. H1-07 adds
-managed per-record envelope encryption and additive credential shadow metadata
-without changing Phase 1 request behavior or provider credential reads.
+`0012_h1_audit_messaging`. Formal H0 Exit and H1-01 through H1-07 are accepted. H1-08
+adds immutable audit chaining and transactional messaging state without changing
+Phase 1 request behavior or provider credential reads.
 Gmail/Calendar/Drive authorization has been completed for the current Wanderra user,
 and live end-to-end verification has succeeded for email, calendar events, and the
 full Drive file lifecycle.
@@ -126,6 +126,22 @@ full Drive file lifecycle.
   envelope migration state.
 - No connection unification, provider runtime changes, agents, workflows, scheduler,
   jobs, notifications, search, memory, or H1-08 functionality.
+
+### Atlas Core H1-08
+
+- Append-only canonical audit writer with redacted, decision-linked records.
+- Per-workspace SHA-256 audit chains, checkpoints, and verification.
+- Caller-owned command idempotency and optimistic aggregate versions.
+- Transactional canonical outbox writes that commit atomically with audit and
+  idempotency evidence.
+- Inbox deduplication, per-aggregate consumer sequencing, gap and poison-message
+  quarantine, and explicit authorized replay.
+- Versioned event contracts with unsupported-schema quarantine.
+- Forced workspace RLS for all new messaging state.
+- Retention and partition-readiness metadata without selecting a partitioning system.
+- Additive, rehearsed migration with guarded rollback after H1-08 state is created.
+- No broker, worker, scheduler, provider effects, timeline, memory, search, or H1-09
+  functionality.
 
 ### Atlas and memory
 
@@ -286,8 +302,7 @@ Interactive OpenAPI documentation is available at `/docs`.
 
 ## Test coverage
 
-The current automated suite contains 300 passing tests, with four
-environment-dependent tests skipped:
+The current PostgreSQL-backed automated suite contains 314 passing tests:
 
 - Health and Atlas chat API behavior.
 - Gmail MIME construction and message parsing.
@@ -322,6 +337,10 @@ environment-dependent tests skipped:
 - H1-07 managed-KMS contracts, authenticated encryption, key versioning, KEK and DEK
   rotation replay, legacy shadow verification, forced RLS, failure quarantine,
   emergency disable, additive migration, audit/outbox evidence, and guarded rollback.
+- H1-08 deterministic envelopes, atomic audit/outbox/idempotency, optimistic
+  concurrency, duplicate suppression, schema and poison quarantine, sequence-gap
+  handling, authorized replay, forced RLS, tamper detection, migration rehearsal, and
+  guarded rollback.
 
 Live integration verification has additionally covered:
 
