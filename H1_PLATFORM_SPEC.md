@@ -87,8 +87,8 @@ architecture fitness rules.
 | H1-04 | Workspace memberships and fixed roles | Accepted; merged in PR #5 | Workspace access lifecycle and versioned fixed-role assignments |
 | H1-05 | Deterministic authorization boundary | Accepted; merged in PR #6 | Deny-first fixed-role decisions with reason codes |
 | H1-06 | Request, actor, tenant, and repository context | Accepted; merged in PR #7 | Typed execution context, transaction-local PostgreSQL context, runtime roles, and repository enforcement |
-| H1-07 | Managed envelope encryption foundation | Implemented; pending pull-request review | KMS-backed per-record encryption and safe Phase 1 credential migration tooling |
-| H1-08 | Immutable audit and transactional messaging | Proposed | Production audit writer, outbox/inbox, idempotency, sequencing, and tamper-evidence baseline |
+| H1-07 | Managed envelope encryption foundation | Accepted; merged in PR #8 | KMS-backed per-record encryption and safe Phase 1 credential migration tooling |
+| H1-08 | Immutable audit and transactional messaging | Implemented; pending pull-request review | Production audit writer, outbox/inbox, idempotency, sequencing, and tamper-evidence baseline |
 | H1-09 | Foundation recovery, restore, and closure rehearsal | Proposed | Backup/restore, tenant-foundation deletion, closure receipts, and recovery evidence |
 | H1-10 | Synthetic tenant vertical slice and Formal H1 Exit | Proposed | Integrated proof of every H1 exit criterion and security acceptance |
 
@@ -464,6 +464,13 @@ domain-event path.
 - Tampering is detectable by verification evidence.
 - Replay requires explicit authorization and cannot cross workspaces.
 - Schema compatibility and poison-message tests pass.
+
+**Acceptance evidence**
+
+- [Deterministic command and event contract tests](tests/messaging/test_h1_08_contracts.py)
+- [PostgreSQL atomicity, idempotency, concurrency, replay, RLS, tamper, and rollback tests](tests/messaging/test_h1_08_postgres.py)
+- [H1-08 slice-isolation architecture fitness tests](tests/architecture/test_h1_08_messaging_scope.py)
+- [Additive audit and messaging migration](alembic/versions/0012_add_audit_messaging.py)
 
 ### H1-09: Foundation recovery, restore, and closure rehearsal
 

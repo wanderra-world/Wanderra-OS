@@ -6,6 +6,8 @@ import uuid
 from datetime import datetime
 
 from sqlalchemy import (
+    BigInteger,
+    Boolean,
     CheckConstraint,
     DateTime,
     ForeignKey,
@@ -17,6 +19,7 @@ from sqlalchemy import (
     UniqueConstraint,
     Uuid,
     func,
+    text,
 )
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column
@@ -154,6 +157,7 @@ class AuditEvent(Base):
             name="fk_audit_events_workspace",
         ),
         Index("ix_audit_events_workspace_recorded", "workspace_id", "recorded_at"),
+        {"implicit_returning": False},
     )
 
     workspace_id: Mapped[uuid.UUID] = mapped_column(Uuid)
@@ -166,6 +170,33 @@ class AuditEvent(Base):
     outcome: Mapped[str] = mapped_column(String(32))
     details: Mapped[dict[str, object]] = mapped_column(
         JSONB, server_default="{}", default=dict
+    )
+    decision_id: Mapped[uuid.UUID | None] = mapped_column(
+        Uuid, server_default=text("NULL"), deferred=True
+    )
+    correlation_id: Mapped[str | None] = mapped_column(
+        String(128), server_default=text("NULL"), deferred=True
+    )
+    causation_id: Mapped[uuid.UUID | None] = mapped_column(
+        Uuid, server_default=text("NULL"), deferred=True
+    )
+    classification: Mapped[str] = mapped_column(
+        String(32), server_default="internal", deferred=True
+    )
+    chain_sequence: Mapped[int | None] = mapped_column(
+        BigInteger, server_default=text("NULL"), deferred=True
+    )
+    previous_digest: Mapped[str | None] = mapped_column(
+        String(64), server_default=text("NULL"), deferred=True
+    )
+    safe_digest: Mapped[str | None] = mapped_column(
+        String(64), server_default=text("NULL"), deferred=True
+    )
+    retention_until: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True), server_default=text("NULL"), deferred=True
+    )
+    partition_key: Mapped[str | None] = mapped_column(
+        String(7), server_default=text("NULL"), deferred=True
     )
     recorded_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now()
@@ -192,6 +223,7 @@ class OutboxEvent(Base):
             name="uq_outbox_aggregate_sequence",
         ),
         Index("ix_outbox_events_unpublished", "published_at", "recorded_at"),
+        {"implicit_returning": False},
     )
 
     workspace_id: Mapped[uuid.UUID] = mapped_column(Uuid)
@@ -202,6 +234,42 @@ class OutboxEvent(Base):
     aggregate_id: Mapped[uuid.UUID] = mapped_column(Uuid)
     aggregate_sequence: Mapped[int] = mapped_column(server_default="1")
     payload: Mapped[dict[str, object]] = mapped_column(JSONB)
+    actor_id: Mapped[uuid.UUID | None] = mapped_column(
+        Uuid, server_default=text("NULL"), deferred=True
+    )
+    delegation_id: Mapped[uuid.UUID | None] = mapped_column(
+        Uuid, server_default=text("NULL"), deferred=True
+    )
+    correlation_id: Mapped[str | None] = mapped_column(
+        String(128), server_default=text("NULL"), deferred=True
+    )
+    causation_id: Mapped[uuid.UUID | None] = mapped_column(
+        Uuid, server_default=text("NULL"), deferred=True
+    )
+    classification: Mapped[str] = mapped_column(
+        String(32), server_default="internal", deferred=True
+    )
+    schema_major: Mapped[int] = mapped_column(server_default="1", deferred=True)
+    schema_minor: Mapped[int] = mapped_column(server_default="0", deferred=True)
+    idempotency_key: Mapped[str | None] = mapped_column(
+        String(128), server_default=text("NULL"), deferred=True
+    )
+    payload_digest: Mapped[str | None] = mapped_column(
+        String(64), server_default=text("NULL"), deferred=True
+    )
+    available_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), deferred=True
+    )
+    attempt_count: Mapped[int] = mapped_column(server_default="0", deferred=True)
+    quarantined: Mapped[bool] = mapped_column(
+        Boolean, server_default="false", deferred=True
+    )
+    retention_until: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True), server_default=text("NULL"), deferred=True
+    )
+    partition_key: Mapped[str | None] = mapped_column(
+        String(7), server_default=text("NULL"), deferred=True
+    )
     recorded_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now()
     )

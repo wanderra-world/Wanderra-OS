@@ -12,6 +12,14 @@ from app.identity.lifecycle_models import (
 )
 from app.identity.models import ExternalIdentityLink, User
 from app.memberships.models import FixedMembershipRole, Role, WorkspaceMembership
+from app.messaging.models import (
+    AggregateVersion,
+    AuditChainHead,
+    CommandIdempotency,
+    ConsumerSequence,
+    EventQuarantine,
+    InboxEvent,
+)
 from app.models.calendar import CalendarCredential, CalendarOAuthState
 from app.models.drive import DriveCredential, DriveFileMetadata, DriveOAuthState
 from app.models.gmail import GmailCredential, GmailOAuthState
@@ -26,10 +34,14 @@ from app.tenancy.models import (
 )
 
 __all__ = [
+    "AggregateVersion",
+    "AuditChainHead",
     "CalendarCredential",
     "CalendarOAuthState",
     "AuditEvent",
     "Cell",
+    "CommandIdempotency",
+    "ConsumerSequence",
     "Conversation",
     "ConversationMessage",
     "DriveCredential",
@@ -37,9 +49,11 @@ __all__ = [
     "DriveOAuthState",
     "EncryptedEnvelope",
     "ExternalIdentityLink",
+    "EventQuarantine",
     "FixedMembershipRole",
     "IdentityLifecycleToken",
     "IdentitySession",
+    "InboxEvent",
     "GmailCredential",
     "GmailOAuthState",
     "Organization",
