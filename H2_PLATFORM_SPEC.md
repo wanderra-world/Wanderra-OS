@@ -3,7 +3,7 @@
 Canonical implementation decomposition for Atlas Phase 2 Stage H2.
 
 **Owner:** Atlas Core  
-**Status:** Accepted; H2-01 implementation authorized
+**Status:** Accepted; H2-01 accepted, H2-02 implementation under review
 **Stage:** H2 — Phase 1 migration foundation  
 **Architecture entry point:** [README_ARCHITECTURE.md](README_ARCHITECTURE.md)  
 **Engineering gate:** [IMPLEMENTATION_GUIDE.md](IMPLEMENTATION_GUIDE.md#h2)  
@@ -302,7 +302,7 @@ and merged.
 
 ### H2-01: Connection registry and lifecycle foundation
 
-**Status:** Implemented; pull-request acceptance pending.
+**Status:** Accepted and merged.
 
 **Objective**
 
@@ -369,6 +369,8 @@ credential reads, OAuth callbacks, APIs, or provider behavior.
 
 ### H2-02: Managed connection credentials and migration inventory
 
+**Status:** Implemented; pull-request acceptance pending.
+
 **Objective**
 
 Create the credential custody boundary and prove that existing Gmail, Calendar, and
@@ -414,6 +416,15 @@ Drive credentials can be migrated safely without changing active reads.
 - Production-like migration inventory and checksum rehearsal.
 - PostgreSQL RLS, rollback, and concurrent migration tests.
 - No-secret architecture fitness scans.
+
+**Acceptance evidence**
+
+- [H2-02 implementation evidence](H2_02_ACCEPTANCE_EVIDENCE.md)
+- [Credential contract unit tests](tests/connection_credentials/test_h2_02_contracts.py)
+- [PostgreSQL, RLS, migration, rollback, and replay tests](tests/connection_credentials/test_h2_02_postgres.py)
+- [H2-02 slice-isolation architecture fitness tests](tests/architecture/test_h2_02_credential_scope.py)
+- [Additive H2-02 migration](alembic/versions/0015_add_connection_credentials.py)
+- [Credential migration and recovery runbook](H2_02_CREDENTIAL_OPERATIONS.md)
 
 ### H2-03: OAuth transaction and incremental authorization boundary
 

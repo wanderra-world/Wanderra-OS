@@ -4,6 +4,10 @@ Import every model here to make it discoverable by Alembic migrations.
 """
 
 from app.authorization.models import Permission, RolePermission
+from app.connection_credentials.models import (
+    ConnectionCredential,
+    CredentialMigrationInventory,
+)
 from app.connections.models import (
     Connection,
     ConnectionCapabilityGrant,
@@ -56,10 +60,12 @@ __all__ = [
     "Cell",
     "CommandIdempotency",
     "Connection",
+    "ConnectionCredential",
     "ConnectionCapabilityGrant",
     "ConnectionKind",
     "ConnectionKindCapability",
     "ConsumerSequence",
+    "CredentialMigrationInventory",
     "Conversation",
     "ConversationMessage",
     "DriveCredential",
