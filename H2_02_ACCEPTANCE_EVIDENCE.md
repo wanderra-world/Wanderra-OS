@@ -2,7 +2,7 @@
 
 **Owner:** Atlas Core
 **Slice:** H2-02 — Managed connection credentials and migration inventory
-**Status:** Implemented and locally verified; pull-request gate pending
+**Status:** Implemented and verified; pull-request acceptance pending
 **Date:** 31 July 2026
 **Governing specification:** [H2_PLATFORM_SPEC.md](H2_PLATFORM_SPEC.md#h2-02-managed-connection-credentials-and-migration-inventory)
 
@@ -157,14 +157,15 @@ and does not affect credential custody, runtime behavior, or the required gate.
 
 ## Pull-request gate
 
-Dedicated pull request: pending creation.
+Dedicated pull request:
+[PR #15 — Implement H2-02 managed connection credentials](https://github.com/wanderra-world/Wanderra-OS/pull/15)
 
-The protected checks required before acceptance are:
+The protected workflow completed successfully for implementation commit `c65f4b3`:
 
-- `H0 Required / Architecture Fitness`;
-- `H0 Required / Regression Tests`;
-- `H0 Required / Docker Build and Smoke`;
-- `H0 Required / H0 Required Gate`.
+- `H0 Required / Architecture Fitness` — passed;
+- `H0 Required / Regression Tests` — passed;
+- `H0 Required / Docker Build and Smoke` — passed;
+- `H0 Required / H0 Required Gate` — passed.
 
-H2-02 remains pending acceptance until all checks pass and the pull request is merged.
-No H2-03 work has started.
+GitHub reports four successful checks and `Ready to merge`. H2-02 remains pending
+formal acceptance and merge. No H2-03 work has started.
