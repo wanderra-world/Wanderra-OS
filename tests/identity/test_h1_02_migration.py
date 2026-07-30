@@ -150,8 +150,8 @@ async def _insert_phase_one_dependencies(
 async def test_h1_02_empty_database_upgrade_is_repeatable_and_reversible() -> None:
     admin, database_name = await _create_test_database()
     try:
-        _require_migration(database_name, "head")
-        _require_migration(database_name, "head")
+        _require_migration(database_name, H1_02_REVISION)
+        _require_migration(database_name, H1_02_REVISION)
 
         database = await asyncpg.connect(_database_url(database_name))
         try:
@@ -218,8 +218,8 @@ async def test_h1_02_preserves_phase_one_ids_and_foreign_keys() -> None:
         finally:
             await database.close()
 
-        _require_migration(database_name, "head")
-        _require_migration(database_name, "head")
+        _require_migration(database_name, H1_02_REVISION)
+        _require_migration(database_name, H1_02_REVISION)
         database = await asyncpg.connect(_database_url(database_name))
         try:
             assert await database.fetchval(
@@ -448,7 +448,7 @@ async def test_h1_02_upgrade_failure_rolls_back_schema_audit_and_outbox() -> Non
         finally:
             await database.close()
 
-        failed_upgrade = _migration(database_name, "head")
+        failed_upgrade = _migration(database_name, H1_02_REVISION)
         assert failed_upgrade.returncode != 0
 
         database = await asyncpg.connect(_database_url(database_name))
@@ -490,8 +490,8 @@ async def test_h1_02_upgrade_failure_rolls_back_schema_audit_and_outbox() -> Non
         finally:
             await database.close()
 
-        _require_migration(database_name, "head")
-        _require_migration(database_name, "head")
+        _require_migration(database_name, H1_02_REVISION)
+        _require_migration(database_name, H1_02_REVISION)
         database = await asyncpg.connect(_database_url(database_name))
         try:
             assert await database.fetchval(

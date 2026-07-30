@@ -3,6 +3,11 @@
 Import every model here to make it discoverable by Alembic migrations.
 """
 
+from app.identity.lifecycle_models import (
+    IdentityLifecycleToken,
+    IdentitySession,
+    SecurityNotification,
+)
 from app.identity.models import ExternalIdentityLink, User
 from app.models.calendar import CalendarCredential, CalendarOAuthState
 from app.models.drive import DriveCredential, DriveFileMetadata, DriveOAuthState
@@ -28,12 +33,15 @@ __all__ = [
     "DriveFileMetadata",
     "DriveOAuthState",
     "ExternalIdentityLink",
+    "IdentityLifecycleToken",
+    "IdentitySession",
     "GmailCredential",
     "GmailOAuthState",
     "Organization",
     "OrganizationMembership",
     "OutboxEvent",
     "Project",
+    "SecurityNotification",
     "User",
     "Workspace",
 ]
