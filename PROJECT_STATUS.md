@@ -13,6 +13,10 @@ working Google integrations for Gmail, Calendar, and Drive.
 The local Docker deployment is operational. Database migrations are at
 `0013_h1_recovery_closure`. Formal H0 Exit and Formal H1 Exit are accepted. H1-01
 through H1-10 are merged, and H2 has not started.
+
+The H2 platform slice decomposition is proposed for architecture review. It contains no
+production code or migration and does not authorize H2 implementation before
+acceptance.
 Gmail/Calendar/Drive authorization has been completed for the current Wanderra user,
 and live end-to-end verification has succeeded for email, calendar events, and the
 full Drive file lifecycle.
