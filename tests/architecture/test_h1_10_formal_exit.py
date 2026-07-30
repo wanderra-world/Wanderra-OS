@@ -9,10 +9,15 @@ EVIDENCE = ROOT / "H1_EXIT_EVIDENCE.md"
 MIGRATIONS = ROOT / "alembic/versions"
 
 
-def test_h1_10_uses_the_accepted_h1_schema_without_new_migration() -> None:
-    revisions = sorted(MIGRATIONS.glob("*.py"))
-    assert revisions[-1].name == "0013_add_recovery_closure.py"
-    assert len(revisions) == 13
+def test_h1_10_schema_remains_the_accepted_h2_predecessor() -> None:
+    accepted_h1 = MIGRATIONS / "0013_add_recovery_closure.py"
+    first_h2 = MIGRATIONS / "0014_add_connection_foundation.py"
+    assert accepted_h1.exists()
+    if first_h2.exists():
+        assert (
+            'down_revision: str | Sequence[str] | None = '
+            '"0013_h1_recovery_closure"'
+        ) in first_h2.read_text(encoding="utf-8")
 
 
 def test_h1_10_evidence_covers_every_formal_exit_criterion() -> None:

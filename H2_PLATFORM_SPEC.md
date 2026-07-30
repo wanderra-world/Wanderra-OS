@@ -3,7 +3,7 @@
 Canonical implementation decomposition for Atlas Phase 2 Stage H2.
 
 **Owner:** Atlas Core  
-**Status:** Proposed for architecture review  
+**Status:** Accepted; H2-01 implementation authorized
 **Stage:** H2 — Phase 1 migration foundation  
 **Architecture entry point:** [README_ARCHITECTURE.md](README_ARCHITECTURE.md)  
 **Engineering gate:** [IMPLEMENTATION_GUIDE.md](IMPLEMENTATION_GUIDE.md#h2)  
@@ -302,6 +302,8 @@ and merged.
 
 ### H2-01: Connection registry and lifecycle foundation
 
+**Status:** Implemented; pull-request acceptance pending.
+
 **Objective**
 
 Introduce the canonical workspace-owned connection boundary without changing Phase 1
@@ -356,6 +358,14 @@ credential reads, OAuth callbacks, APIs, or provider behavior.
   tests.
 - Architecture fitness tests proving no provider SDK import or H2-02 concept.
 - Complete regression, Docker, smoke, and required GitHub gate results.
+
+**Acceptance evidence**
+
+- [H2-01 implementation evidence](H2_01_ACCEPTANCE_EVIDENCE.md)
+- [Connection lifecycle unit tests](tests/connections/test_h2_01_contracts.py)
+- [PostgreSQL, RLS, migration, rollback, and concurrency tests](tests/connections/test_h2_01_postgres.py)
+- [H2-01 slice-isolation architecture fitness tests](tests/architecture/test_h2_01_connection_scope.py)
+- [Additive H2-01 migration](alembic/versions/0014_add_connection_foundation.py)
 
 ### H2-02: Managed connection credentials and migration inventory
 

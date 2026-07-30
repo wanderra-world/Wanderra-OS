@@ -11,12 +11,9 @@ FastAPI service backed by PostgreSQL, with OpenAI-powered chat and durable memor
 working Google integrations for Gmail, Calendar, and Drive.
 
 The local Docker deployment is operational. Database migrations are at
-`0013_h1_recovery_closure`. Formal H0 Exit and Formal H1 Exit are accepted. H1-01
-through H1-10 are merged, and H2 has not started.
-
-The H2 platform slice decomposition is proposed for architecture review. It contains no
-production code or migration and does not authorize H2 implementation before
-acceptance.
+`0014_h2_connections`. Formal H0 Exit and Formal H1 Exit are accepted. H1-01 through
+H1-10 are merged. The H2 platform specification is accepted, and H2-01 is implemented
+on a dedicated branch pending pull-request acceptance.
 Gmail/Calendar/Drive authorization has been completed for the current Wanderra user,
 and live end-to-end verification has succeeded for email, calendar events, and the
 full Drive file lifecycle.
@@ -174,7 +171,26 @@ full Drive file lifecycle.
   ADRs, roadmap, production schema, or previously accepted slice contracts.
 - Pull request #11 is merged, all mandatory checks passed, and Formal H1 Exit is
   accepted.
-- H2 has not started.
+- At Formal H1 Exit, H2 had not started; H2-01 began only after H1 acceptance.
+
+### Atlas Core H2-01
+
+- Stable provider registry metadata without provider behavior in the business layer.
+- Canonical workspace-owned connections bound to exact organization, workspace, and
+  placement-cell coordinates.
+- Pending, active, degraded, reauthorization-required, revoked, and closed lifecycle
+  with deterministic transition rules and optimistic concurrency.
+- Versioned provider-neutral connection kinds and capability grants.
+- Non-secret granted-scope metadata.
+- H1 `manage_workspace` authorization for creation and material lifecycle changes.
+- Context-bound repository and forced PostgreSQL RLS for all tenant-owned H2-01 tables.
+- Composite tenant placement keys, workspace-scoped provider-account uniqueness, and
+  immutable connection identity.
+- Atomic immutable audit and transactional outbox evidence.
+- Additive migration with empty/populated/repeated upgrade, safe rollback, and guarded
+  forward-fix evidence.
+- No credential, OAuth, mirror, provider client, route, API, backfill, cutover, or
+  H2-02 functionality.
 
 ### Atlas and memory
 
@@ -277,6 +293,12 @@ The Docker Compose stack contains:
 | `audit_events` | Immutable workspace-scoped accountability records |
 | `outbox_events` | Workspace-scoped transactional domain-event records |
 | `external_identity_links` | Canonical login identities keyed by issuer and subject |
+| `provider_registry` | Versioned provider identifiers and family metadata |
+| `connection_kinds` | Versioned provider-neutral connection-kind definitions |
+| `provider_capabilities` | Versioned capability identifiers |
+| `connection_kind_capabilities` | Capabilities allowed for each connection kind |
+| `connections` | Canonical workspace-owned provider account connections |
+| `connection_capability_grants` | Workspace-owned versioned connection capability grants |
 
 `drive_file_metadata` stores the file name, MIME type, size, modification time, view
 link, MD5 checksum, parent IDs, the normalized provider payload, and synchronization
@@ -335,7 +357,7 @@ Interactive OpenAPI documentation is available at `/docs`.
 
 ## Test coverage
 
-The current PostgreSQL-backed automated suite contains 329 passing tests:
+The current PostgreSQL-backed automated suite contains 350 passing tests:
 
 - Health and Atlas chat API behavior.
 - Gmail MIME construction and message parsing.
@@ -381,6 +403,11 @@ The current PostgreSQL-backed automated suite contains 329 passing tests:
 - H1-10 synthetic two-tenant isolation, authorization, revocation, execution-context
   enforcement, messaging idempotency, encrypted restore, closure, deletion, and
   Formal H1 Exit architecture evidence.
+- H2-01 connection lifecycle, registry validation, provider-account uniqueness,
+  effective capabilities, execution-context enforcement, H1 authorization, composite
+  placement integrity, forced RLS, cross-workspace denial, optimistic concurrency,
+  atomic audit/outbox evidence, migration rehearsal, guarded rollback, and strict
+  H2-02+ slice isolation.
 
 Live integration verification has additionally covered:
 
@@ -397,7 +424,9 @@ The test run currently emits one non-blocking Starlette/httpx deprecation warnin
 - `X-User-ID` remains trusted directly by Phase 1 routes; the H1-03 session lifecycle
   is intentionally not wired into production request authentication yet.
 - H1 runtime paths remain intentionally unused by Phase 1 requests. Provider migration
-  and Phase 1 cutover belong to H2.
+  and Phase 1 cutover remain in later approved H2 slices.
+- H2-01 connection records are intentionally not wired to Phase 1 credentials,
+  callbacks, APIs, or provider routes; H2-02 through H2-09 own that staged migration.
 - The shared Google callback remains under the Gmail URL for compatibility with the
   currently registered OAuth client. A neutral callback path would be clearer.
 - The Drive integration uses the broad `drive` scope. Production deployments should
