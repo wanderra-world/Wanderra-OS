@@ -2,7 +2,7 @@
 
 **Owner:** Atlas Core
 **Slice:** H2-01 — Connection registry and lifecycle foundation
-**Status:** Implemented; pull-request acceptance pending
+**Status:** Implemented and verified; pull-request review pending
 **Date:** 30 July 2026
 **Governing specification:** [H2_PLATFORM_SPEC.md](H2_PLATFORM_SPEC.md#h2-01-connection-registry-and-lifecycle-foundation)
 
@@ -129,12 +129,16 @@ compatibility-cleanup gate; it does not weaken or bypass the protected CI check.
 
 ## Pull-request gate
 
-The dedicated H2-01 pull request must pass:
+Dedicated pull request:
+[PR #14 — Implement H2-01 connection foundation](https://github.com/wanderra-world/Wanderra-OS/pull/14)
+
+The protected workflow completed successfully for implementation commit `2367804`:
 
 - `H0 Required / Architecture Fitness`;
 - `H0 Required / Regression Tests`;
 - `H0 Required / Docker Build and Smoke`;
 - `H0 Required / H0 Required Gate`.
 
-The pull-request URL and GitHub results are added to this evidence after the branch is
-pushed and required checks complete.
+GitHub reported 4/4 successful checks and `Ready to merge`. The documentation-only
+evidence closeout remains subject to the same required gate before H2-01 completion is
+declared.
