@@ -83,8 +83,8 @@ architecture fitness rules.
 |---|---|---|---|
 | H1-01 | Organization and workspace schema expansion | Accepted; merged in PR #1 | Additive organization, ownership, workspace, placement, audit, and outbox foundation |
 | H1-02 | Canonical identity and external identity schema | Accepted; merged in PR #3 | Global users and issuer/subject identity links with safe migration |
-| H1-03 | Revocable session and identity lifecycle | Implemented; pending pull-request review | Server-side sessions, invitations, recovery, strong-authentication state, and revocation |
-| H1-04 | Workspace memberships and fixed roles | Proposed | Workspace access lifecycle and versioned fixed-role assignments |
+| H1-03 | Revocable session and identity lifecycle | Accepted; merged in PR #4 | Server-side sessions, invitations, recovery, strong-authentication state, and revocation |
+| H1-04 | Workspace memberships and fixed roles | Implemented; pending pull-request review | Workspace access lifecycle and versioned fixed-role assignments |
 | H1-05 | Deterministic authorization boundary | Proposed | Deny-first policy decisions with reason codes and obligations |
 | H1-06 | Request, actor, tenant, and repository context | Proposed | Typed execution context, transaction-local PostgreSQL context, runtime roles, and repository enforcement |
 | H1-07 | Managed envelope encryption foundation | Proposed | KMS-backed per-record encryption and safe Phase 1 credential migration tooling |
@@ -227,6 +227,8 @@ access safely.
 
 ### H1-04: Workspace memberships and fixed roles
 
+**Status:** Implemented; pending pull-request review.
+
 **Objective**
 
 Connect canonical identities to workspaces through explicit lifecycle-controlled
@@ -264,6 +266,13 @@ memberships and versioned fixed role templates.
 - Fixed-role definitions are versioned and deterministic.
 - Organization administrators have no implicit content access.
 - Cross-workspace role assignment and composite-key attacks fail.
+
+**Acceptance evidence**
+
+- [Membership model and fixed-role contract tests](tests/memberships/test_h1_04_models.py)
+- [PostgreSQL, RLS, rollback, lifecycle, and concurrency tests](tests/memberships/test_h1_04_postgres.py)
+- [H1-04 membership-only architecture fitness tests](tests/architecture/test_h1_04_membership_scope.py)
+- [Additive H1-04 migration](alembic/versions/0009_add_workspace_memberships.py)
 
 ### H1-05: Deterministic authorization boundary
 

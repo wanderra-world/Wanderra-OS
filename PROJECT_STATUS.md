@@ -11,9 +11,9 @@ FastAPI service backed by PostgreSQL, with OpenAI-powered chat and durable memor
 working Google integrations for Gmail, Calendar, and Drive.
 
 The local Docker deployment is operational. Database migrations are at
-`0008_h1_identity_lifecycle`. Formal H0 Exit, H1-01, and H1-02 are accepted. H1-03
-adds the revocable server-side human identity lifecycle without changing Phase 1
-request authentication behavior. Gmail/Calendar/Drive authorization has been
+`0009_h1_workspace_memberships`. Formal H0 Exit and H1-01 through H1-03 are accepted.
+H1-04 adds canonical workspace membership lifecycle and ownership invariants without
+changing Phase 1 request behavior. Gmail/Calendar/Drive authorization has been
 completed for the current Wanderra user, and live end-to-end verification has
 succeeded for email, calendar events, and the full Drive file lifecycle.
 
@@ -58,6 +58,21 @@ succeeded for email, calendar events, and the full Drive file lifecycle.
 - Durable security notifications plus transactional audit and outbox records.
 - Secure host-only cookie policy and constant-time double-submit CSRF validation.
 - Additive forced-RLS schema with guarded downgrade and no Phase 1 runtime wiring.
+
+### Atlas Core H1-04
+
+- Canonical membership records linking a user, organization, and workspace through
+  composite tenant keys.
+- Deterministic, versioned organization and workspace role classifications without
+  capability mappings or policy evaluation.
+- Invited, active, suspended, and revoked membership lifecycle.
+- Single-use H1-03 invitation-token acceptance linked to the resulting membership.
+- Immediate role and lifecycle version changes with transactional audit/outbox events.
+- Deferred database invariants preserving an active workspace owner and personal
+  organization consistency.
+- Forced workspace RLS and repository methods that retain explicit workspace scope.
+- Guarded rollback that refuses to discard post-migration membership state.
+- No API, authorization engine, provider, agent, search, or memory changes.
 
 ### Atlas and memory
 
@@ -218,7 +233,7 @@ Interactive OpenAPI documentation is available at `/docs`.
 
 ## Test coverage
 
-The current automated suite contains 263 passing tests:
+The current automated suite contains 273 passing tests:
 
 - Health and Atlas chat API behavior.
 - Gmail MIME construction and message parsing.
@@ -239,6 +254,10 @@ The current automated suite contains 263 passing tests:
 - H1-03 secret hashing, secure cookie and CSRF contracts, session rotation and
   revocation, invitation/recovery denial and replay rules, concurrent single use,
   atomic recovery, identity-link review, forced RLS, and guarded rollback.
+- H1-04 membership modeling, fixed-role determinism, invitation acceptance,
+  lifecycle transitions, repository scoping, composite-key attacks, forced RLS,
+  migration backfill, rollback refusal, personal-workspace consistency, and
+  concurrent last-owner preservation.
 
 Live integration verification has additionally covered:
 
@@ -254,7 +273,7 @@ The test run currently emits one non-blocking Starlette/httpx deprecation warnin
 
 - `X-User-ID` remains trusted directly by Phase 1 routes; the H1-03 session lifecycle
   is intentionally not wired into production request authentication yet.
-- H1-01 through H1-03 schema paths are intentionally unused by Phase 1 requests.
+- H1-01 through H1-04 schema paths are intentionally unused by Phase 1 requests.
   Request context, memberships, authorization, commands, repositories, and provider
   migration remain later H1/H2 slices.
 - The shared Google callback remains under the Gmail URL for compatibility with the

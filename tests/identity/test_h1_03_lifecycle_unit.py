@@ -8,7 +8,6 @@ import pytest
 from sqlalchemy import CheckConstraint
 
 import app.models  # noqa: F401
-from app.database.base import Base
 from app.identity.lifecycle import (
     IdentityLifecycleError,
     InvalidSessionError,
@@ -88,4 +87,9 @@ def test_h1_03_does_not_introduce_h1_04_authorization_tables() -> None:
         "roles",
         "workspace_memberships",
     }
-    assert prohibited.isdisjoint(Base.metadata.tables)
+    h1_03_tables = {
+        IdentityLifecycleToken.__tablename__,
+        IdentitySession.__tablename__,
+        SecurityNotification.__tablename__,
+    }
+    assert prohibited.isdisjoint(h1_03_tables)

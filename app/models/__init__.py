@@ -9,6 +9,7 @@ from app.identity.lifecycle_models import (
     SecurityNotification,
 )
 from app.identity.models import ExternalIdentityLink, User
+from app.memberships.models import FixedMembershipRole, WorkspaceMembership
 from app.models.calendar import CalendarCredential, CalendarOAuthState
 from app.models.drive import DriveCredential, DriveFileMetadata, DriveOAuthState
 from app.models.gmail import GmailCredential, GmailOAuthState
@@ -33,6 +34,7 @@ __all__ = [
     "DriveFileMetadata",
     "DriveOAuthState",
     "ExternalIdentityLink",
+    "FixedMembershipRole",
     "IdentityLifecycleToken",
     "IdentitySession",
     "GmailCredential",
@@ -44,4 +46,5 @@ __all__ = [
     "SecurityNotification",
     "User",
     "Workspace",
+    "WorkspaceMembership",
 ]
