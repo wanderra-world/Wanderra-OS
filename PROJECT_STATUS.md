@@ -11,9 +11,10 @@ FastAPI service backed by PostgreSQL, with OpenAI-powered chat and durable memor
 working Google integrations for Gmail, Calendar, and Drive.
 
 The local Docker deployment is operational. Database migrations are at
-`0015_h2_credentials`. Formal H0 Exit and Formal H1 Exit are accepted. H1-01 through
-H1-10 and H2-01 are merged. The H2 platform specification is accepted, and H2-02 is
-implemented on a dedicated branch pending pull-request acceptance.
+`0016_h2_oauth_transactions`. Formal H0 Exit and Formal H1 Exit are accepted. H1-01
+through H1-10 and H2-01 through H2-02 are merged. The H2 platform specification is
+accepted, and H2-03 is implemented on a dedicated branch pending pull-request
+acceptance.
 Gmail/Calendar/Drive authorization has been completed for the current Wanderra user,
 and live end-to-end verification has succeeded for email, calendar events, and the
 full Drive file lifecycle.
@@ -212,6 +213,29 @@ full Drive file lifecycle.
   while leaving legacy ciphertext and `envelope_cutover = false`.
 - No OAuth transaction, callback routing, provider capability, adapter execution,
   mirror, API, cutover, or H2-03 functionality is present.
+
+### Atlas Core H2-03
+
+- Canonical, provider-neutral, workspace-owned, one-time OAuth transaction metadata.
+- Raw state and PKCE verifier material exists only inside an H1 managed encrypted
+  envelope; database metadata, representations, audit, and outbox records are
+  secret-free.
+- State is workspace-routable without legacy provider-table probing and is persisted
+  only as a SHA-256 digest.
+- Redirect, issuer, provider, purpose, actor, session, membership, authorization
+  decision, expiry, and connection bindings fail closed.
+- Incremental scope supersets are accepted when all required scopes are present and
+  every returned scope is allowed.
+- PostgreSQL row locks and terminal-state immutability make callback consumption
+  single-use and concurrency safe.
+- Provider exchange and H2-02 custody are narrow asynchronous ports; no provider SDK
+  or provider business operation enters the core boundary.
+- Forced PostgreSQL RLS, closed-workspace write protection, immutable binding
+  metadata, additive migration, and guarded rollback protect transaction evidence.
+- Phase 1 Gmail, Calendar, Drive, their registered callback URL, and legacy state
+  tables remain unchanged.
+- No provider mirror, external reference, capability execution, adapter cutover,
+  worker, API, or H2-04 functionality is present.
 
 ### Atlas and memory
 
