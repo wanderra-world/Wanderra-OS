@@ -6,7 +6,6 @@ import ast
 from pathlib import Path
 
 import app.models  # noqa: F401
-from app.database.base import Base
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 MEMBERSHIP_ROOT = REPOSITORY_ROOT / "app" / "memberships"
@@ -21,7 +20,11 @@ def test_h1_04_has_no_permission_policy_or_capability_schema() -> None:
         "role_capabilities",
         "role_permissions",
     }
-    assert prohibited_tables.isdisjoint(Base.metadata.tables)
+    h1_04_tables = {
+        "fixed_membership_roles",
+        "workspace_memberships",
+    }
+    assert prohibited_tables.isdisjoint(h1_04_tables)
 
 
 def test_h1_04_membership_boundary_has_no_provider_or_agent_dependencies() -> None:

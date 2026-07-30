@@ -11,11 +11,11 @@ FastAPI service backed by PostgreSQL, with OpenAI-powered chat and durable memor
 working Google integrations for Gmail, Calendar, and Drive.
 
 The local Docker deployment is operational. Database migrations are at
-`0009_h1_workspace_memberships`. Formal H0 Exit and H1-01 through H1-03 are accepted.
-H1-04 adds canonical workspace membership lifecycle and ownership invariants without
-changing Phase 1 request behavior. Gmail/Calendar/Drive authorization has been
-completed for the current Wanderra user, and live end-to-end verification has
-succeeded for email, calendar events, and the full Drive file lifecycle.
+`0010_h1_authorization`. Formal H0 Exit and H1-01 through H1-04 are accepted. H1-05
+adds the deterministic fixed-role authorization boundary without changing Phase 1
+request behavior. Gmail/Calendar/Drive authorization has been completed for the
+current Wanderra user, and live end-to-end verification has succeeded for email,
+calendar events, and the full Drive file lifecycle.
 
 ## Implemented capabilities
 
@@ -73,6 +73,20 @@ succeeded for email, calendar events, and the full Drive file lifecycle.
 - Forced workspace RLS and repository methods that retain explicit workspace scope.
 - Guarded rollback that refuses to discard post-migration membership state.
 - No API, authorization engine, provider, agent, search, or memory changes.
+
+### Atlas Core H1-05
+
+- The H1-04 fixed system-role table is reused as the canonical Role model.
+- H1-04 workspace memberships remain the canonical role assignments.
+- Versioned canonical permission definitions and explicit fixed-role allow/deny rules.
+- Uncached workspace-scoped permission lookup with explicit-deny precedence.
+- Deny-first checks for workspace mismatch and invalid actor, session, or membership.
+- Stable versioned authorization decisions and reason codes.
+- Redacted transactional audit and outbox records for allow and deny decisions.
+- Forced-RLS membership joins that cannot expose cross-workspace assignments.
+- Guarded rollback that refuses to remove mutated catalogs or recorded decisions.
+- No custom roles, inheritance, ABAC, APIs, provider access, agents, workflows,
+  notifications, search, memory, or H1-06 context plumbing.
 
 ### Atlas and memory
 
@@ -233,7 +247,7 @@ Interactive OpenAPI documentation is available at `/docs`.
 
 ## Test coverage
 
-The current automated suite contains 273 passing tests:
+The current automated suite contains 283 passing tests:
 
 - Health and Atlas chat API behavior.
 - Gmail MIME construction and message parsing.
@@ -258,6 +272,10 @@ The current automated suite contains 273 passing tests:
   lifecycle transitions, repository scoping, composite-key attacks, forced RLS,
   migration backfill, rollback refusal, personal-workspace consistency, and
   concurrent last-owner preservation.
+- H1-05 canonical roles and permissions, explicit allow/deny rules, deterministic
+  decisions, unknown-permission denial, workspace mismatch denial, immediate
+  revocation, forced-RLS permission joins, redacted audit/outbox evidence, migration
+  rehearsal, and guarded rollback.
 
 Live integration verification has additionally covered:
 
@@ -273,7 +291,7 @@ The test run currently emits one non-blocking Starlette/httpx deprecation warnin
 
 - `X-User-ID` remains trusted directly by Phase 1 routes; the H1-03 session lifecycle
   is intentionally not wired into production request authentication yet.
-- H1-01 through H1-04 schema paths are intentionally unused by Phase 1 requests.
+- H1-01 through H1-05 schema paths are intentionally unused by Phase 1 requests.
   Request context, memberships, authorization, commands, repositories, and provider
   migration remain later H1/H2 slices.
 - The shared Google callback remains under the Gmail URL for compatibility with the

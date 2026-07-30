@@ -84,8 +84,8 @@ architecture fitness rules.
 | H1-01 | Organization and workspace schema expansion | Accepted; merged in PR #1 | Additive organization, ownership, workspace, placement, audit, and outbox foundation |
 | H1-02 | Canonical identity and external identity schema | Accepted; merged in PR #3 | Global users and issuer/subject identity links with safe migration |
 | H1-03 | Revocable session and identity lifecycle | Accepted; merged in PR #4 | Server-side sessions, invitations, recovery, strong-authentication state, and revocation |
-| H1-04 | Workspace memberships and fixed roles | Implemented; pending pull-request review | Workspace access lifecycle and versioned fixed-role assignments |
-| H1-05 | Deterministic authorization boundary | Proposed | Deny-first policy decisions with reason codes and obligations |
+| H1-04 | Workspace memberships and fixed roles | Accepted; merged in PR #5 | Workspace access lifecycle and versioned fixed-role assignments |
+| H1-05 | Deterministic authorization boundary | Implemented; pending pull-request review | Deny-first fixed-role decisions with reason codes |
 | H1-06 | Request, actor, tenant, and repository context | Proposed | Typed execution context, transaction-local PostgreSQL context, runtime roles, and repository enforcement |
 | H1-07 | Managed envelope encryption foundation | Proposed | KMS-backed per-record encryption and safe Phase 1 credential migration tooling |
 | H1-08 | Immutable audit and transactional messaging | Proposed | Production audit writer, outbox/inbox, idempotency, sequencing, and tamper-evidence baseline |
@@ -276,6 +276,8 @@ memberships and versioned fixed role templates.
 
 ### H1-05: Deterministic authorization boundary
 
+**Status:** Implemented; pending pull-request review.
+
 **Objective**
 
 Provide one explainable, deny-first authorization service for every Atlas Core command
@@ -312,6 +314,13 @@ and query.
 - Revocation is visible without positive authorization caching across transactions.
 - Decisions are deterministic for identical versioned inputs.
 - Every decision can be safely audited without sensitive payload leakage.
+
+**Acceptance evidence**
+
+- [Authorization model and decision-contract tests](tests/authorization/test_h1_05_models.py)
+- [PostgreSQL, RLS, rollback, revocation, and decision-matrix tests](tests/authorization/test_h1_05_postgres.py)
+- [H1-05 slice-isolation architecture fitness tests](tests/architecture/test_h1_05_authorization_scope.py)
+- [Additive H1-05 permission migration](alembic/versions/0010_add_fixed_role_permissions.py)
 
 ### H1-06: Request, actor, tenant, and repository context
 
