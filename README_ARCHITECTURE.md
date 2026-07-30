@@ -4,7 +4,7 @@ The single entry point to the Atlas architecture documentation.
 
 **Owner:** Atlas Architecture Council  
 **Current phase:** Phase 2 — Atlas Core  
-**Status:** Formal H0 Exit accepted; H1-01 and H1-02 accepted; H1-03 pending review
+**Status:** Formal H0 Exit accepted; H1-01 through H1-03 accepted; H1-04 pending review
 **Last updated:** July 30, 2026
 
 ## Core principle
@@ -57,9 +57,9 @@ H1-01 has implemented the additive organization and workspace schema expansion b
 unused runtime paths. Current implementation details are recorded in
 [PROJECT_STATUS.md](PROJECT_STATUS.md).
 
-The H1 decomposition is accepted. H1-02 is merged. H1-03 implements the revocable
-server-side identity lifecycle on a review branch without changing Phase 1 request
-authentication behavior.
+The H1 decomposition is accepted. H1-03 is merged. H1-04 implements workspace
+membership lifecycle and ownership invariants on a review branch without changing
+Phase 1 request behavior.
 
 ## Recommended reading order
 
@@ -424,5 +424,5 @@ enforcement is owned by `IMPLEMENTATION_GUIDE.md`.
 
 ## Next action
 
-Review and accept the H1-03 pull request. H1-04 is not authorized and no subsequent H1
+Review and accept the H1-04 pull request. H1-05 is not authorized and no subsequent H1
 production slice has been started.

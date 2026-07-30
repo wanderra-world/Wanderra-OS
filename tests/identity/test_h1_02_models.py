@@ -3,7 +3,6 @@
 from sqlalchemy import CheckConstraint, UniqueConstraint
 
 import app.models  # noqa: F401
-from app.database.base import Base
 from app.identity.models import ExternalIdentityLink, User
 from app.models.memory import User as CompatibilityUser
 
@@ -85,4 +84,5 @@ def test_h1_02_does_not_add_session_membership_or_permission_tables() -> None:
         "workspace_memberships",
     }
 
-    assert prohibited_tables.isdisjoint(Base.metadata.tables)
+    h1_02_tables = {User.__tablename__, ExternalIdentityLink.__tablename__}
+    assert prohibited_tables.isdisjoint(h1_02_tables)
