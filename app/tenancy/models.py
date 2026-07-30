@@ -116,6 +116,12 @@ class Workspace(Base):
             "organization_id",
             name="uq_workspaces_id_organization",
         ),
+        UniqueConstraint(
+            "workspace_id",
+            "organization_id",
+            "cell_id",
+            name="uq_workspaces_id_organization_cell",
+        ),
         Index("ix_workspaces_cell_id", "cell_id"),
     )
 

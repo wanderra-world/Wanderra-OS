@@ -4,7 +4,8 @@ The single entry point to the Atlas architecture documentation.
 
 **Owner:** Atlas Architecture Council  
 **Current phase:** Phase 2 — Atlas Core  
-**Status:** Formal H0 Exit accepted; Formal H1 Exit accepted; H2 specification proposed
+**Status:** Formal H0 Exit accepted; Formal H1 Exit accepted; H2 specification accepted;
+H2-01 implemented pending pull-request acceptance
 **Last updated:** July 30, 2026
 
 ## Core principle
@@ -42,7 +43,7 @@ The Google Workspace Foundation is implemented and validated end to end:
 
 See [PROJECT_STATUS.md](PROJECT_STATUS.md) for the detailed implementation status.
 
-### Phase 2 — H1 accepted; H2 specification review
+### Phase 2 — H1 accepted; H2-01 implementation review
 
 The architecture phase, Formal H0 Exit, and Formal H1 Exit are complete. H1-01
 through H1-10 are accepted and merged.
@@ -60,9 +61,11 @@ vertical-slice evidence. See
 [H1_FORMAL_EXIT_REPORT.md](H1_FORMAL_EXIT_REPORT.md) and
 [PROJECT_STATUS.md](PROJECT_STATUS.md).
 
-The proposed H2 production decomposition is defined in
-[H2_PLATFORM_SPEC.md](H2_PLATFORM_SPEC.md). It introduces no implementation
-authorization until the specification is reviewed and accepted.
+The accepted H2 production decomposition is defined in
+[H2_PLATFORM_SPEC.md](H2_PLATFORM_SPEC.md). H2-01 is implemented on its dedicated
+branch with evidence in
+[H2_01_ACCEPTANCE_EVIDENCE.md](H2_01_ACCEPTANCE_EVIDENCE.md). H2-02 and later slices
+remain unauthorized and unimplemented.
 
 ## Recommended reading order
 
@@ -260,15 +263,15 @@ authorization and predecessor acceptance.
 
 ### 13. [H2_PLATFORM_SPEC.md](H2_PLATFORM_SPEC.md)
 
-Defines the proposed H2 Phase 1 migration decomposition:
+Defines the accepted H2 Phase 1 migration decomposition:
 
 - canonical connections, managed credentials, and OAuth transactions;
 - provider mirrors and neutral capability contracts;
 - reversible Gmail, Calendar, and Drive adapter migration;
 - cutover stabilization and Formal H2 Exit.
 
-This specification is proposed for review. No H2 production slice is authorized until
-it is accepted, and each accepted slice still requires explicit authorization.
+This specification is accepted. H2-01 has explicit implementation authorization;
+every later slice still requires predecessor acceptance and explicit authorization.
 
 ## Architecture document hierarchy
 
@@ -440,9 +443,10 @@ enforcement is owned by `IMPLEMENTATION_GUIDE.md`.
 | [H0_FOUNDATION_SPEC.md](H0_FOUNDATION_SPEC.md) | Normative P0 contracts and H0 evidence |
 | [H1_PLATFORM_SPEC.md](H1_PLATFORM_SPEC.md) | Accepted H1 slice decomposition |
 | [H1_FORMAL_EXIT_REPORT.md](H1_FORMAL_EXIT_REPORT.md) | Formal H1 acceptance decision and evidence |
-| [H2_PLATFORM_SPEC.md](H2_PLATFORM_SPEC.md) | Proposed H2 slice decomposition |
+| [H2_PLATFORM_SPEC.md](H2_PLATFORM_SPEC.md) | Accepted H2 slice decomposition |
+| [H2_01_ACCEPTANCE_EVIDENCE.md](H2_01_ACCEPTANCE_EVIDENCE.md) | H2-01 implementation and verification evidence |
 
 ## Next action
 
-Review the proposed H2 platform specification. No H2 production implementation has
-started.
+Review and merge the dedicated H2-01 pull request after all mandatory checks pass.
+Do not begin H2-02 before H2-01 is explicitly accepted and merged.

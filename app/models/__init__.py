@@ -4,6 +4,14 @@ Import every model here to make it discoverable by Alembic migrations.
 """
 
 from app.authorization.models import Permission, RolePermission
+from app.connections.models import (
+    Connection,
+    ConnectionCapabilityGrant,
+    ConnectionKind,
+    ConnectionKindCapability,
+    ProviderCapability,
+    ProviderRegistryEntry,
+)
 from app.encryption.models import EncryptedEnvelope
 from app.identity.lifecycle_models import (
     IdentityLifecycleToken,
@@ -47,6 +55,10 @@ __all__ = [
     "AuditEvent",
     "Cell",
     "CommandIdempotency",
+    "Connection",
+    "ConnectionCapabilityGrant",
+    "ConnectionKind",
+    "ConnectionKindCapability",
     "ConsumerSequence",
     "Conversation",
     "ConversationMessage",
@@ -66,6 +78,8 @@ __all__ = [
     "OrganizationMembership",
     "OutboxEvent",
     "Project",
+    "ProviderCapability",
+    "ProviderRegistryEntry",
     "Permission",
     "Role",
     "RolePermission",
