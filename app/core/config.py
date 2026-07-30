@@ -21,6 +21,9 @@ class Settings(BaseSettings):
     google_oauth_client_secret_file: str = "secrets/google/client_secret.json"
     google_oauth_redirect_uri: str = "http://localhost:8000/api/v1/gmail/oauth/callback"
     gmail_credentials_encryption_key: SecretStr | None = None
+    atlas_kms_provider: str | None = None
+    atlas_kms_key_resource: str | None = None
+    atlas_kms_key_version: str | None = None
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 

@@ -86,8 +86,8 @@ architecture fitness rules.
 | H1-03 | Revocable session and identity lifecycle | Accepted; merged in PR #4 | Server-side sessions, invitations, recovery, strong-authentication state, and revocation |
 | H1-04 | Workspace memberships and fixed roles | Accepted; merged in PR #5 | Workspace access lifecycle and versioned fixed-role assignments |
 | H1-05 | Deterministic authorization boundary | Accepted; merged in PR #6 | Deny-first fixed-role decisions with reason codes |
-| H1-06 | Request, actor, tenant, and repository context | Implemented; pending pull-request review | Typed execution context, transaction-local PostgreSQL context, runtime roles, and repository enforcement |
-| H1-07 | Managed envelope encryption foundation | Proposed | KMS-backed per-record encryption and safe Phase 1 credential migration tooling |
+| H1-06 | Request, actor, tenant, and repository context | Accepted; merged in PR #7 | Typed execution context, transaction-local PostgreSQL context, runtime roles, and repository enforcement |
+| H1-07 | Managed envelope encryption foundation | Implemented; pending pull-request review | KMS-backed per-record encryption and safe Phase 1 credential migration tooling |
 | H1-08 | Immutable audit and transactional messaging | Proposed | Production audit writer, outbox/inbox, idempotency, sequencing, and tamper-evidence baseline |
 | H1-09 | Foundation recovery, restore, and closure rehearsal | Proposed | Backup/restore, tenant-foundation deletion, closure receipts, and recovery evidence |
 | H1-10 | Synthetic tenant vertical slice and Formal H1 Exit | Proposed | Integrated proof of every H1 exit criterion and security acceptance |
@@ -377,6 +377,8 @@ transactions, repositories, audit, events, and future job envelopes.
 
 ### H1-07: Managed envelope encryption foundation
 
+**Status:** Implemented; pending pull-request review.
+
 **Objective**
 
 Replace single-key credential protection with a production KMS-backed, per-record
@@ -414,6 +416,13 @@ envelope-encryption service and reversible migration tooling.
 - Existing credentials shadow-decrypt equivalently before cutover.
 - Rollback or forward-fix preserves provider access.
 - Rotation, audit, least-privilege, and secret-leak tests pass.
+
+**Acceptance evidence**
+
+- [Envelope and managed-KMS contract tests](tests/encryption/test_h1_07_contracts.py)
+- [Migration, RLS, rotation, failure, audit, and rollback tests](tests/encryption/test_h1_07_postgres.py)
+- [H1-07 encryption-only architecture fitness tests](tests/architecture/test_h1_07_encryption_scope.py)
+- [Additive managed-envelope and legacy-shadow migration](alembic/versions/0011_add_managed_envelopes.py)
 
 ### H1-08: Immutable audit and transactional messaging
 

@@ -60,7 +60,7 @@ def test_h1_06_does_not_import_phase_one_provider_modules() -> None:
 
 def test_h1_06_adds_no_domain_schema_or_authorization_changes() -> None:
     assert not list(
-        (ROOT / "alembic" / "versions").glob("0011*")
+        (ROOT / "alembic" / "versions").glob("*execution_context*")
     ), "H1-06 execution context must remain schema-free"
     changed_context_sources = {
         path.name for path in CONTEXT_ROOT.glob("*.py")

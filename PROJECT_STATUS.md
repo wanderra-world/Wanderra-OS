@@ -11,11 +11,12 @@ FastAPI service backed by PostgreSQL, with OpenAI-powered chat and durable memor
 working Google integrations for Gmail, Calendar, and Drive.
 
 The local Docker deployment is operational. Database migrations are at
-`0010_h1_authorization`. Formal H0 Exit and H1-01 through H1-05 are accepted. H1-06
-adds typed execution-context plumbing without changing Phase 1 request behavior or
-the H1-05 authorization decision. Gmail/Calendar/Drive authorization has been
-completed for the current Wanderra user, and live end-to-end verification has
-succeeded for email, calendar events, and the full Drive file lifecycle.
+`0011_h1_envelopes`. Formal H0 Exit and H1-01 through H1-06 are accepted. H1-07 adds
+managed per-record envelope encryption and additive credential shadow metadata
+without changing Phase 1 request behavior or provider credential reads.
+Gmail/Calendar/Drive authorization has been completed for the current Wanderra user,
+and live end-to-end verification has succeeded for email, calendar events, and the
+full Drive file lifecycle.
 
 ## Implemented capabilities
 
@@ -105,6 +106,26 @@ succeeded for email, calendar events, and the full Drive file lifecycle.
   migration `0010_h1_authorization`.
 - No Phase 1 route wiring, authorization changes, policy changes, providers, agents,
   jobs, workflows, notifications, search, memory, or H1-07 functionality.
+
+### Atlas Core H1-07
+
+- Versioned AES-256-GCM per-record envelope encryption with independently wrapped
+  data-encryption keys.
+- Tenant, connection, record-type, record-ID, and format-version authenticated data.
+- Narrow asynchronous managed-KMS port and Google Cloud KMS production adapter.
+- Immutable managed-key resource/version references with fail-closed provider errors.
+- Context-bound envelope repository and forced workspace RLS.
+- Idempotent KEK rewrap and DEK replacement with durable rotation checkpoints.
+- Wrong-version, corrupted-ciphertext, provider-outage, and emergency-disable denial.
+- Failure quarantine and redacted transactional audit/outbox evidence.
+- Additive Gmail, Calendar, and Drive credential shadow columns; legacy ciphertext
+  remains untouched and continues serving all Phase 1 runtime reads.
+- Shadow equivalence verification, legacy checksums, explicit cutover state, and
+  reauthorization fallback metadata.
+- Guarded rollback that preserves legacy provider access and refuses to discard
+  envelope migration state.
+- No connection unification, provider runtime changes, agents, workflows, scheduler,
+  jobs, notifications, search, memory, or H1-08 functionality.
 
 ### Atlas and memory
 
@@ -265,7 +286,7 @@ Interactive OpenAPI documentation is available at `/docs`.
 
 ## Test coverage
 
-The current automated suite contains 289 passing tests, with four
+The current automated suite contains 300 passing tests, with four
 environment-dependent tests skipped:
 
 - Health and Atlas chat API behavior.
@@ -298,6 +319,9 @@ environment-dependent tests skipped:
 - H1-06 immutable execution contracts, request-scope reset, placement validation,
   transaction-local propagation, context-bound repositories, forced-RLS runtime
   roles, pool reset, deterministic replay, and schema-free rollback rehearsal.
+- H1-07 managed-KMS contracts, authenticated encryption, key versioning, KEK and DEK
+  rotation replay, legacy shadow verification, forced RLS, failure quarantine,
+  emergency disable, additive migration, audit/outbox evidence, and guarded rollback.
 
 Live integration verification has additionally covered:
 

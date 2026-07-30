@@ -4,6 +4,7 @@ Import every model here to make it discoverable by Alembic migrations.
 """
 
 from app.authorization.models import Permission, RolePermission
+from app.encryption.models import EncryptedEnvelope
 from app.identity.lifecycle_models import (
     IdentityLifecycleToken,
     IdentitySession,
@@ -34,6 +35,7 @@ __all__ = [
     "DriveCredential",
     "DriveFileMetadata",
     "DriveOAuthState",
+    "EncryptedEnvelope",
     "ExternalIdentityLink",
     "FixedMembershipRole",
     "IdentityLifecycleToken",
