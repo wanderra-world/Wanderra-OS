@@ -162,6 +162,17 @@ full Drive file lifecycle.
 - No provider deletion, document lineage, content export, workspace transfer, cell
   migration, or H1-10 functionality.
 
+### H1-10 Formal Exit candidate
+
+- Added an integrated two-tenant acceptance harness covering isolation, session
+  revocation, deterministic authorization, execution context, audit integrity,
+  messaging idempotency, encrypted backup and restore, closure, and deletion.
+- Added the H1 evidence matrix and security review without changing the architecture,
+  ADRs, roadmap, production schema, or previously accepted slice contracts.
+- H1-10 remains a Formal H1 Exit candidate until its dedicated pull request passes
+  all mandatory checks and is explicitly accepted.
+- H2 has not started.
+
 ### Atlas and memory
 
 - Atlas chat endpoint backed by the configured OpenAI model.
