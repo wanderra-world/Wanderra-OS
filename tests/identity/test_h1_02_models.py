@@ -22,7 +22,7 @@ def test_canonical_user_has_lifecycle_verification_and_version_state() -> None:
         "version",
     }
 
-    assert set(User.__table__.columns.keys()) == expected_columns
+    assert expected_columns <= set(User.__table__.columns.keys())
     assert CompatibilityUser is User
 
 

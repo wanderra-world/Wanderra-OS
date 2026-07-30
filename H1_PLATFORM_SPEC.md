@@ -82,8 +82,8 @@ architecture fitness rules.
 | Slice | Name | Status | Primary outcome |
 |---|---|---|---|
 | H1-01 | Organization and workspace schema expansion | Accepted; merged in PR #1 | Additive organization, ownership, workspace, placement, audit, and outbox foundation |
-| H1-02 | Canonical identity and external identity schema | Implemented; pending pull-request review | Global users and issuer/subject identity links with safe migration |
-| H1-03 | Revocable session and identity lifecycle | Proposed | Server-side sessions, invitations, recovery, strong-authentication state, and revocation |
+| H1-02 | Canonical identity and external identity schema | Accepted; merged in PR #3 | Global users and issuer/subject identity links with safe migration |
+| H1-03 | Revocable session and identity lifecycle | Implemented; pending pull-request review | Server-side sessions, invitations, recovery, strong-authentication state, and revocation |
 | H1-04 | Workspace memberships and fixed roles | Proposed | Workspace access lifecycle and versioned fixed-role assignments |
 | H1-05 | Deterministic authorization boundary | Proposed | Deny-first policy decisions with reason codes and obligations |
 | H1-06 | Request, actor, tenant, and repository context | Proposed | Typed execution context, transaction-local PostgreSQL context, runtime roles, and repository enforcement |
@@ -179,6 +179,8 @@ Phase 1 users for safe canonical identity use.
 
 ### H1-03: Revocable session and identity lifecycle
 
+**Status:** Implemented; pending pull-request review.
+
 **Objective**
 
 Implement the server-side identity lifecycle needed to authenticate and revoke human
@@ -216,6 +218,12 @@ access safely.
 - Identity linking requires proof of both identities and recent strong authentication.
 - Cookie settings and CSRF/session fixation defenses pass security tests.
 - Concurrency tests prove single-use token behavior.
+
+**Acceptance evidence**
+
+- [Lifecycle security and schema contract tests](tests/identity/test_h1_03_lifecycle_unit.py)
+- [PostgreSQL, RLS, rollback, revocation, recovery, and concurrency tests](tests/identity/test_h1_03_lifecycle_postgres.py)
+- [Additive H1-03 migration](alembic/versions/0008_add_identity_lifecycle.py)
 
 ### H1-04: Workspace memberships and fixed roles
 

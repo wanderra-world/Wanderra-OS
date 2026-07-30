@@ -23,6 +23,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.database.base import Base
 
 if TYPE_CHECKING:
+    from app.identity.lifecycle_models import IdentitySession
     from app.models.memory import Conversation, Project
 
 
@@ -69,8 +70,15 @@ class User(Base):
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
     )
+    mfa_required: Mapped[bool] = mapped_column(
+        Boolean, default=False, server_default="false"
+    )
 
     external_identities: Mapped[list[ExternalIdentityLink]] = relationship(
+        back_populates="user",
+        cascade="all, delete-orphan",
+    )
+    sessions: Mapped[list[IdentitySession]] = relationship(
         back_populates="user",
         cascade="all, delete-orphan",
     )
@@ -118,6 +126,18 @@ class ExternalIdentityLink(Base):
             """,
             name="ck_external_identity_links_email_verification_provenance",
         ),
+        CheckConstraint(
+            """
+            (
+                status = 'review_pending'
+                AND proofed_at IS NOT NULL
+                AND proof_reference IS NOT NULL
+                AND review_expires_at IS NOT NULL
+            )
+            OR status <> 'review_pending'
+            """,
+            name="ck_external_identity_links_review_evidence",
+        ),
         UniqueConstraint(
             "issuer",
             "subject",
@@ -139,11 +159,13 @@ class ExternalIdentityLink(Base):
     email_verification_source: Mapped[str | None] = mapped_column(String(128))
     status: Mapped[str] = mapped_column(String(32), default="active", server_default="active")
     version: Mapped[int] = mapped_column(Integer, default=1, server_default="1")
+    proofed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    proof_reference: Mapped[str | None] = mapped_column(String(255))
+    review_expires_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     linked_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now()
     )
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
     )
-
     user: Mapped[User] = relationship(back_populates="external_identities")
