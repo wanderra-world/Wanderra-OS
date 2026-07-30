@@ -88,9 +88,9 @@ architecture fitness rules.
 | H1-05 | Deterministic authorization boundary | Accepted; merged in PR #6 | Deny-first fixed-role decisions with reason codes |
 | H1-06 | Request, actor, tenant, and repository context | Accepted; merged in PR #7 | Typed execution context, transaction-local PostgreSQL context, runtime roles, and repository enforcement |
 | H1-07 | Managed envelope encryption foundation | Accepted; merged in PR #8 | KMS-backed per-record encryption and safe Phase 1 credential migration tooling |
-| H1-08 | Immutable audit and transactional messaging | Implemented; pending pull-request review | Production audit writer, outbox/inbox, idempotency, sequencing, and tamper-evidence baseline |
-| H1-09 | Foundation recovery, restore, and closure rehearsal | Proposed | Backup/restore, tenant-foundation deletion, closure receipts, and recovery evidence |
-| H1-10 | Synthetic tenant vertical slice and Formal H1 Exit | Proposed | Integrated proof of every H1 exit criterion and security acceptance |
+| H1-08 | Immutable audit and transactional messaging | Accepted; merged in PR #9 | Production audit writer, outbox/inbox, idempotency, sequencing, and tamper-evidence baseline |
+| H1-09 | Foundation recovery, restore, and closure rehearsal | Accepted; merged in PR #10 | Backup/restore, tenant-foundation deletion, closure receipts, and recovery evidence |
+| H1-10 | Synthetic tenant vertical slice and Formal H1 Exit | Accepted; merged in PR #11 | Integrated proof of every H1 exit criterion and security acceptance |
 
 The sequence is mandatory. Parallel implementation is prohibited when a slice depends
 on an incomplete predecessor. Documentation and disposable test design may be prepared
@@ -126,8 +126,7 @@ foundation, including deterministic default ownership for existing Phase 1 users
 
 ### H1-02: Canonical identity and external identity schema
 
-**Status:** Implemented on `codex/h1-02-canonical-identity`; pending pull-request
-review.
+**Status:** Accepted; merged in pull request #3.
 
 **Objective**
 
@@ -179,7 +178,7 @@ Phase 1 users for safe canonical identity use.
 
 ### H1-03: Revocable session and identity lifecycle
 
-**Status:** Implemented; pending pull-request review.
+**Status:** Accepted; merged in pull request #4.
 
 **Objective**
 
@@ -227,7 +226,7 @@ access safely.
 
 ### H1-04: Workspace memberships and fixed roles
 
-**Status:** Implemented; pending pull-request review.
+**Status:** Accepted; merged in pull request #5.
 
 **Objective**
 
@@ -276,7 +275,7 @@ memberships and versioned fixed role templates.
 
 ### H1-05: Deterministic authorization boundary
 
-**Status:** Implemented; pending pull-request review.
+**Status:** Accepted; merged in pull request #6.
 
 **Objective**
 
@@ -324,7 +323,7 @@ and query.
 
 ### H1-06: Request, actor, tenant, and repository context
 
-**Status:** Implemented; pending pull-request review.
+**Status:** Accepted; merged in pull request #7.
 
 **Objective**
 
@@ -377,7 +376,7 @@ transactions, repositories, audit, events, and future job envelopes.
 
 ### H1-07: Managed envelope encryption foundation
 
-**Status:** Implemented; pending pull-request review.
+**Status:** Accepted; merged in pull request #8.
 
 **Objective**
 
@@ -425,6 +424,8 @@ envelope-encryption service and reversible migration tooling.
 - [Additive managed-envelope and legacy-shadow migration](alembic/versions/0011_add_managed_envelopes.py)
 
 ### H1-08: Immutable audit and transactional messaging
+
+**Status:** Accepted; merged in pull request #9.
 
 **Objective**
 
@@ -474,6 +475,8 @@ domain-event path.
 
 ### H1-09: Foundation recovery, restore, and closure rehearsal
 
+**Status:** Accepted; merged in pull request #10.
+
 **Objective**
 
 Prove that the H1 platform skeleton can be recovered, closed, and deleted without
@@ -513,7 +516,17 @@ losing isolation or accountability.
   inaccessible with a verification receipt.
 - Repeated closure and restore operations are idempotent.
 
+**Acceptance evidence**
+
+- [Encrypted backup and recovery contract tests](tests/recovery/test_h1_09_backup.py)
+- [PostgreSQL restore, closure, RLS, and rollback tests](tests/recovery/test_h1_09_postgres.py)
+- [H1-09 slice-isolation architecture fitness tests](tests/architecture/test_h1_09_recovery_scope.py)
+- [Additive recovery and closure migration](alembic/versions/0013_add_recovery_closure.py)
+- [Recovery and closure operations runbook](H1_09_OPERATIONS.md)
+
 ### H1-10: Synthetic tenant vertical slice and Formal H1 Exit
+
+**Status:** Accepted; merged in pull request #11. Formal H1 Exit accepted.
 
 **Objective**
 
@@ -554,6 +567,13 @@ H2.
 - Phase 1 regression and Google integration behavior remain compatible.
 - The merge-blocking CI gate is green and Formal H1 Exit is explicitly accepted before
   H2 begins.
+
+**Acceptance evidence**
+
+- [Synthetic two-tenant vertical-slice tests](tests/acceptance/test_h1_10_vertical_slice.py)
+- [H1-10 architecture fitness tests](tests/architecture/test_h1_10_formal_exit.py)
+- [H1 acceptance evidence matrix](H1_EXIT_EVIDENCE.md)
+- [Formal H1 Exit Report](H1_FORMAL_EXIT_REPORT.md)
 
 ## 6. Dependency flow
 

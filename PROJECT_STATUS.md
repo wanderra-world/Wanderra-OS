@@ -11,9 +11,8 @@ FastAPI service backed by PostgreSQL, with OpenAI-powered chat and durable memor
 working Google integrations for Gmail, Calendar, and Drive.
 
 The local Docker deployment is operational. Database migrations are at
-`0013_h1_recovery_closure`. Formal H0 Exit and H1-01 through H1-08 are accepted. H1-09
-adds H1-owned backup, restore, export, retention, and closure controls without changing
-Phase 1 request behavior or provider credential reads.
+`0013_h1_recovery_closure`. Formal H0 Exit and Formal H1 Exit are accepted. H1-01
+through H1-10 are merged, and H2 has not started.
 Gmail/Calendar/Drive authorization has been completed for the current Wanderra user,
 and live end-to-end verification has succeeded for email, calendar events, and the
 full Drive file lifecycle.
@@ -162,15 +161,15 @@ full Drive file lifecycle.
 - No provider deletion, document lineage, content export, workspace transfer, cell
   migration, or H1-10 functionality.
 
-### H1-10 Formal Exit candidate
+### H1-10 Formal Exit
 
 - Added an integrated two-tenant acceptance harness covering isolation, session
   revocation, deterministic authorization, execution context, audit integrity,
   messaging idempotency, encrypted backup and restore, closure, and deletion.
 - Added the H1 evidence matrix and security review without changing the architecture,
   ADRs, roadmap, production schema, or previously accepted slice contracts.
-- H1-10 remains a Formal H1 Exit candidate until its dedicated pull request passes
-  all mandatory checks and is explicitly accepted.
+- Pull request #11 is merged, all mandatory checks passed, and Formal H1 Exit is
+  accepted.
 - H2 has not started.
 
 ### Atlas and memory
@@ -332,7 +331,7 @@ Interactive OpenAPI documentation is available at `/docs`.
 
 ## Test coverage
 
-The current PostgreSQL-backed automated suite contains 324 passing tests:
+The current PostgreSQL-backed automated suite contains 329 passing tests:
 
 - Health and Atlas chat API behavior.
 - Gmail MIME construction and message parsing.
@@ -375,6 +374,9 @@ The current PostgreSQL-backed automated suite contains 324 passing tests:
   restore equivalence, H1-only export manifests, explicit closure authorization,
   access revocation, legal-hold precedence, write freezing, eligible erasure, Phase 1
   provider preservation, receipt immutability, forced RLS, and guarded rollback.
+- H1-10 synthetic two-tenant isolation, authorization, revocation, execution-context
+  enforcement, messaging idempotency, encrypted restore, closure, deletion, and
+  Formal H1 Exit architecture evidence.
 
 Live integration verification has additionally covered:
 
@@ -390,9 +392,8 @@ The test run currently emits one non-blocking Starlette/httpx deprecation warnin
 
 - `X-User-ID` remains trusted directly by Phase 1 routes; the H1-03 session lifecycle
   is intentionally not wired into production request authentication yet.
-- H1-01 through H1-05 schema paths are intentionally unused by Phase 1 requests.
-  Request context, memberships, authorization, commands, repositories, and provider
-  migration remain later H1/H2 slices.
+- H1 runtime paths remain intentionally unused by Phase 1 requests. Provider migration
+  and Phase 1 cutover belong to H2.
 - The shared Google callback remains under the Gmail URL for compatibility with the
   currently registered OAuth client. A neutral callback path would be clearer.
 - The Drive integration uses the broad `drive` scope. Production deployments should
