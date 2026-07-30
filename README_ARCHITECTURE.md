@@ -5,7 +5,7 @@ The single entry point to the Atlas architecture documentation.
 **Owner:** Atlas Architecture Council  
 **Current phase:** Phase 2 — Atlas Core  
 **Status:** Formal H0 Exit accepted; Formal H1 Exit accepted; H2 specification accepted;
-H2-01 accepted; H2-02 implemented pending pull-request acceptance
+H2-01 and H2-02 accepted; H2-03 implemented pending pull-request acceptance
 **Last updated:** July 31, 2026
 
 ## Core principle
@@ -43,7 +43,7 @@ The Google Workspace Foundation is implemented and validated end to end:
 
 See [PROJECT_STATUS.md](PROJECT_STATUS.md) for the detailed implementation status.
 
-### Phase 2 — H1 and H2-01 accepted; H2-02 implementation review
+### Phase 2 — H1, H2-01, and H2-02 accepted; H2-03 implementation review
 
 The architecture phase, Formal H0 Exit, and Formal H1 Exit are complete. H1-01
 through H1-10 are accepted and merged.
@@ -62,9 +62,9 @@ vertical-slice evidence. See
 [PROJECT_STATUS.md](PROJECT_STATUS.md).
 
 The accepted H2 production decomposition is defined in
-[H2_PLATFORM_SPEC.md](H2_PLATFORM_SPEC.md). H2-01 is accepted and merged. H2-02 is
-implemented on its dedicated branch with evidence in
-[H2_02_ACCEPTANCE_EVIDENCE.md](H2_02_ACCEPTANCE_EVIDENCE.md). H2-03 and later slices
+[H2_PLATFORM_SPEC.md](H2_PLATFORM_SPEC.md). H2-01 and H2-02 are accepted and merged.
+H2-03 is implemented on its dedicated branch with evidence in
+[H2_03_ACCEPTANCE_EVIDENCE.md](H2_03_ACCEPTANCE_EVIDENCE.md). H2-04 and later slices
 remain unauthorized and unimplemented.
 
 ## Recommended reading order
@@ -270,9 +270,9 @@ Defines the accepted H2 Phase 1 migration decomposition:
 - reversible Gmail, Calendar, and Drive adapter migration;
 - cutover stabilization and Formal H2 Exit.
 
-This specification is accepted. H2-01 is accepted and merged; H2-02 has explicit
-implementation authorization. Every later slice still requires predecessor acceptance
-and explicit authorization.
+This specification is accepted. H2-01 and H2-02 are accepted and merged; H2-03 has
+explicit implementation authorization. Every later slice still requires predecessor
+acceptance and explicit authorization.
 
 ## Architecture document hierarchy
 
@@ -448,8 +448,9 @@ enforcement is owned by `IMPLEMENTATION_GUIDE.md`.
 | [H2_01_ACCEPTANCE_EVIDENCE.md](H2_01_ACCEPTANCE_EVIDENCE.md) | H2-01 implementation and verification evidence |
 | [H2_02_ACCEPTANCE_EVIDENCE.md](H2_02_ACCEPTANCE_EVIDENCE.md) | H2-02 implementation and verification evidence |
 | [H2_02_CREDENTIAL_OPERATIONS.md](H2_02_CREDENTIAL_OPERATIONS.md) | H2-02 credential migration, failure, and rollback runbook |
+| [H2_03_ACCEPTANCE_EVIDENCE.md](H2_03_ACCEPTANCE_EVIDENCE.md) | H2-03 implementation and verification evidence |
 
 ## Next action
 
-Review and merge the dedicated H2-02 pull request after all mandatory checks pass.
-Do not begin H2-03 before H2-02 is explicitly accepted and merged.
+Review and merge the dedicated H2-03 pull request after all mandatory checks pass.
+Do not begin H2-04 before H2-03 is explicitly accepted and merged.

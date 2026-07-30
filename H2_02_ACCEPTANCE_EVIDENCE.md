@@ -2,7 +2,7 @@
 
 **Owner:** Atlas Core
 **Slice:** H2-02 — Managed connection credentials and migration inventory
-**Status:** Implemented and verified; pull-request acceptance pending
+**Status:** Accepted and merged
 **Date:** 31 July 2026
 **Governing specification:** [H2_PLATFORM_SPEC.md](H2_PLATFORM_SPEC.md#h2-02-managed-connection-credentials-and-migration-inventory)
 
@@ -167,5 +167,5 @@ The protected workflow completed successfully for implementation commit `c65f4b3
 - `H0 Required / Docker Build and Smoke` — passed;
 - `H0 Required / H0 Required Gate` — passed.
 
-GitHub reports four successful checks and `Ready to merge`. H2-02 remains pending
-formal acceptance and merge. No H2-03 work has started.
+GitHub reported four successful checks, and PR #15 was accepted and merged into
+`master` as commit `e48c237`. H2-03 began only after that accepted baseline.

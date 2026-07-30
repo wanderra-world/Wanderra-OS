@@ -3,7 +3,7 @@
 Canonical implementation decomposition for Atlas Phase 2 Stage H2.
 
 **Owner:** Atlas Core  
-**Status:** Accepted; H2-01 accepted, H2-02 implementation under review
+**Status:** Accepted; H2-01 and H2-02 accepted, H2-03 implementation under review
 **Stage:** H2 — Phase 1 migration foundation  
 **Architecture entry point:** [README_ARCHITECTURE.md](README_ARCHITECTURE.md)  
 **Engineering gate:** [IMPLEMENTATION_GUIDE.md](IMPLEMENTATION_GUIDE.md#h2)  
@@ -471,6 +471,10 @@ single-use OAuth transaction while preserving current Google callback compatibil
   tests.
 - PostgreSQL RLS and migration rehearsal.
 - Existing Gmail, Calendar, and Drive OAuth regression tests.
+- [H2-03 implementation evidence](H2_03_ACCEPTANCE_EVIDENCE.md)
+- [H2-03 contract and PostgreSQL tests](tests/oauth_transactions/)
+- [H2-03 slice-isolation fitness tests](tests/architecture/test_h2_03_oauth_scope.py)
+- [Additive H2-03 migration](alembic/versions/0016_add_oauth_transactions.py)
 
 ### H2-04: Provider mirror and external-reference foundation
 
