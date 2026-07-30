@@ -25,7 +25,7 @@ from app.database.base import Base
 
 
 class FixedMembershipRole(Base):
-    """Versioned fixed role name without permissions or policy behavior."""
+    """Canonical versioned system role; custom roles remain prohibited."""
 
     __tablename__ = "fixed_membership_roles"
     __table_args__ = (
@@ -44,6 +44,9 @@ class FixedMembershipRole(Base):
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now()
     )
+
+
+Role = FixedMembershipRole
 
 
 class WorkspaceMembership(Base):

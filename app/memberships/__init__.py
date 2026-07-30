@@ -5,7 +5,7 @@ from app.memberships.contracts import (
     MEMBERSHIP_ROLE_VERSION,
     MembershipLifecycleError,
 )
-from app.memberships.models import FixedMembershipRole, WorkspaceMembership
+from app.memberships.models import FixedMembershipRole, Role, WorkspaceMembership
 from app.memberships.repository import WorkspaceMembershipRepository
 from app.memberships.service import WorkspaceMembershipService
 
@@ -14,6 +14,7 @@ __all__ = [
     "MEMBERSHIP_ROLE_VERSION",
     "FixedMembershipRole",
     "MembershipLifecycleError",
+    "Role",
     "WorkspaceMembership",
     "WorkspaceMembershipRepository",
     "WorkspaceMembershipService",

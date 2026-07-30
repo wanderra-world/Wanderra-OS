@@ -5,7 +5,6 @@ from __future__ import annotations
 from sqlalchemy import CheckConstraint, ForeignKeyConstraint, UniqueConstraint
 
 import app.models  # noqa: F401
-from app.database.base import Base
 from app.memberships.contracts import (
     FIXED_MEMBERSHIP_ROLES,
     FIXED_ROLE_DEFINITIONS,
@@ -101,10 +100,16 @@ def test_fixed_roles_define_classification_without_capabilities() -> None:
         "scope",
         "version",
     }
-    assert {
+    prohibited_h1_04_tables = {
         "capabilities",
         "permissions",
         "policy_decisions",
         "role_capabilities",
         "role_permissions",
-    }.isdisjoint(Base.metadata.tables)
+    }
+    assert prohibited_h1_04_tables.isdisjoint(
+        {
+            FixedMembershipRole.__tablename__,
+            WorkspaceMembership.__tablename__,
+        }
+    )

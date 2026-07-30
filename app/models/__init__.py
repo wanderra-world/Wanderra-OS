@@ -3,13 +3,14 @@
 Import every model here to make it discoverable by Alembic migrations.
 """
 
+from app.authorization.models import Permission, RolePermission
 from app.identity.lifecycle_models import (
     IdentityLifecycleToken,
     IdentitySession,
     SecurityNotification,
 )
 from app.identity.models import ExternalIdentityLink, User
-from app.memberships.models import FixedMembershipRole, WorkspaceMembership
+from app.memberships.models import FixedMembershipRole, Role, WorkspaceMembership
 from app.models.calendar import CalendarCredential, CalendarOAuthState
 from app.models.drive import DriveCredential, DriveFileMetadata, DriveOAuthState
 from app.models.gmail import GmailCredential, GmailOAuthState
@@ -43,6 +44,9 @@ __all__ = [
     "OrganizationMembership",
     "OutboxEvent",
     "Project",
+    "Permission",
+    "Role",
+    "RolePermission",
     "SecurityNotification",
     "User",
     "Workspace",
