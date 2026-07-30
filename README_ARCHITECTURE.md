@@ -4,7 +4,7 @@ The single entry point to the Atlas architecture documentation.
 
 **Owner:** Atlas Architecture Council  
 **Current phase:** Phase 2 — Atlas Core  
-**Status:** Formal H0 Exit accepted; Formal H1 Exit accepted
+**Status:** Formal H0 Exit accepted; Formal H1 Exit accepted; H2 specification proposed
 **Last updated:** July 30, 2026
 
 ## Core principle
@@ -42,7 +42,7 @@ The Google Workspace Foundation is implemented and validated end to end:
 
 See [PROJECT_STATUS.md](PROJECT_STATUS.md) for the detailed implementation status.
 
-### Phase 2 — H1 accepted
+### Phase 2 — H1 accepted; H2 specification review
 
 The architecture phase, Formal H0 Exit, and Formal H1 Exit are complete. H1-01
 through H1-10 are accepted and merged.
@@ -59,6 +59,10 @@ transactional messaging, recovery and closure controls, and the synthetic-tenant
 vertical-slice evidence. See
 [H1_FORMAL_EXIT_REPORT.md](H1_FORMAL_EXIT_REPORT.md) and
 [PROJECT_STATUS.md](PROJECT_STATUS.md).
+
+The proposed H2 production decomposition is defined in
+[H2_PLATFORM_SPEC.md](H2_PLATFORM_SPEC.md). It introduces no implementation
+authorization until the specification is reviewed and accepted.
 
 ## Recommended reading order
 
@@ -254,6 +258,18 @@ Defines the proposed canonical H1 production slice decomposition:
 This specification is accepted. Each production slice still requires explicit
 authorization and predecessor acceptance.
 
+### 13. [H2_PLATFORM_SPEC.md](H2_PLATFORM_SPEC.md)
+
+Defines the proposed H2 Phase 1 migration decomposition:
+
+- canonical connections, managed credentials, and OAuth transactions;
+- provider mirrors and neutral capability contracts;
+- reversible Gmail, Calendar, and Drive adapter migration;
+- cutover stabilization and Formal H2 Exit.
+
+This specification is proposed for review. No H2 production slice is authorized until
+it is accepted, and each accepted slice still requires explicit authorization.
+
 ## Architecture document hierarchy
 
 When documents conflict, apply the following precedence:
@@ -261,13 +277,14 @@ When documents conflict, apply the following precedence:
 1. Security, tenancy, and legal invariants.
 2. Approved superseding ADRs.
 3. `H0_FOUNDATION_SPEC.md`.
-4. `ARCHITECTURE_HARDENING.md`.
-5. `ARCHITECTURE_REVIEW.md`.
-6. `ARCHITECTURE.md`.
-7. `DOMAIN_MODEL.md`.
-8. `ROADMAP.md`.
-9. `VISION.md` and `MISSION.md` as strategic context.
-10. `PROJECT_STATUS.md` as a description of the current implementation.
+4. Accepted stage platform specifications.
+5. `ARCHITECTURE_HARDENING.md`.
+6. `ARCHITECTURE_REVIEW.md`.
+7. `ARCHITECTURE.md`.
+8. `DOMAIN_MODEL.md`.
+9. `ROADMAP.md`.
+10. `VISION.md` and `MISSION.md` as strategic context.
+11. `PROJECT_STATUS.md` as a description of the current implementation.
 
 The review has precedence over the original architecture because an identified risk
 cannot be ignored merely because an earlier ADR is marked Accepted.
@@ -293,6 +310,7 @@ non-overlapping canonical responsibility.
 | `IMPLEMENTATION_GUIDE.md` | Atlas Engineering | Engineering rules, readiness, completion, stage execution gates, tests, migrations, approvals, and pull-request contract |
 | `H0_FOUNDATION_SPEC.md` | Atlas Core | Implementable P0 contracts, threat register, targets, and H0 evidence status |
 | `H1_PLATFORM_SPEC.md` | Atlas Core | H1 slice sequence, slice objectives, boundaries, dependencies, and acceptance criteria |
+| `H2_PLATFORM_SPEC.md` | Atlas Core | H2 slice sequence, slice objectives, boundaries, dependencies, acceptance criteria, and evidence contract |
 
 A document may summarize another document only for navigation or context and must link
 to the canonical owner. Summaries are non-normative and must not restate detailed
@@ -307,6 +325,7 @@ requirements, decision rules, enumerations, or acceptance criteria.
 - H0–H8 engineering prerequisites, deliverables, tests, and exit criteria exist only in
   `IMPLEMENTATION_GUIDE.md`.
 - H1 slice-level decomposition exists only in `H1_PLATFORM_SPEC.md`.
+- H2 slice-level decomposition exists only in `H2_PLATFORM_SPEC.md`.
 - Strategic phase outcomes exist only in `ROADMAP.md`.
 - Engineering workflow and quality rules exist only in `IMPLEMENTATION_GUIDE.md`.
 - Current implementation claims exist only in `PROJECT_STATUS.md`.
@@ -421,8 +440,9 @@ enforcement is owned by `IMPLEMENTATION_GUIDE.md`.
 | [H0_FOUNDATION_SPEC.md](H0_FOUNDATION_SPEC.md) | Normative P0 contracts and H0 evidence |
 | [H1_PLATFORM_SPEC.md](H1_PLATFORM_SPEC.md) | Accepted H1 slice decomposition |
 | [H1_FORMAL_EXIT_REPORT.md](H1_FORMAL_EXIT_REPORT.md) | Formal H1 acceptance decision and evidence |
+| [H2_PLATFORM_SPEC.md](H2_PLATFORM_SPEC.md) | Proposed H2 slice decomposition |
 
 ## Next action
 
-Phase H1 is closed. H2 remains unstarted and requires separate authorization under the
-approved implementation sequence.
+Review the proposed H2 platform specification. No H2 production implementation has
+started.
