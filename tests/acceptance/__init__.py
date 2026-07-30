@@ -1,0 +1,1 @@
+"""Integrated platform acceptance evidence."""
