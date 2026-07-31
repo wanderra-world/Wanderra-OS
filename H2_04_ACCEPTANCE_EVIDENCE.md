@@ -2,7 +2,8 @@
 
 **Owner:** Atlas Core  
 **Slice:** H2-04 — Provider mirror and external-reference foundation  
-**Status:** Implemented and locally verified; pull-request acceptance pending  
+**Status:** Accepted and merged
+
 **Date:** 31 July 2026  
 **Governing specification:** [H2_PLATFORM_SPEC.md](H2_PLATFORM_SPEC.md#h2-04-provider-mirror-and-external-reference-foundation)
 
@@ -114,8 +115,8 @@ The complete local inventory is **404 passing tests**.
 - Docker Build and Smoke: passed.
 - H0 Required Gate: passed.
 
-The pull request remains pending review and merge. H2-04 is implementation-complete
-and satisfies the mandatory protected-branch checks.
+Pull request #17 was accepted and merged as commit `254e516`. H2-04 satisfies the
+mandatory protected-branch checks.
 
 ## Compatibility and findings
 
