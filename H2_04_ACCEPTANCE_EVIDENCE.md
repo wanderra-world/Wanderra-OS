@@ -101,8 +101,21 @@ Production image smoke
 FastAPI application, H2-04 service, and ORM model imported successfully
 ```
 
-The complete local inventory is **404 passing tests**. Protected GitHub results are
-recorded after the dedicated pull request is verified.
+The complete local inventory is **404 passing tests**.
+
+## Protected GitHub verification
+
+**Pull request:** [#17](https://github.com/wanderra-world/Wanderra-OS/pull/17)
+
+**Workflow run:** [H0 Required 30593838349](https://github.com/wanderra-world/Wanderra-OS/actions/runs/30593838349)
+
+- Architecture Fitness: passed.
+- Regression Tests: passed.
+- Docker Build and Smoke: passed.
+- H0 Required Gate: passed.
+
+The pull request remains pending review and merge. H2-04 is implementation-complete
+and satisfies the mandatory protected-branch checks.
 
 ## Compatibility and findings
 
