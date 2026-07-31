@@ -327,8 +327,9 @@ recurring/one-time schedules; rate and concurrency limits; operator pause/resume
 **Excluded:** Business schedules; workflow definitions; model planning; provider
 webhook product features; infrastructure extraction.
 
-**Dependencies:** H3-01 resource references; H1 outbox/inbox/idempotency; ADR-019/029;
-approved SLO and quota policies.
+**Dependencies:** Accepted H3-01 resource references; H1 outbox/inbox/idempotency;
+ADR-019/029; the approved
+[H3-02 SLO and quota policy](H3_IMPLEMENTATION_GUIDE.md#15-h3-02-approved-slo-and-quota-policy).
 
 **Acceptance criteria:** Duplicate delivery cannot duplicate a job effect; worker
 crash and lease expiry recover deterministically; cancellation and replay are audited;

@@ -52,6 +52,62 @@ Provider external-reference identity fields remain immutable and are never
 destructively rewritten. Migration implementation details remain subject to H3-01 Red
 tests and may not broaden this accepted plan.
 
+### 1.3 H3-02 accepted security-review scope
+
+H3-02 security review MUST cover forged or context-free enqueue, workspace or resource
+substitution, cross-workspace claim/heartbeat/cancel/replay, lease-owner substitution,
+concurrent claim, stale heartbeat, retry-category escalation, deadline bypass,
+idempotency-key reuse with a different command digest, unauthorized dead-letter replay,
+schedule activation or pause without operator authority, quota bypass, starvation,
+payload or exception leakage, audit/outbox non-atomicity, and H3-03+ scope leakage.
+Job payloads remain typed command envelopes, are classified at enqueue, and MUST NOT
+contain credentials, provider tokens, arbitrary executable code, or raw provider SDK
+payloads. Replay is a new authorized execution referencing immutable prior evidence; it
+never edits or silently reopens the original attempt.
+
+### 1.4 H3-02 accepted migration plan
+
+H3-02 uses one additive expand-first migration from accepted revision
+`0022_h3_resource_graph`. It adds only the durable-execution schema required by the
+H3-02 scope: job definitions and instances, attempts, leases, dead letters, schedules,
+and operator controls. Every tenant-owned key includes organization, workspace, and
+cell identity; composite foreign keys preserve that identity; enabled and forced RLS
+exist before runtime writes. The migration performs no H3-01 rewrite and no provider,
+workflow, document, model, search, notification, or business-agent backfill.
+
+Empty-state downgrade MUST be proven. After durable execution, attempt, schedule,
+dead-letter, audit, or outbox evidence exists, schema downgrade MUST fail closed and
+require worker disablement plus a reviewed forward-fix or export. Application and
+worker rollback preserve queued state and MUST NOT discard or re-run accepted work.
+
+### 1.5 H3-02 approved SLO and quota policy
+
+This section is the single normative owner of H3-02 service objectives and quotas.
+Values are versioned configuration with the following safe defaults; deployments may
+lower limits, but raising them requires measured capacity evidence and architecture
+review. Tests use an injected monotonic clock and a reference load of at least three
+active workspaces so results are deterministic and tenant fairness is observable.
+
+| Control | Approved default and required behavior |
+|---|---|
+| Eligible-job dispatch | At reference load, 95% start within 5 seconds and 99% within 30 seconds of eligibility while capacity is available. |
+| Lease and heartbeat | Default lease is 30 seconds; heartbeat interval is 10 seconds and MUST be no greater than one third of the lease. Expired work becomes reclaimable within 5 seconds without overlapping a valid lease. |
+| Recovery | After a worker stops heartbeating, eligible retry or terminal classification occurs within 35 seconds. No successful effect is repeated without the command's idempotency or version precondition. |
+| Retry budget | At most 5 attempts. Typed retry delays are 1, 5, 30, and 120 seconds, capped by the job deadline. Permanent, authorization, validation, cancellation, and expired-deadline failures never retry. |
+| Workspace concurrency | At most 20 running jobs per workspace and 100 per organization by default. The lower applicable limit wins. |
+| Enqueue rate and backlog | At most 120 accepted enqueues per workspace per rolling minute and 10,000 non-terminal jobs per workspace. Excess work receives explicit backpressure and is never silently dropped. |
+| Claim fairness | Claims use deterministic workspace round-robin ordering. While equally eligible workspaces remain below their quotas, their cumulative claim counts differ by no more than one. |
+| Scheduler catch-up | Every schedule declares `skip`, `fire_once`, or bounded `catch_up`. Catch-up is limited to 10 occurrences per evaluation and is also subject to enqueue and concurrency quotas. |
+| Dead letters and replay | Retry exhaustion or poison classification creates operator-visible dead-letter evidence within the terminal transaction. Replay requires explicit authorization, reason, correlation ID, and a new idempotency key. |
+| Pause and cancellation | Workspace or definition pause prevents new claims within 5 seconds. Cancellation prevents an unstarted job immediately and is observed by a cooperative running handler by its next heartbeat, no later than 10 seconds. |
+| Availability objective | The durable execution control plane targets 99.9% monthly availability, excluding an authorized emergency pause; correctness, tenant isolation, and auditability take precedence over dispatch latency. |
+
+The implementation MUST expose quota and SLO outcomes without tenant-sensitive
+payloads, document the reference-load environment in H3-02 evidence, and fail the
+slice gate if dispatch, recovery, isolation, fairness, or backpressure cannot be
+reproduced. These targets authorize H3-02 implementation only; later slices own their
+own content, search, model, notification, and agent objectives.
+
 ## 2. Recommended implementation order
 
 | Order | Slice | Why it is next |

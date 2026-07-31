@@ -53,3 +53,18 @@ def test_h3_sequencing_change_is_accepted_without_starting_implementation() -> N
     assert "**Status:** Approved for implementation" in guide
     assert "h4 or later-stage implementation" in architecture.casefold()
     assert not list((ROOT / "app").glob("h3*"))
+
+
+def test_h3_02_governance_gate_has_one_normative_policy_owner() -> None:
+    index = (ROOT / "README_ARCHITECTURE.md").read_text()
+    architecture = (ROOT / "H3_ARCHITECTURE.md").read_text()
+    guide = (ROOT / "H3_IMPLEMENTATION_GUIDE.md").read_text()
+    status = (ROOT / "PROJECT_STATUS.md").read_text()
+
+    assert "H3-01 is Accepted and merged" in index
+    assert "H3-02 implementation gate is open" in index
+    assert "H3-01 Resource Graph is Accepted and merged" in status
+    assert "H3-02 approved SLO and quota policy" in guide
+    assert "This section is the single normative owner" in guide
+    assert "H3-02 SLO and quota policy" in architecture
+    assert "H3-02 is not authorized" not in index

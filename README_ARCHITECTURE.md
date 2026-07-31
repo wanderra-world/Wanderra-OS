@@ -495,6 +495,9 @@ enforcement is owned by `IMPLEMENTATION_GUIDE.md`.
 
 ## Next action
 
-H3-01 is implemented on its dedicated review branch and must pass protected review and
-merge before it is accepted. H3-02 is not authorized and must not begin. Do not begin
-any business agent or H4 work.
+H3-01 is Accepted and merged into `origin/master` through PR #26 at commit `a4602b6`.
+The H3-02 security-review scope, migration plan, and SLO/quota policy are approved in
+[H3_IMPLEMENTATION_GUIDE.md](H3_IMPLEMENTATION_GUIDE.md#13-h3-02-accepted-security-review-scope).
+The sequential H3-02 implementation gate is open for an explicitly authorized,
+dedicated H3-02 implementation pull request. H3-03 and later slices, business agents,
+and H4 work remain unauthorized.
