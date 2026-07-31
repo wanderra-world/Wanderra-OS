@@ -10,12 +10,14 @@ Atlas is the AI assistant layer of Wanderra OS. The current platform is a Python
 FastAPI service backed by PostgreSQL, with OpenAI-powered chat and durable memory plus
 working Google integrations for Gmail, Calendar, and Drive.
 
-The local Docker deployment is operational. Database migrations are at
-`0021_h2_connection_cutover`. Formal H0 Exit and Formal H1 Exit are accepted. H1-01
+The local Docker deployment is operational. The accepted production baseline remains
+at `0021_h2_connection_cutover`; the dedicated H3-01 branch adds the pending
+`0022_h3_resource_graph` migration. Formal H0 Exit and Formal H1 Exit are accepted. H1-01
 through H1-10 and H2-01 through H2-08 are merged. The H2 platform specification is
 accepted. H2-01 through H2-10 are merged and Formal H2 Exit is accepted. PR #24
 formally approved the H3 blueprint and opened the sequential implementation gate.
-H3-01 production implementation has not started.
+H3-01 Resource Graph implementation is complete locally and awaiting protected
+pull-request acceptance. H3-02 has not started.
 Gmail/Calendar/Drive authorization has been completed for the current Wanderra user,
 and live end-to-end verification has succeeded for email, calendar events, and the
 full Drive file lifecycle.
@@ -485,6 +487,15 @@ The Docker Compose stack contains:
 | `provider_external_references` | Immutable provider identity and optional approved canonical linkage |
 | `provider_mirror_conflicts` | Explicit conflict detection and user-resolution evidence |
 | `provider_mirror_comparisons` | Idempotent inbound and outbound comparison decisions |
+| `resource_projections` | One-to-one typed operational projection bindings |
+| `resources` | Constrained, versioned, connectable resource identities |
+| `resource_relationships` | Typed, directed, workspace-safe resource relationships |
+| `resource_tags` | Normalized shared resource tags |
+| `resource_attachments` | Resource-to-document attachment references |
+| `resource_notes` | Human and provenance-bearing AI notes |
+| `resource_ownerships` | Explicit resource ownership assignments |
+| `resource_grants` | Exceptional resource-scoped permission grants |
+| `resource_external_links` | Immutable links to H2 provider external references |
 
 `drive_file_metadata` stores the file name, MIME type, size, modification time, view
 link, MD5 checksum, parent IDs, the normalized provider payload, and synchronization
@@ -543,7 +554,7 @@ Interactive OpenAPI documentation is available at `/docs`.
 
 ## Test coverage
 
-The current PostgreSQL-backed automated suite contains 479 passing tests:
+The current PostgreSQL-backed automated suite contains 491 passing tests:
 
 - Health and Atlas chat API behavior.
 - Gmail MIME construction and message parsing.
@@ -553,6 +564,9 @@ The current PostgreSQL-backed automated suite contains 479 passing tests:
   of missing or unexpected scopes.
 - Drive search escaping and metadata normalization.
 - Drive MIME dispatch regression coverage.
+- H3-01 constrained resource/projection identity, typed relationships, shared resource
+  capabilities, optimistic concurrency, audit/outbox, external-reference linkage,
+  forced RLS, migration, rollback, and cross-workspace isolation.
 - PDF and DOCX extraction helpers.
 - H0 architecture fitness, threat, isolation, authorization, encryption, custody,
   provider-conflict, lineage, AI security, entity integrity, and replay evidence.

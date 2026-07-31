@@ -28,7 +28,10 @@ def test_h2_10_formal_evidence_is_complete_and_traceable() -> None:
     assert "critical" in security.casefold() and "high" in security.casefold()
 
 
-def test_h2_10_is_schema_free_and_does_not_start_h3() -> None:
+def test_h2_10_remains_schema_free_after_the_approved_h3_successor() -> None:
     versions = sorted((ROOT / "alembic/versions").glob("*.py"))
-    assert versions[-1].name.startswith("0021_")
+    h2_head = next(path for path in versions if path.name.startswith("0021_"))
+    assert 'revision = "0021_h2_connection_cutover"' in h2_head.read_text()
+    h3_successor = next(path for path in versions if path.name.startswith("0022_"))
+    assert 'down_revision = "0021_h2_connection_cutover"' in h3_successor.read_text()
     assert not (ROOT / "app/entities").exists()

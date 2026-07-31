@@ -58,6 +58,17 @@ from app.recovery.models import (
     WorkspaceDataGovernance,
     WorkspaceExport,
 )
+from app.resource_graph.models import (
+    Resource,
+    ResourceAttachment,
+    ResourceExternalLink,
+    ResourceGrant,
+    ResourceNote,
+    ResourceOwnership,
+    ResourceProjection,
+    ResourceRelationship,
+    ResourceTag,
+)
 from app.storage_capability.models import StorageCapabilityRoute, StorageShadowComparison
 from app.tenancy.models import (
     AuditEvent,
@@ -118,6 +129,15 @@ __all__ = [
     "Role",
     "RolePermission",
     "RecoveryEvidence",
+    "Resource",
+    "ResourceAttachment",
+    "ResourceExternalLink",
+    "ResourceGrant",
+    "ResourceNote",
+    "ResourceOwnership",
+    "ResourceProjection",
+    "ResourceRelationship",
+    "ResourceTag",
     "SecurityNotification",
     "StorageCapabilityRoute",
     "StorageShadowComparison",
