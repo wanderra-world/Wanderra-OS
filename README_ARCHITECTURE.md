@@ -491,9 +491,10 @@ enforcement is owned by `IMPLEMENTATION_GUIDE.md`.
 | [H3_ARCHITECTURE.md](H3_ARCHITECTURE.md) | Approved H3 System Intelligence architecture and slice decomposition |
 | [H3_IMPLEMENTATION_GUIDE.md](H3_IMPLEMENTATION_GUIDE.md) | Approved H3-specific engineering contract |
 | [H3_EXIT_DEFINITION.md](H3_EXIT_DEFINITION.md) | Active Formal H3 Exit and Atlas Platform Complete definition |
+| [H3_01_ACCEPTANCE_EVIDENCE.md](H3_01_ACCEPTANCE_EVIDENCE.md) | H3-01 Resource Graph implementation and verification evidence |
 
 ## Next action
 
-The H3 architecture gate is open. Begin only the next explicitly authorized H3 slice
-after verifying its Definition of Ready and predecessor state. H3-01 has not started.
-Do not begin any business agent or H4 work.
+H3-01 is implemented on its dedicated review branch and must pass protected review and
+merge before it is accepted. H3-02 is not authorized and must not begin. Do not begin
+any business agent or H4 work.
