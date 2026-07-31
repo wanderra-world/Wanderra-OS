@@ -54,6 +54,7 @@ from app.recovery.models import (
     WorkspaceDataGovernance,
     WorkspaceExport,
 )
+from app.storage_capability.models import StorageCapabilityRoute, StorageShadowComparison
 from app.tenancy.models import (
     AuditEvent,
     Cell,
@@ -112,6 +113,8 @@ __all__ = [
     "RolePermission",
     "RecoveryEvidence",
     "SecurityNotification",
+    "StorageCapabilityRoute",
+    "StorageShadowComparison",
     "User",
     "Workspace",
     "WorkspaceClosure",

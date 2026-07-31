@@ -11,9 +11,9 @@ FastAPI service backed by PostgreSQL, with OpenAI-powered chat and durable memor
 working Google integrations for Gmail, Calendar, and Drive.
 
 The local Docker deployment is operational. Database migrations are at
-`0019_h2_calendar_capability`. Formal H0 Exit and Formal H1 Exit are accepted. H1-01
-through H1-10 and H2-01 through H2-06 are merged. The H2 platform specification is
-accepted, and H2-07 is implemented on a dedicated branch pending pull-request
+`0020_h2_storage_capability`. Formal H0 Exit and Formal H1 Exit are accepted. H1-01
+through H1-10 and H2-01 through H2-07 are merged. The H2 platform specification is
+accepted, and H2-08 is implemented on a dedicated branch pending pull-request
 acceptance.
 Gmail/Calendar/Drive authorization has been completed for the current Wanderra user,
 and live end-to-end verification has succeeded for email, calendar events, and the
@@ -329,6 +329,18 @@ full Drive file lifecycle.
   forced RLS, immutable comparisons, and guarded rollback.
 - Phase 1 Calendar APIs remain unchanged. No continuous synchronization, push
   notification, scheduler, worker, storage adapter, or H2-08+ behavior is present.
+
+### Atlas Core H2-08
+
+- Canonical Drive list, search, metadata, download, upload, update, delete, and text
+  projection behavior behind the H2-05 storage port.
+- Google Docs, PDF, and DOCX readable-text paths remain transient; binary content is
+  not copied into PostgreSQL.
+- Managed credentials, provider observation, safe errors, opaque cursors, checksums,
+  versions, approval, idempotency, post-write verification, and rollback are explicit.
+- Legacy, shadow, and canonical workspace routes use additive forced-RLS state and
+  immutable comparison evidence.
+- Phase 1 APIs remain unchanged; no H2-09 backfill or default cutover is present.
 
 ### Atlas and memory
 
