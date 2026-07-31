@@ -1,7 +1,7 @@
 # H3-01 Resource Graph Acceptance Evidence
 
 **Owner:** Atlas Platform Engineering  
-**Status:** Implementation complete; protected pull-request acceptance pending  
+**Status:** Implementation complete; PR #26 ready for review with required gate passed  
 **Governing specification:** [H3_ARCHITECTURE.md](H3_ARCHITECTURE.md#h3-01-resource-graph-foundation)  
 **Engineering contract:** [H3_IMPLEMENTATION_GUIDE.md](H3_IMPLEMENTATION_GUIDE.md)
 
@@ -74,7 +74,7 @@ authorization before resource retrieval, and made relationship deletion explicit
 | H3-01 and architecture Ruff checks | Passed |
 | Complete regression suite | 491 passed against PostgreSQL 16 |
 | Docker build and production smoke | Passed with `atlas-h3-01` production image |
-| Protected GitHub required gate | Pending pull request |
+| Protected GitHub required gate | PR #26 passed Architecture Fitness, Regression Tests, Docker Build and Smoke, and H0 Required Gate |
 
 ## 7. Security and residual risk
 
