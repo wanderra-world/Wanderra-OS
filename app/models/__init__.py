@@ -37,6 +37,12 @@ from app.models.drive import DriveCredential, DriveFileMetadata, DriveOAuthState
 from app.models.gmail import GmailCredential, GmailOAuthState
 from app.models.memory import Conversation, ConversationMessage, Project
 from app.oauth_transactions.models import OAuthTransaction
+from app.provider_mirrors.models import (
+    ProviderExternalReference,
+    ProviderMirror,
+    ProviderMirrorComparison,
+    ProviderMirrorConflict,
+)
 from app.recovery.models import (
     RecoveryEvidence,
     WorkspaceClosure,
@@ -87,6 +93,10 @@ __all__ = [
     "OutboxEvent",
     "Project",
     "ProviderCapability",
+    "ProviderExternalReference",
+    "ProviderMirror",
+    "ProviderMirrorComparison",
+    "ProviderMirrorConflict",
     "ProviderRegistryEntry",
     "Permission",
     "Role",
