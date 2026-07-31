@@ -4,8 +4,8 @@ The single entry point to the Atlas architecture documentation.
 
 **Owner:** Atlas Architecture Council  
 **Current phase:** Phase 2 — Atlas Core  
-**Status:** Formal H0 Exit accepted; Formal H1 Exit accepted; H2 specification accepted;
-H2-01 through H2-08 accepted; H2-09 implemented pending pull-request acceptance
+**Status:** Formal H0 Exit accepted; Formal H1 Exit accepted; H2-01 through H2-09
+accepted; H2-10 Formal H2 Exit candidate under verification
 **Last updated:** July 31, 2026
 
 ## Core principle
@@ -43,7 +43,7 @@ The Google Workspace Foundation is implemented and validated end to end:
 
 See [PROJECT_STATUS.md](PROJECT_STATUS.md) for the detailed implementation status.
 
-### Phase 2 — H1 and H2-01 through H2-08 accepted; H2-09 implementation review
+### Phase 2 — H1 and H2-01 through H2-09 accepted; Formal H2 Exit review
 
 The architecture phase, Formal H0 Exit, and Formal H1 Exit are complete. H1-01
 through H1-10 are accepted and merged.
@@ -62,10 +62,9 @@ vertical-slice evidence. See
 [PROJECT_STATUS.md](PROJECT_STATUS.md).
 
 The accepted H2 production decomposition is defined in
-[H2_PLATFORM_SPEC.md](H2_PLATFORM_SPEC.md). H2-01 through H2-08 are accepted and
-merged. H2-09 is implemented on its dedicated branch with evidence in
-[H2_09_ACCEPTANCE_EVIDENCE.md](H2_09_ACCEPTANCE_EVIDENCE.md). H2-10 remains
-unauthorized and unimplemented.
+[H2_PLATFORM_SPEC.md](H2_PLATFORM_SPEC.md). H2-01 through H2-09 are accepted and
+merged. H2-10 is the authorized evidence-only Formal H2 Exit slice; its evidence is
+under verification and introduces no H3 work.
 
 ## Recommended reading order
 
@@ -456,8 +455,13 @@ enforcement is owned by `IMPLEMENTATION_GUIDE.md`.
 | [H2_08_ACCEPTANCE_EVIDENCE.md](H2_08_ACCEPTANCE_EVIDENCE.md) | H2-08 implementation and verification evidence |
 | [H2_09_ACCEPTANCE_EVIDENCE.md](H2_09_ACCEPTANCE_EVIDENCE.md) | H2-09 implementation and verification evidence |
 | [H2_09_CUTOVER_OPERATIONS.md](H2_09_CUTOVER_OPERATIONS.md) | H2-09 cutover, rollback, and compatibility inventory runbook |
+| [H2_10_ACCEPTANCE_EVIDENCE.md](H2_10_ACCEPTANCE_EVIDENCE.md) | H2-10 integrated conformance and verification evidence |
+| [H2_EVIDENCE_MATRIX.md](H2_EVIDENCE_MATRIX.md) | Complete H2 criterion-to-evidence trace |
+| [H2_SECURITY_REVIEW.md](H2_SECURITY_REVIEW.md) | Formal H2 threat and residual-risk review |
+| [H2_EXIT_REPORT.md](H2_EXIT_REPORT.md) | Formal H2 Exit decision and completed baseline |
 
 ## Next action
 
-Review and merge the dedicated H2-09 pull request after all mandatory checks pass.
-Do not begin H2-10 before H2-09 is explicitly accepted and merged.
+Complete the dedicated H2-10 protected pull-request review. Formal H2 Exit becomes
+effective after the required gate passes and the pull request is merged. Do not begin
+H3 without separate authorization.
