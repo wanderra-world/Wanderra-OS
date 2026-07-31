@@ -12,8 +12,8 @@ working Google integrations for Gmail, Calendar, and Drive.
 
 The local Docker deployment is operational. Database migrations are at
 `0017_h2_provider_mirrors`. Formal H0 Exit and Formal H1 Exit are accepted. H1-01
-through H1-10 and H2-01 through H2-03 are merged. The H2 platform specification is
-accepted, and H2-04 is implemented on a dedicated branch pending pull-request
+through H1-10 and H2-01 through H2-04 are merged. The H2 platform specification is
+accepted, and H2-05 is implemented on a dedicated branch pending pull-request
 acceptance.
 Gmail/Calendar/Drive authorization has been completed for the current Wanderra user,
 and live end-to-end verification has succeeded for email, calendar events, and the
@@ -264,6 +264,28 @@ full Drive file lifecycle.
   universal entity, automatic conflict resolution, API, or H2-05 functionality is
   present.
 
+### Atlas Core H2-05
+
+- Immutable provider-neutral email, calendar, and storage DTOs cover every approved
+  Phase 1 operation.
+- Asynchronous canonical ports isolate application code from concrete provider SDK
+  clients, resources, exceptions, field names, and payloads.
+- Deterministic capability discovery and exact-version negotiation avoid
+  provider-name branching.
+- Canonical errors distinguish authentication, authorization, scope, rate limit,
+  transient, conflict, not found, invalid input, quota, and unsupported capability.
+- Opaque cursors, offset-preserving timestamps, version preconditions, mutation
+  idempotency contexts, and namespaced non-authoritative extensions are explicit.
+- A deterministic in-memory second provider passes the shared email, calendar, and
+  storage conformance suite.
+- Static fitness tests prohibit SDK leakage, runtime framework/database coupling,
+  provider-name conditionals, and H2-06+ concepts.
+- H2-05 is schema-free and runtime-disconnected. Phase 1 APIs, Google integrations,
+  H2 connection/OAuth/mirror behavior, and production migration revision remain
+  unchanged.
+- No production adapter, provider call, synchronization, shadow routing, cutover,
+  webhook, worker, or H2-06 functionality is present.
+
 ### Atlas and memory
 
 - Atlas chat endpoint backed by the configured OpenAI model.
@@ -436,7 +458,7 @@ Interactive OpenAPI documentation is available at `/docs`.
 
 ## Test coverage
 
-The current PostgreSQL-backed automated suite contains 404 passing tests:
+The current PostgreSQL-backed automated suite contains 428 passing tests:
 
 - Health and Atlas chat API behavior.
 - Gmail MIME construction and message parsing.
@@ -498,6 +520,10 @@ The current PostgreSQL-backed automated suite contains 404 passing tests:
   tombstones, conflicts, canonical linkage, idempotent replay, stale outbound
   preconditions, cross-workspace attacks, forced RLS, guarded rollback, and strict
   H2-05+ slice isolation.
+- H2-05 immutable DTO serialization, timezone/offset preservation, opaque pagination,
+  version preconditions, capability discovery and negotiation, canonical errors and
+  retry classification, mutation replay, shared second-provider conformance, SDK
+  confinement, provider-branch rejection, and strict H2-06+ slice isolation.
 
 Live integration verification has additionally covered:
 

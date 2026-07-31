@@ -3,7 +3,7 @@
 Canonical implementation decomposition for Atlas Phase 2 Stage H2.
 
 **Owner:** Atlas Core  
-**Status:** Accepted; H2-01 through H2-03 accepted, H2-04 implementation under review
+**Status:** Accepted; H2-01 through H2-04 accepted, H2-05 implementation under review
 **Stage:** H2 — Phase 1 migration foundation  
 **Architecture entry point:** [README_ARCHITECTURE.md](README_ARCHITECTURE.md)  
 **Engineering gate:** [IMPLEMENTATION_GUIDE.md](IMPLEMENTATION_GUIDE.md#h2)  
@@ -480,6 +480,8 @@ single-use OAuth transaction while preserving current Google callback compatibil
 
 ### H2-04: Provider mirror and external-reference foundation
 
+**Status:** Accepted and merged.
+
 **Objective**
 
 Implement stable provider-resource identity and synchronization state without adding
@@ -530,6 +532,8 @@ continuous synchronization execution.
 
 ### H2-05: Canonical capability contracts and provider SDK boundary
 
+**Status:** Implementation complete; pending pull-request acceptance and merge.
+
 **Objective**
 
 Define versioned provider-neutral email, calendar, and storage contracts and a reusable
@@ -575,6 +579,10 @@ adapter conformance kit before moving production behavior.
 - Shared conformance suite results for mock adapters.
 - Static dependency and provider-leakage fitness tests.
 - API compatibility mapping for every Phase 1 operation.
+- [H2-05 implementation evidence](H2_05_ACCEPTANCE_EVIDENCE.md)
+- [H2-05 contract and serialization tests](tests/provider_capabilities/test_h2_05_contracts.py)
+- [H2-05 shared conformance tests](tests/provider_capabilities/test_h2_05_conformance.py)
+- [H2-05 slice-isolation fitness tests](tests/architecture/test_h2_05_capability_scope.py)
 
 ### H2-06: Gmail adapter and email shadow migration
 
