@@ -5,7 +5,6 @@ from __future__ import annotations
 import asyncio
 import base64
 import json
-import uuid
 from datetime import UTC, datetime
 from email.message import EmailMessage as MimeMessage
 from email.utils import getaddresses, parseaddr
@@ -13,13 +12,9 @@ from typing import Protocol
 
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
-from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.connection_credentials.repository import ConnectionCredentialRepository
+from app.capability_routing.credentials import ManagedConnectionCredentialLoader
 from app.email_capability.contracts import EmailResourceObserver
-from app.encryption.repository import EncryptionRepository
-from app.encryption.service import EnvelopeEncryptionService
-from app.execution_context import ExecutionContext
 from app.provider_capabilities.common import (
     CanonicalErrorCategory,
     ExtensionEnvelope,
@@ -146,45 +141,7 @@ class GmailManagedPortFactory:
         )
 
 
-class ManagedGmailCredentialLoader:
-    """Workspace-bound managed credential lookup and decryption."""
-
-    def __init__(
-        self,
-        session: AsyncSession,
-        context: ExecutionContext,
-        *,
-        connection_id: uuid.UUID,
-        encryption: EnvelopeEncryptionService,
-    ) -> None:
-        self._context = context
-        self._connection_id = connection_id
-        self._credentials = ConnectionCredentialRepository(session, context)
-        self._envelopes = EncryptionRepository(session, context)
-        self._encryption = encryption
-
-    async def load(self) -> bytes:
-        credential = await self._credentials.latest_generation(
-            self._connection_id, "oauth_refresh_token"
-        )
-        if credential is None or credential.status not in {
-            "active",
-            "shadow_verified",
-        }:
-            raise ProviderCapabilityError(
-                CanonicalErrorCategory.AUTHENTICATION,
-                "The managed email credential is unavailable.",
-            )
-        envelope = await self._envelopes.get(
-            workspace_id=self._context.tenant.workspace_id,
-            envelope_id=credential.envelope_id,
-        )
-        if envelope is None:
-            raise ProviderCapabilityError(
-                CanonicalErrorCategory.AUTHENTICATION,
-                "The managed email credential is unavailable.",
-            )
-        return await self._encryption.decrypt(envelope)
+ManagedGmailCredentialLoader = ManagedConnectionCredentialLoader
 
 
 class GmailEmailAdapter:

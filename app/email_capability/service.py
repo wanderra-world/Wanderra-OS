@@ -10,13 +10,12 @@ from typing import TypeVar
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.capability_routing.contracts import AuthorizationGate, MutationGuard
 from app.email_capability.contracts import (
-    AuthorizationGate,
     CanonicalEmailPortFactory,
     EmailOperation,
     EmailRoute,
     EmailRoutingStore,
-    MutationGuard,
 )
 from app.email_capability.repository import EmailRoutingRepository
 from app.execution_context import ExecutionContext

@@ -48,6 +48,7 @@ class CalendarEvent:
     attendees: tuple[CalendarAttendee, ...] = ()
     created_at: datetime | None = None
     updated_at: datetime | None = None
+    recurrence: tuple[str, ...] = ()
     extensions: ExtensionEnvelope = EMPTY_EXTENSIONS
 
 
@@ -68,6 +69,7 @@ class CalendarEventCreate:
     description: str | None = None
     location: str | None = None
     attendees: tuple[str, ...] = ()
+    recurrence: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -78,6 +80,7 @@ class CalendarEventPatch:
     description: str | None = None
     location: str | None = None
     attendees: tuple[str, ...] | None = None
+    recurrence: tuple[str, ...] | None = None
 
     def __post_init__(self) -> None:
         if all(
@@ -89,6 +92,7 @@ class CalendarEventPatch:
                 self.description,
                 self.location,
                 self.attendees,
+                self.recurrence,
             )
         ):
             raise ValueError("At least one event change is required.")

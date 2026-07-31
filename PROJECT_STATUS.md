@@ -11,9 +11,9 @@ FastAPI service backed by PostgreSQL, with OpenAI-powered chat and durable memor
 working Google integrations for Gmail, Calendar, and Drive.
 
 The local Docker deployment is operational. Database migrations are at
-`0018_h2_email_capability`. Formal H0 Exit and Formal H1 Exit are accepted. H1-01
-through H1-10 and H2-01 through H2-05 are merged. The H2 platform specification is
-accepted, and H2-06 is implemented on a dedicated branch pending pull-request
+`0019_h2_calendar_capability`. Formal H0 Exit and Formal H1 Exit are accepted. H1-01
+through H1-10 and H2-01 through H2-06 are merged. The H2 platform specification is
+accepted, and H2-07 is implemented on a dedicated branch pending pull-request
 acceptance.
 Gmail/Calendar/Drive authorization has been completed for the current Wanderra user,
 and live end-to-end verification has succeeded for email, calendar events, and the
@@ -307,6 +307,28 @@ full Drive file lifecycle.
   RLS, immutable comparison evidence, and guarded rollback.
 - Phase 1 APIs remain unchanged. No continuous synchronization, webhook, polling,
   worker, Calendar adapter, Drive adapter, or H2-07+ functionality is present.
+
+### Atlas Core H2-07
+
+- The production Google Calendar adapter implements the canonical H2-05 Calendar port
+  for event listing, creation, update, and deletion.
+- Timed offsets, IANA timezone annotations, all-day dates, recurrence rules,
+  attendees, provider versions, cursors, and namespaced extensions are translated
+  without provider types escaping the adapter.
+- Managed credentials reuse the H2-02 repository and H1 envelope service after
+  authorization; the shared loader also removes duplicate credential plumbing from
+  the accepted email adapter without changing its behavior.
+- Per-workspace connection routing supports legacy, shadow, and canonical modes.
+  Shadow reads return the legacy result and append deterministic comparison evidence.
+- Create, update, and delete require action-specific approval and caller-owned
+  idempotency. Update/delete require provider version preconditions and never blind
+  retry conflicts.
+- Mutations perform provider read-back or absence verification before returning.
+- Authorized route changes emit transactional audit and outbox evidence.
+- Additive Calendar routing and shadow-evidence tables use composite workspace keys,
+  forced RLS, immutable comparisons, and guarded rollback.
+- Phase 1 Calendar APIs remain unchanged. No continuous synchronization, push
+  notification, scheduler, worker, storage adapter, or H2-08+ behavior is present.
 
 ### Atlas and memory
 

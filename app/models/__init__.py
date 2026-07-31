@@ -4,6 +4,10 @@ Import every model here to make it discoverable by Alembic migrations.
 """
 
 from app.authorization.models import Permission, RolePermission
+from app.calendar_capability.models import (
+    CalendarCapabilityRoute,
+    CalendarShadowComparison,
+)
 from app.connection_credentials.models import (
     ConnectionCredential,
     CredentialMigrationInventory,
@@ -63,7 +67,9 @@ __all__ = [
     "AggregateVersion",
     "AuditChainHead",
     "CalendarCredential",
+    "CalendarCapabilityRoute",
     "CalendarOAuthState",
+    "CalendarShadowComparison",
     "AuditEvent",
     "Cell",
     "CommandIdempotency",
