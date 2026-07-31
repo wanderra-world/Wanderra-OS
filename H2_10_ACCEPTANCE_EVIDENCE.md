@@ -2,7 +2,7 @@
 
 **Owner:** Atlas Platform Engineering  
 **Specification:** [H2_PLATFORM_SPEC.md](H2_PLATFORM_SPEC.md#h2-10-synthetic-multi-provider-conformance-and-formal-h2-exit)  
-**Status:** Implemented and locally verified; pull-request gate pending  
+**Status:** Implemented and verified; merge pending  
 **Date:** 31 July 2026
 
 ## Scope and exclusions
@@ -85,8 +85,20 @@ closure, compatibility, routing, and conformance tests are included in those sui
 A repository-wide advisory `ruff check .` continues to report the accepted 102
 pre-existing Phase 1 style findings outside H2-10. The merge-blocking Ruff scope
 (`tests/architecture`) and every H2-10 Python file are clean; H2-10 changes none of
-the legacy files. The `H0 Required / H0 Required Gate` result remains pending until
-the dedicated pull request runs on GitHub.
+the legacy files.
+
+## Pull-request gate
+
+Dedicated [PR #23](https://github.com/wanderra-world/Wanderra-OS/pull/23) contains
+only H2-10 tests and evidence. GitHub Actions run `30642120077` passed all four
+protected checks for implementation commit `6b043b2`:
+
+- `H0 Required / Architecture Fitness` — passed;
+- `H0 Required / Regression Tests` — passed;
+- `H0 Required / Docker Build and Smoke` — passed;
+- `H0 Required / H0 Required Gate` — passed.
+
+The evidence-closeout commit is subject to the same protected checks before merge.
 
 ## Findings and slice isolation
 
