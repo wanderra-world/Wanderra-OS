@@ -3,9 +3,9 @@
 The single entry point to the Atlas architecture documentation.
 
 **Owner:** Atlas Architecture Council  
-**Current phase:** Phase 2 — Atlas Core  
-**Status:** Formal H0 Exit accepted; Formal H1 Exit accepted; H2-01 through H2-09
-accepted; H2-10 Formal H2 Exit candidate under verification
+**Current phase:** H3 architecture design — System Intelligence Layer
+**Status:** Formal H0, H1, and H2 Exits accepted; H3 blueprint proposed for review;
+no H3 production implementation authorized
 **Last updated:** July 31, 2026
 
 ## Core principle
@@ -43,7 +43,7 @@ The Google Workspace Foundation is implemented and validated end to end:
 
 See [PROJECT_STATUS.md](PROJECT_STATUS.md) for the detailed implementation status.
 
-### Phase 2 — H1 and H2-01 through H2-09 accepted; Formal H2 Exit review
+### H0–H2 — formally accepted and merged
 
 The architecture phase, Formal H0 Exit, and Formal H1 Exit are complete. H1-01
 through H1-10 are accepted and merged.
@@ -62,9 +62,18 @@ vertical-slice evidence. See
 [PROJECT_STATUS.md](PROJECT_STATUS.md).
 
 The accepted H2 production decomposition is defined in
-[H2_PLATFORM_SPEC.md](H2_PLATFORM_SPEC.md). H2-01 through H2-09 are accepted and
-merged. H2-10 is the authorized evidence-only Formal H2 Exit slice; its evidence is
-under verification and introduces no H3 work.
+[H2_PLATFORM_SPEC.md](H2_PLATFORM_SPEC.md). H2-01 through H2-10 are accepted and
+merged. The accepted decision and evidence are recorded in
+[H2_EXIT_REPORT.md](H2_EXIT_REPORT.md).
+
+### H3 — blueprint proposed; implementation not authorized
+
+The proposed final reusable platform layer is defined by
+[H3_ARCHITECTURE.md](H3_ARCHITECTURE.md), with stage-specific engineering gates in
+[H3_IMPLEMENTATION_GUIDE.md](H3_IMPLEMENTATION_GUIDE.md) and the meaning of Atlas
+Platform Complete in [H3_EXIT_DEFINITION.md](H3_EXIT_DEFINITION.md). ADR-033 proposes
+consolidating the former H3–H8 delivery packaging into eleven sequential H3 slices.
+No production slice or business agent is authorized by these documents.
 
 ## Recommended reading order
 
@@ -269,9 +278,20 @@ Defines the accepted H2 Phase 1 migration decomposition:
 - reversible Gmail, Calendar, and Drive adapter migration;
 - cutover stabilization and Formal H2 Exit.
 
-This specification is accepted. H2-01 through H2-04 are accepted and merged; H2-05
-has explicit implementation authorization. Every later slice still requires
-predecessor acceptance and explicit authorization.
+This specification is accepted and formally closed. H2-01 through H2-10 are accepted
+and merged.
+
+### 14. H3 blueprint
+
+[H3_ARCHITECTURE.md](H3_ARCHITECTURE.md) defines the proposed System Intelligence
+Layer and H3-01 through H3-11 slice architecture.
+
+[H3_IMPLEMENTATION_GUIDE.md](H3_IMPLEMENTATION_GUIDE.md) defines H3-specific delivery,
+compatibility, migration, test, and evidence rules while inheriting the repository-wide
+contract from `IMPLEMENTATION_GUIDE.md`.
+
+[H3_EXIT_DEFINITION.md](H3_EXIT_DEFINITION.md) exclusively defines the Formal H3 Exit
+and the phrase “Atlas Platform Complete.”
 
 ## Architecture document hierarchy
 
@@ -314,6 +334,9 @@ non-overlapping canonical responsibility.
 | `H0_FOUNDATION_SPEC.md` | Atlas Core | Implementable P0 contracts, threat register, targets, and H0 evidence status |
 | `H1_PLATFORM_SPEC.md` | Atlas Core | H1 slice sequence, slice objectives, boundaries, dependencies, and acceptance criteria |
 | `H2_PLATFORM_SPEC.md` | Atlas Core | H2 slice sequence, slice objectives, boundaries, dependencies, acceptance criteria, and evidence contract |
+| `H3_ARCHITECTURE.md` | Atlas Architecture Council | H3 vision, component boundaries, slice sequence, dependencies, and acceptance criteria |
+| `H3_IMPLEMENTATION_GUIDE.md` | Atlas Platform Engineering | H3-specific implementation order, constraints, compatibility, migrations, testing, and evidence gates |
+| `H3_EXIT_DEFINITION.md` | Atlas Architecture Council | Formal H3 Exit and the definition of Atlas Platform Complete |
 
 A document may summarize another document only for navigation or context and must link
 to the canonical owner. Summaries are non-normative and must not restate detailed
@@ -329,6 +352,9 @@ requirements, decision rules, enumerations, or acceptance criteria.
   `IMPLEMENTATION_GUIDE.md`.
 - H1 slice-level decomposition exists only in `H1_PLATFORM_SPEC.md`.
 - H2 slice-level decomposition exists only in `H2_PLATFORM_SPEC.md`.
+- H3 component and slice architecture exists only in `H3_ARCHITECTURE.md`.
+- H3-specific implementation rules exist only in `H3_IMPLEMENTATION_GUIDE.md`.
+- Formal H3 Exit and Atlas Platform Complete exist only in `H3_EXIT_DEFINITION.md`.
 - Strategic phase outcomes exist only in `ROADMAP.md`.
 - Engineering workflow and quality rules exist only in `IMPLEMENTATION_GUIDE.md`.
 - Current implementation claims exist only in `PROJECT_STATUS.md`.
@@ -369,6 +395,7 @@ text and status remain canonical only in `DECISIONS.md`.
 | [ADR-023](DECISIONS.md#adr-023-use-canonical-identities-and-revocable-server-side-sessions) | Identity and sessions |
 | [ADR-030](DECISIONS.md#adr-030-treat-untrusted-content-as-data-and-govern-ai-egress) | AI security and egress |
 | [ADR-031](DECISIONS.md#adr-031-enforce-architecture-invariants-with-fitness-tests) | Architecture fitness tests |
+| [ADR-033](DECISIONS.md#adr-033-consolidate-the-remaining-reusable-platform-foundation-into-h3) | H3 final-platform sequencing and post-H3 business-agent boundary |
 
 ## P0 Architecture Gate
 
@@ -459,9 +486,13 @@ enforcement is owned by `IMPLEMENTATION_GUIDE.md`.
 | [H2_EVIDENCE_MATRIX.md](H2_EVIDENCE_MATRIX.md) | Complete H2 criterion-to-evidence trace |
 | [H2_SECURITY_REVIEW.md](H2_SECURITY_REVIEW.md) | Formal H2 threat and residual-risk review |
 | [H2_EXIT_REPORT.md](H2_EXIT_REPORT.md) | Formal H2 Exit decision and completed baseline |
+| [H3_ARCHITECTURE.md](H3_ARCHITECTURE.md) | Proposed H3 System Intelligence architecture and slice decomposition |
+| [H3_IMPLEMENTATION_GUIDE.md](H3_IMPLEMENTATION_GUIDE.md) | Proposed H3-specific engineering contract |
+| [H3_EXIT_DEFINITION.md](H3_EXIT_DEFINITION.md) | Proposed Formal H3 Exit and Atlas Platform Complete definition |
 
 ## Next action
 
-Complete the dedicated H2-10 protected pull-request review. Formal H2 Exit becomes
-effective after the required gate passes and the pull request is merged. Do not begin
-H3 without separate authorization.
+Review ADR-033 and the H3 blueprint as one coherent architecture change. Do not begin
+H3-01 until the blueprint, decision, architecture consistency checks, security review
+scope, and H3-01 Definition of Ready are explicitly accepted. Do not begin any business
+agent or H4 work.

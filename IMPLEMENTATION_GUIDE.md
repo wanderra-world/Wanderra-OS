@@ -112,9 +112,9 @@ Relevant decisions:
 
 ## 3. Canonical implementation order
 
-The stage names and order below are inherited from the approved hardening plan. They
-MUST NOT be renamed or reordered without updating the Architecture Index and approving
-the relevant ADR changes.
+H0 through H2 retain the approved hardening sequence. ADR-033 consolidates the former
+H3–H8 packaging into the final H3 program. Future renaming or reordering requires an
+Architecture Index update and a superseding ADR.
 
 The requested engineering areas map to the canonical stages as follows:
 
@@ -123,12 +123,13 @@ The requested engineering areas map to the canonical stages as follows:
 | Foundation | H0 and H1 |
 | Identity | H1 |
 | Workspaces | H1 |
-| Permissions | H1, extended in H3 |
-| Connections | H2 and H4 |
-| Universal Entities | H3 |
-| Memory | H5 and H6 |
-| Search | H6 |
-| Atlas Agent | H8; broad autonomy is outside early Phase 2 |
+| Permissions | H1; H3 resource grants reuse H1 authorization |
+| Connections | H2; H3 durable work consumes H2 ports |
+| Universal Resources | H3-01 |
+| Documents, Knowledge, and Memory | H3-03 through H3-05 |
+| Search | H3-06 |
+| Tasks, Workflows, and Notifications | H3-07 through H3-09 |
+| Agent platform contracts | H3-10; business agents remain post-H3 |
 
 Stages are sequential release gates. Limited exploratory prototypes MAY run earlier
 only when H0 explicitly requires them; they are not production implementation.
@@ -251,7 +252,19 @@ only when H0 explicitly requires them; they are not production implementation.
 - No direct Google SDK or payload dependency remains in business/application code.
 - Phase 1 behavior remains backward compatible.
 
-### H3
+### H3 System Intelligence Layer
+
+ADR-033 consolidates the former H3–H8 delivery packaging into the final reusable H3
+platform program. The canonical H3 implementation order, prerequisites, deliverables,
+tests, compatibility, migration, and exit gates are owned by
+[H3_IMPLEMENTATION_GUIDE.md](H3_IMPLEMENTATION_GUIDE.md). The component and slice
+architecture is owned by [H3_ARCHITECTURE.md](H3_ARCHITECTURE.md), and Formal H3 Exit
+is owned by [H3_EXIT_DEFINITION.md](H3_EXIT_DEFINITION.md).
+
+The historical sections below preserve the pre-ADR-033 review record only. They have
+no implementation-authorizing or normative effect.
+
+### Historical H3: Minimum universal core (superseded by ADR-033)
 
 **Architecture purpose:**
 [Stage H3](ARCHITECTURE_HARDENING.md#stage-h3-minimum-universal-core)
@@ -285,7 +298,7 @@ only when H0 explicitly requires them; they are not production implementation.
 - Tenant integrity is enforced by both application policy and database constraints.
 - No operational aggregate is stored as a generic EAV/JSON entity.
 
-### H4
+### Historical H4: Durable processing (superseded by ADR-033)
 
 **Architecture purpose:**
 [Stage H4](ARCHITECTURE_HARDENING.md#stage-h4-durable-processing-and-provider-synchronization)
@@ -318,7 +331,7 @@ only when H0 explicitly requires them; they are not production implementation.
   credentials, quota limits, and worker crashes.
 - Operators can detect, diagnose, pause, replay, and reconcile failed work.
 
-### H5
+### Historical H5: Documents and derivation (superseded by ADR-033)
 
 **Architecture purpose:**
 [Stage H5](ARCHITECTURE_HARDENING.md#stage-h5-documents-activity-and-governed-derivation)
@@ -352,7 +365,7 @@ only when H0 explicitly requires them; they are not production implementation.
 - Every derivative is traceable to its source, model or extractor version, and policy.
 - Deletion is demonstrably complete or produces an explicit, auditable exception.
 
-### H6
+### Historical H6: Search and memory (superseded by ADR-033)
 
 **Architecture purpose:**
 [Stage H6](ARCHITECTURE_HARDENING.md#stage-h6-permission-aware-search-and-memory)
@@ -387,7 +400,7 @@ only when H0 explicitly requires them; they are not production implementation.
 - Retrieval never treats vector similarity as authorization.
 - Memory never becomes untraceable operational truth.
 
-### H7
+### Historical H7: Product cutover (superseded by ADR-033)
 
 **Architecture purpose:**
 [Stage H7](ARCHITECTURE_HARDENING.md#stage-h7-core-product-and-migration-cutover)
@@ -419,7 +432,7 @@ only when H0 explicitly requires them; they are not production implementation.
 - Restore and forward-fix procedures have been exercised successfully.
 - Temporary compatibility code is removed or has an approved owner and removal date.
 
-### H8
+### Historical H8: Recommendations and approvals (superseded by ADR-033)
 
 **Architecture purpose:**
 [Stage H8](ARCHITECTURE_HARDENING.md#stage-h8-recommendations-and-basic-approvals)
