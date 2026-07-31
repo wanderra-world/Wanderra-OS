@@ -11,9 +11,9 @@ FastAPI service backed by PostgreSQL, with OpenAI-powered chat and durable memor
 working Google integrations for Gmail, Calendar, and Drive.
 
 The local Docker deployment is operational. Database migrations are at
-`0016_h2_oauth_transactions`. Formal H0 Exit and Formal H1 Exit are accepted. H1-01
-through H1-10 and H2-01 through H2-02 are merged. The H2 platform specification is
-accepted, and H2-03 is implemented on a dedicated branch pending pull-request
+`0017_h2_provider_mirrors`. Formal H0 Exit and Formal H1 Exit are accepted. H1-01
+through H1-10 and H2-01 through H2-03 are merged. The H2 platform specification is
+accepted, and H2-04 is implemented on a dedicated branch pending pull-request
 acceptance.
 Gmail/Calendar/Drive authorization has been completed for the current Wanderra user,
 and live end-to-end verification has succeeded for email, calendar events, and the
@@ -237,6 +237,33 @@ full Drive file lifecycle.
 - No provider mirror, external reference, capability execution, adapter cutover,
   worker, API, or H2-04 functionality is present.
 
+### Atlas Core H2-04
+
+- Canonical workspace- and connection-scoped provider mirrors with stable external
+  resource identity.
+- Immutable external-reference identity with an approval-linked optional future
+  canonical reference; no H3 universal entity is introduced.
+- Explicit resource and field authority metadata using the four accepted authority
+  policies.
+- Deterministic inbound comparison decisions for no-change, provider-authoritative
+  application, conflict, and tombstone outcomes.
+- Deterministic outbound precondition decisions that deny provider-authoritative
+  writes and require refresh instead of blind stale retries.
+- Durable comparison evidence and PostgreSQL advisory locks make observation and
+  decision replay idempotent.
+- Explicit conflict evidence and user-resolution records prohibit destructive
+  last-write-wins behavior.
+- Provider tombstones preserve governed Atlas evidence and remain distinct from Atlas
+  deletion.
+- Optional raw-payload references require an approved custody owner; H2-04 stores no
+  raw provider payload blobs.
+- Forced PostgreSQL RLS, composite workspace foreign keys, immutable identity
+  triggers, audit/outbox atomicity, additive migration, and guarded rollback protect
+  mirror state.
+- No provider call, capability port, adapter, webhook, poller, scheduler, worker,
+  universal entity, automatic conflict resolution, API, or H2-05 functionality is
+  present.
+
 ### Atlas and memory
 
 - Atlas chat endpoint backed by the configured OpenAI model.
@@ -346,6 +373,11 @@ The Docker Compose stack contains:
 | `connection_capability_grants` | Workspace-owned versioned connection capability grants |
 | `connection_credentials` | Connection-bound encrypted credential generation metadata |
 | `credential_migration_inventory` | Idempotent Phase 1 credential inventory and shadow-verification evidence |
+| `oauth_transactions` | Workspace-bound, single-use canonical OAuth transaction metadata |
+| `provider_mirrors` | Provider resource identity, authority, version, hash, state, and tombstone metadata |
+| `provider_external_references` | Immutable provider identity and optional approved canonical linkage |
+| `provider_mirror_conflicts` | Explicit conflict detection and user-resolution evidence |
+| `provider_mirror_comparisons` | Idempotent inbound and outbound comparison decisions |
 
 `drive_file_metadata` stores the file name, MIME type, size, modification time, view
 link, MD5 checksum, parent IDs, the normalized provider payload, and synchronization
@@ -404,7 +436,7 @@ Interactive OpenAPI documentation is available at `/docs`.
 
 ## Test coverage
 
-The current PostgreSQL-backed automated suite contains 365 passing tests:
+The current PostgreSQL-backed automated suite contains 404 passing tests:
 
 - Health and Atlas chat API behavior.
 - Gmail MIME construction and message parsing.
@@ -459,6 +491,13 @@ The current PostgreSQL-backed automated suite contains 365 passing tests:
   checksums, shadow replay, concurrent migration serialization, managed-key failures,
   rotation, emergency disable, forced RLS, migration rollback, and strict H2-03+
   slice isolation.
+- H2-03 OAuth state/PKCE custody, binding, scope supersets, replay, expiry,
+  cancellation, provider denial, concurrency, forced RLS, guarded rollback, and strict
+  H2-04+ slice isolation.
+- H2-04 mirror identity, authority decision tables, version/hash comparisons,
+  tombstones, conflicts, canonical linkage, idempotent replay, stale outbound
+  preconditions, cross-workspace attacks, forced RLS, guarded rollback, and strict
+  H2-05+ slice isolation.
 
 Live integration verification has additionally covered:
 

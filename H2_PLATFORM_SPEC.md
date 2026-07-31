@@ -3,7 +3,7 @@
 Canonical implementation decomposition for Atlas Phase 2 Stage H2.
 
 **Owner:** Atlas Core  
-**Status:** Accepted; H2-01 and H2-02 accepted, H2-03 implementation under review
+**Status:** Accepted; H2-01 through H2-03 accepted, H2-04 implementation under review
 **Stage:** H2 — Phase 1 migration foundation  
 **Architecture entry point:** [README_ARCHITECTURE.md](README_ARCHITECTURE.md)  
 **Engineering gate:** [IMPLEMENTATION_GUIDE.md](IMPLEMENTATION_GUIDE.md#h2)  
@@ -369,7 +369,7 @@ credential reads, OAuth callbacks, APIs, or provider behavior.
 
 ### H2-02: Managed connection credentials and migration inventory
 
-**Status:** Implemented; pull-request acceptance pending.
+**Status:** Accepted and merged.
 
 **Objective**
 
@@ -427,6 +427,8 @@ Drive credentials can be migrated safely without changing active reads.
 - [Credential migration and recovery runbook](H2_02_CREDENTIAL_OPERATIONS.md)
 
 ### H2-03: OAuth transaction and incremental authorization boundary
+
+**Status:** Accepted and merged.
 
 **Objective**
 
@@ -521,6 +523,10 @@ continuous synchronization execution.
 - PostgreSQL RLS, composite-key, concurrency, idempotency, tombstone, migration, and
   rollback tests.
 - Architecture fitness evidence proving H3/H4 boundaries.
+- [H2-04 implementation evidence](H2_04_ACCEPTANCE_EVIDENCE.md)
+- [H2-04 contract and PostgreSQL tests](tests/provider_mirrors/)
+- [H2-04 slice-isolation fitness tests](tests/architecture/test_h2_04_mirror_scope.py)
+- [Additive H2-04 migration](alembic/versions/0017_add_provider_mirrors.py)
 
 ### H2-05: Canonical capability contracts and provider SDK boundary
 

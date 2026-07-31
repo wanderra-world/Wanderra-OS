@@ -2,7 +2,7 @@
 
 **Owner:** Atlas Core  
 **Slice:** H2-03 — OAuth transaction and incremental authorization boundary  
-**Status:** Implemented and locally verified; pull-request acceptance pending  
+**Status:** Accepted and merged
 **Date:** 31 July 2026  
 **Governing specification:** [H2_PLATFORM_SPEC.md](H2_PLATFORM_SPEC.md#h2-03-oauth-transaction-and-incremental-authorization-boundary)
 
@@ -116,4 +116,5 @@ The protected workflow passed for the implementation commit:
 - `H0 Required / Docker Build and Smoke` — passed;
 - `H0 Required / H0 Required Gate` — passed.
 
-H2-03 remains pending formal acceptance and merge. H2-04 has not started.
+PR #16 was accepted and merged into `master` as commit `c5a8344`. H2-04 began only
+after that accepted baseline.
