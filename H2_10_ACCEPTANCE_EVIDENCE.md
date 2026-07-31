@@ -2,7 +2,7 @@
 
 **Owner:** Atlas Platform Engineering  
 **Specification:** [H2_PLATFORM_SPEC.md](H2_PLATFORM_SPEC.md#h2-10-synthetic-multi-provider-conformance-and-formal-h2-exit)  
-**Status:** Implemented and verified; merge pending  
+**Status:** Accepted and merged; Formal H2 Exit effective
 **Date:** 31 July 2026
 
 ## Scope and exclusions
@@ -98,10 +98,10 @@ protected checks for implementation commit `6b043b2`:
 - `H0 Required / Docker Build and Smoke` — passed;
 - `H0 Required / H0 Required Gate` — passed.
 
-The evidence-closeout commit is subject to the same protected checks before merge.
+The evidence-closeout commit passed the same protected checks and PR #23 merged into
+`master` as commit `b4d0e4b`.
 
 ## Findings and slice isolation
 
-No known critical or high finding is open. H2-10 adds no migration. H3 has not been
-started. Formal acceptance remains contingent on the dedicated pull request passing
-all mandatory checks and being reviewed under the protected branch policy.
+No known critical or high finding is open. H2-10 adds no migration. Formal H2 Exit is
+accepted. H3 production implementation has not started.

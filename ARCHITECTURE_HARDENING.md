@@ -658,37 +658,21 @@ and transactional messaging foundation.
 Purpose: move Phase 1 Google capabilities behind provider-neutral connections and
 migration boundaries without breaking existing behavior.
 
-## Stage H3: Minimum universal core
+## Stage H3: System Intelligence Layer
 
-Purpose: deliver the constrained universal entity layer and minimum typed operational
-core.
+Purpose: complete the reusable Atlas platform before business agents by delivering the
+constrained resource core, durable execution, governed documents and derivatives,
+knowledge, memory, permission-aware search, tasks, workflows, notifications, agent
+platform contracts, and operational intelligence through sequential H3 slices.
 
-## Stage H4: Durable processing and provider synchronization
-
-Purpose: make asynchronous work and provider synchronization durable, recoverable, and
-operable.
-
-## Stage H5: Documents, activity, and governed derivation
-
-Purpose: establish governed documents, activity, extraction, provenance, retention, and
-derivative deletion.
-
-## Stage H6: Permission-aware search and memory
-
-Purpose: provide permission-aware hybrid search and governed memory.
-
-## Stage H7: Core product and migration cutover
-
-Purpose: deliver core product surfaces and complete the verified Phase 1 cutover.
-
-## Stage H8: Recommendations and basic approvals
-
-Purpose: add evidence-linked recommendations and basic approval-controlled actions
-without broad autonomy.
+ADR-033 supersedes the former H3–H8 delivery packaging. It preserves the underlying
+architecture boundaries and consolidates their implementation into the H3 program
+defined by [H3_ARCHITECTURE.md](H3_ARCHITECTURE.md). H4 and business-agent work are not
+authorized by this consolidation.
 
 All stage prerequisites, deliverables, required tests, and exit criteria are owned
 exclusively by
-[IMPLEMENTATION_GUIDE.md](IMPLEMENTATION_GUIDE.md#3-canonical-implementation-order).
+[H3_IMPLEMENTATION_GUIDE.md](H3_IMPLEMENTATION_GUIDE.md).
 
 ## Phase 2 completion definition
 

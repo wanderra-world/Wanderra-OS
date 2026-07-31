@@ -13,8 +13,8 @@ working Google integrations for Gmail, Calendar, and Drive.
 The local Docker deployment is operational. Database migrations are at
 `0021_h2_connection_cutover`. Formal H0 Exit and Formal H1 Exit are accepted. H1-01
 through H1-10 and H2-01 through H2-08 are merged. The H2 platform specification is
-accepted. H2-01 through H2-09 are merged, and the evidence-only H2-10 Formal H2 Exit
-slice is under verification.
+accepted. H2-01 through H2-10 are merged and Formal H2 Exit is accepted. H3 remains
+architecture-only: its proposed blueprint introduces no production code or migration.
 Gmail/Calendar/Drive authorization has been completed for the current Wanderra user,
 and live end-to-end verification has succeeded for email, calendar events, and the
 full Drive file lifecycle.
@@ -366,9 +366,9 @@ full Drive file lifecycle.
 - Adversarial replay and stale-version mutation tests fail closed.
 - A complete H2 evidence matrix and formal security review trace migration, RLS,
   routing, cutover, rollback, approval, recovery, export, closure, and compatibility.
-- H2-10 is schema-free and changes no production runtime behavior. Formal H2 Exit
-  becomes effective only after its protected pull request is green and merged.
-- H3 has not been started.
+- H2-10 is schema-free and changes no production runtime behavior. PR #23 passed the
+  protected required gate, merged into `master`, and made Formal H2 Exit effective.
+- H3 production implementation has not started.
 
 ### Atlas and memory
 
@@ -542,7 +542,7 @@ Interactive OpenAPI documentation is available at `/docs`.
 
 ## Test coverage
 
-The current PostgreSQL-backed automated suite contains 428 passing tests:
+The current PostgreSQL-backed automated suite contains 479 passing tests:
 
 - Health and Atlas chat API behavior.
 - Gmail MIME construction and message parsing.

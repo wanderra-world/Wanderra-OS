@@ -3,7 +3,7 @@
 Canonical implementation decomposition for Atlas Phase 2 Stage H2.
 
 **Owner:** Atlas Core  
-**Status:** Accepted; H2-01 through H2-04 accepted, H2-05 implementation under review
+**Status:** Accepted and formally closed; H2-01 through H2-10 accepted and merged
 **Stage:** H2 — Phase 1 migration foundation  
 **Architecture entry point:** [README_ARCHITECTURE.md](README_ARCHITECTURE.md)  
 **Engineering gate:** [IMPLEMENTATION_GUIDE.md](IMPLEMENTATION_GUIDE.md#h2)  
@@ -532,7 +532,7 @@ continuous synchronization execution.
 
 ### H2-05: Canonical capability contracts and provider SDK boundary
 
-**Status:** Implementation complete; pending pull-request acceptance and merge.
+**Status:** Accepted and merged.
 
 **Objective**
 

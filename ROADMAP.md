@@ -150,6 +150,11 @@ pgvector remains Phase 2 work.
 
 ## Phase 3: Business modules
 
+Business-module and business-agent implementation begins only after the Formal H3 Exit
+defined by [H3_EXIT_DEFINITION.md](H3_EXIT_DEFINITION.md). ADR-033 consolidates the
+remaining reusable platform foundation into H3; the strategic phases below describe
+product outcomes and do not authorize a separate H4 platform stage.
+
 Build reusable domains before workspace-specific variants.
 
 ### Shared modules

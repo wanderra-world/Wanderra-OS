@@ -1,16 +1,15 @@
 # Formal H2 Exit Report
 
 **Owner:** Atlas Architecture Council  
-**Decision:** Formal H2 Exit candidate accepted by evidence; merge pending  
+**Decision:** Formal H2 Exit accepted; PR #23 merged into `master`
 **Date:** 31 July 2026
 
 ## Executive decision
 
-H2-01 through H2-09 are accepted and merged. H2-10 supplies the final integrated
+H2-01 through H2-10 are accepted and merged. H2-10 supplies the final integrated
 multi-provider, security, migration, compatibility, recovery, and architectural
-evidence without changing production behavior or schema. Subject to the dedicated
-pull request passing the merge-blocking required gate and being merged, the Formal H2
-Exit criteria are satisfied. PR #23 has passed the protected Architecture Fitness,
+evidence without changing production behavior or schema. The Formal H2 Exit criteria
+are satisfied. PR #23 passed the protected Architecture Fitness,
 Regression Tests, Docker Build and Smoke, and aggregate H0 Required Gate checks.
 
 ## Completed architecture baseline
@@ -42,6 +41,6 @@ disposition is in [H2_SECURITY_REVIEW.md](H2_SECURITY_REVIEW.md).
 
 ## Formal boundary
 
-Formal H2 Exit becomes effective only after the H2-10 pull request passes all required
-GitHub checks and is merged to `master`. Acceptance authorizes consideration of H3;
-it does not authorize H3 implementation. H3 has not been started.
+Formal H2 Exit became effective when PR #23 passed all required GitHub checks and was
+merged to `master` as commit `b4d0e4b`. Acceptance authorizes consideration of H3; it
+does not authorize H3 implementation.

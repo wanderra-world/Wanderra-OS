@@ -426,3 +426,45 @@ has been shown insufficient.
 
 **Consequences:** H0 specifies job/event semantics but does not choose the permanent P1
 job platform. See `H0_FOUNDATION_SPEC.md` sections 13–16.
+
+## ADR-033: Consolidate the remaining reusable platform foundation into H3
+
+**Status:** Proposed; required before H3 implementation
+
+**Decision:** After Formal H2 Exit, consolidate the reusable platform capabilities
+previously sequenced as H3 through H8 into one final, internally gated H3 System
+Intelligence program. H3 uses sequential H3-01 through H3-11 slices and ends with a
+Formal H3 Exit. Business agents and business modules begin only after that exit under
+separate authorization. No H4 implementation stage is authorized by this decision.
+
+This decision changes delivery packaging and stage numbering only. It preserves the
+accepted boundaries and constraints of ADR-003/028 (constrained universal resources),
+ADR-005/027 (data planes and lineage), ADR-008/029 (events and concurrency), ADR-010/011
+(agent command and approval boundaries), ADR-012/030 (retrieval and AI egress),
+ADR-019 (durable jobs), ADR-020 (migrations), ADR-024 (authorization), ADR-031
+(fitness tests), and ADR-032 (PostgreSQL-first extraction criteria).
+
+**Why:** The remaining capabilities form one dependency chain needed by every future
+business agent: governed resources, durable execution, documents, knowledge, memory,
+search, tasks, workflows, notifications, agent contracts, and observability. Keeping
+them as multiple top-level stages suggests that business modules may safely begin
+between them, while calling only the original minimum entity stage “H3” no longer
+matches the stated product gate. A single program with small sequential slices makes
+“platform complete before business agents” explicit without merging bounded contexts
+or permitting a big-bang implementation.
+
+**Alternatives considered:**
+
+- Retain H3–H8 unchanged: rejected because the requested final-platform gate would
+  remain ambiguous and business-agent readiness would not have one formal exit.
+- Build only orchestration/planning in H3: rejected because agents over weak custody,
+  provenance, retrieval, jobs, and workflow foundations would be unsafe.
+- Implement the entire layer as one slice or service: rejected because it would be
+  unreviewable, rollback-hostile, and premature distribution.
+
+**Consequences:** `H3_ARCHITECTURE.md` owns the H3 component and slice architecture;
+`H3_IMPLEMENTATION_GUIDE.md` owns H3-specific engineering gates;
+`H3_EXIT_DEFINITION.md` owns the meaning of Atlas Platform Complete. The prior H3–H8
+stage sequence is historical and superseded for future implementation. Each H3 slice
+still requires explicit authorization, dedicated evidence, protected CI, acceptance,
+and merge. This ADR does not authorize production code, H4 work, or a business agent.
