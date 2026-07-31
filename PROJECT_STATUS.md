@@ -13,8 +13,8 @@ working Google integrations for Gmail, Calendar, and Drive.
 The local Docker deployment is operational. Database migrations are at
 `0021_h2_connection_cutover`. Formal H0 Exit and Formal H1 Exit are accepted. H1-01
 through H1-10 and H2-01 through H2-08 are merged. The H2 platform specification is
-accepted, and H2-09 is implemented on a dedicated branch pending pull-request
-acceptance.
+accepted. H2-01 through H2-09 are merged, and the evidence-only H2-10 Formal H2 Exit
+slice is under verification.
 Gmail/Calendar/Drive authorization has been completed for the current Wanderra user,
 and live end-to-end verification has succeeded for email, calendar events, and the
 full Drive file lifecycle.
@@ -356,6 +356,19 @@ full Drive file lifecycle.
   credentials, closes connections, restores legacy flags, and preserves provider
   reconciliation boundaries.
 - Compatibility code remains owned by Atlas Core until the explicit H7 removal gate.
+
+### Atlas Core H2-10
+
+- Integrated canonical-output validation covers Gmail, Google Calendar, and Google
+  Drive through the provider-neutral H2 capability ports.
+- Two independent deterministic mock-provider connections prove shared email,
+  calendar, and storage contracts are not Google-shaped.
+- Adversarial replay and stale-version mutation tests fail closed.
+- A complete H2 evidence matrix and formal security review trace migration, RLS,
+  routing, cutover, rollback, approval, recovery, export, closure, and compatibility.
+- H2-10 is schema-free and changes no production runtime behavior. Formal H2 Exit
+  becomes effective only after its protected pull request is green and merged.
+- H3 has not been started.
 
 ### Atlas and memory
 
