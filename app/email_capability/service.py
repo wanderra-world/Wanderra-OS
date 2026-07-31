@@ -53,34 +53,25 @@ class EmailCapabilityService:
     async def profile(self) -> EmailProfile:
         return await self._read(EmailOperation.PROFILE, lambda port: port.profile())
 
-    async def list_messages(
-        self, request: EmailListRequest
-    ) -> Page[EmailMessage]:
-        return await self._read(
-            EmailOperation.LIST, lambda port: port.list_messages(request)
-        )
+    async def list_messages(self, request: EmailListRequest) -> Page[EmailMessage]:
+        return await self._read(EmailOperation.LIST, lambda port: port.list_messages(request))
 
     async def list_unread(self, request: EmailListRequest) -> Page[EmailMessage]:
-        return await self._read(
-            EmailOperation.UNREAD, lambda port: port.list_unread(request)
-        )
+        return await self._read(EmailOperation.UNREAD, lambda port: port.list_unread(request))
 
-    async def search_messages(
-        self, request: EmailSearchRequest
-    ) -> Page[EmailMessage]:
-        return await self._read(
-            EmailOperation.SEARCH, lambda port: port.search_messages(request)
-        )
+    async def search_messages(self, request: EmailSearchRequest) -> Page[EmailMessage]:
+        return await self._read(EmailOperation.SEARCH, lambda port: port.search_messages(request))
 
     async def create_draft(
         self, message: EmailMessageCreate, context: MutationContext
     ) -> EmailMessage:
         await self._authorization.require("update_content")
-        route = await self._routing.route()
+        mutation_route = getattr(self._routing, "mutation_route", None)
+        route = (
+            await mutation_route() if mutation_route is not None else await self._routing.route()
+        )
         port = (
-            await self._factory.canonical_port()
-            if route is EmailRoute.CANONICAL
-            else self._legacy
+            await self._factory.canonical_port() if route is EmailRoute.CANONICAL else self._legacy
         )
         return await port.create_draft(message, context)
 
@@ -95,15 +86,14 @@ class EmailCapabilityService:
         if self._mutations is None:
             raise RuntimeError("A mutation guard is required for sending email.")
         await self._mutations.require_approval(approval_id)
-        route = await self._routing.route()
-        port = (
-            await self._factory.canonical_port()
-            if route is EmailRoute.CANONICAL
-            else self._legacy
+        mutation_route = getattr(self._routing, "mutation_route", None)
+        route = (
+            await mutation_route() if mutation_route is not None else await self._routing.route()
         )
-        digest = hashlib.sha256(
-            json.dumps(to_wire(message), sort_keys=True).encode()
-        ).hexdigest()
+        port = (
+            await self._factory.canonical_port() if route is EmailRoute.CANONICAL else self._legacy
+        )
+        digest = hashlib.sha256(json.dumps(to_wire(message), sort_keys=True).encode()).hexdigest()
         return await self._mutations.execute_once(
             context.idempotency_key,
             digest,
@@ -143,9 +133,7 @@ class EmailRouteControlService:
         self._context = context
         self._connection_id = connection_id
         self._authorization = authorization
-        self._repository = EmailRoutingRepository(
-            session, context, connection_id=connection_id
-        )
+        self._repository = EmailRoutingRepository(session, context, connection_id=connection_id)
         self._audit = AuditWriterService(session, context)
 
     async def set_route(self, route: EmailRoute) -> None:

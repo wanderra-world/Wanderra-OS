@@ -8,6 +8,10 @@ from datetime import UTC, datetime
 from sqlalchemy import delete, func, select, text, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.calendar_capability.models import CalendarCapabilityRoute
+from app.connection_credentials.models import ConnectionCredential
+from app.connections.models import Connection
+from app.email_capability.models import EmailCapabilityRoute
 from app.encryption.models import EncryptedEnvelope
 from app.execution_context import ExecutionContext
 from app.identity.lifecycle_models import (
@@ -37,6 +41,7 @@ from app.recovery.repository import (
     manifest_payload,
     payload_digest,
 )
+from app.storage_capability.models import StorageCapabilityRoute
 from app.tenancy.models import OutboxEvent
 
 
@@ -127,9 +132,7 @@ class WorkspaceRecoveryService:
                 status="succeeded",
                 source_snapshot_at=artifact.source_snapshot_at,
                 recovery_point_seconds=int(
-                    (
-                        artifact.completed_at - artifact.source_snapshot_at
-                    ).total_seconds()
+                    (artifact.completed_at - artifact.source_snapshot_at).total_seconds()
                 ),
                 key_access_verified=True,
                 evidence_digest=payload_digest(payload),
@@ -201,9 +204,7 @@ class WorkspaceRecoveryService:
                 idempotency_key=idempotency_key,
                 state=ClosureState.WRITES_FROZEN,
                 initiated_by=self._context.actor.actor_id,
-                authorization_decision_id=(
-                    self._context.actor.authorization_decision_id
-                ),
+                authorization_decision_id=(self._context.actor.authorization_decision_id),
                 reason=reason,
                 before_manifest=manifest_payload(before),
             )
@@ -277,6 +278,45 @@ class WorkspaceRecoveryService:
             .where(EncryptedEnvelope.workspace_id == workspace_id)
             .values(status="disabled")
         )
+        if await self._table_exists("connection_credentials"):
+            await self._session.execute(
+                update(ConnectionCredential)
+                .where(ConnectionCredential.workspace_id == workspace_id)
+                .values(status="disabled", disabled_at=now)
+            )
+        if await self._table_exists("connections"):
+            await self._session.execute(
+                update(Connection)
+                .where(
+                    Connection.workspace_id == workspace_id,
+                    Connection.status != "closed",
+                )
+                .values(status="closed", closed_at=now, version=Connection.version + 1)
+            )
+        for table_name, route_model in (
+            ("email_capability_routes", EmailCapabilityRoute),
+            ("calendar_capability_routes", CalendarCapabilityRoute),
+            ("storage_capability_routes", StorageCapabilityRoute),
+        ):
+            if await self._table_exists(table_name):
+                if await self._column_exists(table_name, "mutation_route"):
+                    await self._session.execute(
+                        update(route_model)
+                        .where(route_model.workspace_id == workspace_id)
+                        .values(
+                            route="legacy",
+                            mutation_route="legacy",
+                            version=route_model.version + 1,
+                        )
+                    )
+                else:
+                    await self._session.execute(
+                        text(
+                            f"UPDATE {table_name} SET route='legacy', version=version+1 "
+                            "WHERE workspace_id=:workspace_id"
+                        ),
+                        {"workspace_id": workspace_id},
+                    )
 
     async def _erase_eligible_h1_data(self) -> None:
         workspace_id = self._context.tenant.workspace_id
@@ -284,16 +324,45 @@ class WorkspaceRecoveryService:
             IdentitySession,
             IdentityLifecycleToken,
             SecurityNotification,
-            EncryptedEnvelope,
             InboxEvent,
             EventQuarantine,
             ConsumerSequence,
             CommandIdempotency,
             AggregateVersion,
         ):
-            await self._session.execute(
-                delete(model).where(model.workspace_id == workspace_id)
+            await self._session.execute(delete(model).where(model.workspace_id == workspace_id))
+        envelope_delete = delete(EncryptedEnvelope).where(
+            EncryptedEnvelope.workspace_id == workspace_id
+        )
+        if await self._table_exists("connection_credentials"):
+            referenced_envelopes = select(ConnectionCredential.envelope_id).where(
+                ConnectionCredential.workspace_id == workspace_id
             )
+            envelope_delete = envelope_delete.where(
+                EncryptedEnvelope.id.not_in(referenced_envelopes)
+            )
+        await self._session.execute(envelope_delete)
+
+    async def _table_exists(self, table_name: str) -> bool:
+        return bool(
+            await self._session.scalar(
+                text("SELECT to_regclass(:table_name) IS NOT NULL"),
+                {"table_name": f"public.{table_name}"},
+            )
+        )
+
+    async def _column_exists(self, table_name: str, column_name: str) -> bool:
+        return bool(
+            await self._session.scalar(
+                text(
+                    """SELECT EXISTS (
+                    SELECT 1 FROM information_schema.columns
+                    WHERE table_schema='public' AND table_name=:table_name
+                      AND column_name=:column_name)"""
+                ),
+                {"table_name": table_name, "column_name": column_name},
+            )
+        )
 
     async def _record_closure_evidence(
         self,
@@ -315,8 +384,7 @@ class WorkspaceRecoveryService:
         )
         sequence = (
             await self._session.scalar(
-                select(func.coalesce(func.max(OutboxEvent.aggregate_sequence), 0))
-                .where(
+                select(func.coalesce(func.max(OutboxEvent.aggregate_sequence), 0)).where(
                     OutboxEvent.workspace_id == closure.workspace_id,
                     OutboxEvent.aggregate_type == "workspace",
                     OutboxEvent.aggregate_id == closure.workspace_id,
@@ -373,13 +441,8 @@ class WorkspaceRecoveryService:
         self,
         authorization_decision_id: uuid.UUID,
     ) -> None:
-        if (
-            authorization_decision_id
-            != self._context.actor.authorization_decision_id
-        ):
-            raise WorkspaceRecoveryError(
-                "recovery authorization does not match execution context"
-            )
+        if authorization_decision_id != self._context.actor.authorization_decision_id:
+            raise WorkspaceRecoveryError("recovery authorization does not match execution context")
 
     @staticmethod
     def _manifest_from_payload(
@@ -397,7 +460,5 @@ class WorkspaceRecoveryService:
                 str(key): str(value)
                 for key, value in dict(payload["table_digests"]).items()  # type: ignore[arg-type]
             },
-            provider_reconciliation_required=bool(
-                payload["provider_reconciliation_required"]
-            ),
+            provider_reconciliation_required=bool(payload["provider_reconciliation_required"]),
         )

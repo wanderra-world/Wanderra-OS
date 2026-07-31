@@ -59,7 +59,10 @@ class StorageCapabilityService:
         if precondition and context.precondition is None:
             raise ValueError("A version precondition is required.")
         await self._mutations.require_approval(approval)
-        route = await self._routing.route()
+        mutation_route = getattr(self._routing, "mutation_route", None)
+        route = (
+            await mutation_route() if mutation_route is not None else await self._routing.route()
+        )
         port = (
             await self._factory.canonical_port()
             if route is StorageRoute.CANONICAL

@@ -11,9 +11,9 @@ FastAPI service backed by PostgreSQL, with OpenAI-powered chat and durable memor
 working Google integrations for Gmail, Calendar, and Drive.
 
 The local Docker deployment is operational. Database migrations are at
-`0020_h2_storage_capability`. Formal H0 Exit and Formal H1 Exit are accepted. H1-01
-through H1-10 and H2-01 through H2-07 are merged. The H2 platform specification is
-accepted, and H2-08 is implemented on a dedicated branch pending pull-request
+`0021_h2_connection_cutover`. Formal H0 Exit and Formal H1 Exit are accepted. H1-01
+through H1-10 and H2-01 through H2-08 are merged. The H2 platform specification is
+accepted, and H2-09 is implemented on a dedicated branch pending pull-request
 acceptance.
 Gmail/Calendar/Drive authorization has been completed for the current Wanderra user,
 and live end-to-end verification has succeeded for email, calendar events, and the
@@ -340,7 +340,22 @@ full Drive file lifecycle.
   versions, approval, idempotency, post-write verification, and rollback are explicit.
 - Legacy, shadow, and canonical workspace routes use additive forced-RLS state and
   immutable comparison evidence.
-- Phase 1 APIs remain unchanged; no H2-09 backfill or default cutover is present.
+- Phase 1 APIs remain unchanged.
+
+### Atlas Core H2-09
+
+- Deterministic and restartable default-workspace connection backfill combines each
+  Google Workspace provider account without merging unrelated accounts.
+- Immutable source and reconciliation checksums detect changed or ambiguous replays.
+- Explicit reauthorization exceptions preserve valid Phase 1 credential fallback.
+- Read routing requires evidence-backed legacy → shadow → canonical cutover. Mutation
+  routing remains independently controlled and defaults to legacy.
+- Canonical routing requires configured sample and failure-budget thresholds; rollback
+  to the legacy path is always available.
+- H2-owned state is included in recovery/export manifests and closure disables
+  credentials, closes connections, restores legacy flags, and preserves provider
+  reconciliation boundaries.
+- Compatibility code remains owned by Atlas Core until the explicit H7 removal gate.
 
 ### Atlas and memory
 

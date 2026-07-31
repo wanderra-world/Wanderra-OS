@@ -49,9 +49,7 @@ class CalendarCapabilityService:
         self._authorization = authorization
         self._mutations = mutation_guard
 
-    async def list_events(
-        self, request: CalendarListRequest
-    ) -> Page[CalendarEvent]:
+    async def list_events(self, request: CalendarListRequest) -> Page[CalendarEvent]:
         await self._authorization.require("read_content")
         route = await self._routing.route()
         if route is CalendarRoute.LEGACY:
@@ -130,7 +128,10 @@ class CalendarCapabilityService:
         if require_precondition and context.precondition is None:
             raise ValueError("A version precondition is required.")
         await self._mutations.require_approval(approval_id)
-        route = await self._routing.route()
+        mutation_route = getattr(self._routing, "mutation_route", None)
+        route = (
+            await mutation_route() if mutation_route is not None else await self._routing.route()
+        )
         port = (
             await self._factory.canonical_port()
             if route is CalendarRoute.CANONICAL
@@ -141,9 +142,7 @@ class CalendarCapabilityService:
             "value": to_wire(value),
             "precondition": to_wire(context.precondition),
         }
-        digest = hashlib.sha256(
-            json.dumps(request, sort_keys=True).encode()
-        ).hexdigest()
+        digest = hashlib.sha256(json.dumps(request, sort_keys=True).encode()).hexdigest()
         return await self._mutations.execute_once(
             context.idempotency_key, digest, lambda: call(port)
         )
@@ -164,9 +163,7 @@ class CalendarRouteControlService:
         self._context = context
         self._connection_id = connection_id
         self._authorization = authorization
-        self._repository = CalendarRoutingRepository(
-            session, context, connection_id=connection_id
-        )
+        self._repository = CalendarRoutingRepository(session, context, connection_id=connection_id)
         self._audit = AuditWriterService(session, context)
 
     async def set_route(self, route: CalendarRoute) -> None:

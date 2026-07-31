@@ -5,7 +5,7 @@ The single entry point to the Atlas architecture documentation.
 **Owner:** Atlas Architecture Council  
 **Current phase:** Phase 2 — Atlas Core  
 **Status:** Formal H0 Exit accepted; Formal H1 Exit accepted; H2 specification accepted;
-H2-01 through H2-07 accepted; H2-08 implemented pending pull-request acceptance
+H2-01 through H2-08 accepted; H2-09 implemented pending pull-request acceptance
 **Last updated:** July 31, 2026
 
 ## Core principle
@@ -43,7 +43,7 @@ The Google Workspace Foundation is implemented and validated end to end:
 
 See [PROJECT_STATUS.md](PROJECT_STATUS.md) for the detailed implementation status.
 
-### Phase 2 — H1 and H2-01 through H2-07 accepted; H2-08 implementation review
+### Phase 2 — H1 and H2-01 through H2-08 accepted; H2-09 implementation review
 
 The architecture phase, Formal H0 Exit, and Formal H1 Exit are complete. H1-01
 through H1-10 are accepted and merged.
@@ -62,10 +62,10 @@ vertical-slice evidence. See
 [PROJECT_STATUS.md](PROJECT_STATUS.md).
 
 The accepted H2 production decomposition is defined in
-[H2_PLATFORM_SPEC.md](H2_PLATFORM_SPEC.md). H2-01 through H2-07 are accepted and
-merged. H2-08 is implemented on its dedicated branch with evidence in
-[H2_08_ACCEPTANCE_EVIDENCE.md](H2_08_ACCEPTANCE_EVIDENCE.md). H2-09 and later slices
-remain unauthorized and unimplemented.
+[H2_PLATFORM_SPEC.md](H2_PLATFORM_SPEC.md). H2-01 through H2-08 are accepted and
+merged. H2-09 is implemented on its dedicated branch with evidence in
+[H2_09_ACCEPTANCE_EVIDENCE.md](H2_09_ACCEPTANCE_EVIDENCE.md). H2-10 remains
+unauthorized and unimplemented.
 
 ## Recommended reading order
 
@@ -454,8 +454,10 @@ enforcement is owned by `IMPLEMENTATION_GUIDE.md`.
 | [H2_06_ACCEPTANCE_EVIDENCE.md](H2_06_ACCEPTANCE_EVIDENCE.md) | H2-06 implementation and verification evidence |
 | [H2_07_ACCEPTANCE_EVIDENCE.md](H2_07_ACCEPTANCE_EVIDENCE.md) | H2-07 implementation and verification evidence |
 | [H2_08_ACCEPTANCE_EVIDENCE.md](H2_08_ACCEPTANCE_EVIDENCE.md) | H2-08 implementation and verification evidence |
+| [H2_09_ACCEPTANCE_EVIDENCE.md](H2_09_ACCEPTANCE_EVIDENCE.md) | H2-09 implementation and verification evidence |
+| [H2_09_CUTOVER_OPERATIONS.md](H2_09_CUTOVER_OPERATIONS.md) | H2-09 cutover, rollback, and compatibility inventory runbook |
 
 ## Next action
 
-Review and merge the dedicated H2-08 pull request after all mandatory checks pass.
-Do not begin H2-09 before H2-08 is explicitly accepted and merged.
+Review and merge the dedicated H2-09 pull request after all mandatory checks pass.
+Do not begin H2-10 before H2-09 is explicitly accepted and merged.

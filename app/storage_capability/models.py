@@ -33,10 +33,15 @@ class StorageCapabilityRoute(Base):
             "route IN ('legacy', 'shadow', 'canonical')", name="ck_storage_capability_routes_route"
         ),
         CheckConstraint("version > 0", name="ck_storage_capability_routes_version"),
+        CheckConstraint(
+            "mutation_route IN ('legacy', 'canonical')",
+            name="ck_storage_capability_routes_mutation_route",
+        ),
     )
     workspace_id: Mapped[uuid.UUID] = mapped_column(Uuid)
     connection_id: Mapped[uuid.UUID] = mapped_column(Uuid)
     route: Mapped[str] = mapped_column(String(16), server_default="legacy")
+    mutation_route: Mapped[str] = mapped_column(String(16), server_default="legacy")
     version: Mapped[int] = mapped_column(Integer, server_default="1")
     updated_by_user_id: Mapped[uuid.UUID] = mapped_column(Uuid)
     updated_at: Mapped[datetime] = mapped_column(
