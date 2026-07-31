@@ -429,7 +429,7 @@ job platform. See `H0_FOUNDATION_SPEC.md` sections 13–16.
 
 ## ADR-033: Consolidate the remaining reusable platform foundation into H3
 
-**Status:** Proposed; required before H3 implementation
+**Status:** Accepted; formally approved through PR #24
 
 **Decision:** After Formal H2 Exit, consolidate the reusable platform capabilities
 previously sequenced as H3 through H8 into one final, internally gated H3 System

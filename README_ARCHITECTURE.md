@@ -3,9 +3,9 @@
 The single entry point to the Atlas architecture documentation.
 
 **Owner:** Atlas Architecture Council  
-**Current phase:** H3 architecture design — System Intelligence Layer
-**Status:** Formal H0, H1, and H2 Exits accepted; H3 blueprint proposed for review;
-no H3 production implementation authorized
+**Current phase:** H3 — System Intelligence Layer
+**Status:** Formal H0, H1, and H2 Exits accepted; H3 architecture approved through
+PR #24; sequential H3 production implementation authorized by explicit slice approval
 **Last updated:** July 31, 2026
 
 ## Core principle
@@ -66,14 +66,16 @@ The accepted H2 production decomposition is defined in
 merged. The accepted decision and evidence are recorded in
 [H2_EXIT_REPORT.md](H2_EXIT_REPORT.md).
 
-### H3 — blueprint proposed; implementation not authorized
+### H3 — architecture approved; implementation gate open
 
-The proposed final reusable platform layer is defined by
+The approved final reusable platform layer is defined by
 [H3_ARCHITECTURE.md](H3_ARCHITECTURE.md), with stage-specific engineering gates in
 [H3_IMPLEMENTATION_GUIDE.md](H3_IMPLEMENTATION_GUIDE.md) and the meaning of Atlas
-Platform Complete in [H3_EXIT_DEFINITION.md](H3_EXIT_DEFINITION.md). ADR-033 proposes
-consolidating the former H3–H8 delivery packaging into eleven sequential H3 slices.
-No production slice or business agent is authorized by these documents.
+Platform Complete in [H3_EXIT_DEFINITION.md](H3_EXIT_DEFINITION.md). Accepted ADR-033
+consolidates the former H3–H8 delivery packaging into eleven sequential H3 slices.
+PR #24 is the formal architecture acceptance. H3 production implementation is
+authorized only one explicitly requested slice at a time; no business agent or H4 work
+is authorized.
 
 ## Recommended reading order
 
@@ -283,7 +285,7 @@ and merged.
 
 ### 14. H3 blueprint
 
-[H3_ARCHITECTURE.md](H3_ARCHITECTURE.md) defines the proposed System Intelligence
+[H3_ARCHITECTURE.md](H3_ARCHITECTURE.md) defines the approved System Intelligence
 Layer and H3-01 through H3-11 slice architecture.
 
 [H3_IMPLEMENTATION_GUIDE.md](H3_IMPLEMENTATION_GUIDE.md) defines H3-specific delivery,
@@ -486,13 +488,12 @@ enforcement is owned by `IMPLEMENTATION_GUIDE.md`.
 | [H2_EVIDENCE_MATRIX.md](H2_EVIDENCE_MATRIX.md) | Complete H2 criterion-to-evidence trace |
 | [H2_SECURITY_REVIEW.md](H2_SECURITY_REVIEW.md) | Formal H2 threat and residual-risk review |
 | [H2_EXIT_REPORT.md](H2_EXIT_REPORT.md) | Formal H2 Exit decision and completed baseline |
-| [H3_ARCHITECTURE.md](H3_ARCHITECTURE.md) | Proposed H3 System Intelligence architecture and slice decomposition |
-| [H3_IMPLEMENTATION_GUIDE.md](H3_IMPLEMENTATION_GUIDE.md) | Proposed H3-specific engineering contract |
-| [H3_EXIT_DEFINITION.md](H3_EXIT_DEFINITION.md) | Proposed Formal H3 Exit and Atlas Platform Complete definition |
+| [H3_ARCHITECTURE.md](H3_ARCHITECTURE.md) | Approved H3 System Intelligence architecture and slice decomposition |
+| [H3_IMPLEMENTATION_GUIDE.md](H3_IMPLEMENTATION_GUIDE.md) | Approved H3-specific engineering contract |
+| [H3_EXIT_DEFINITION.md](H3_EXIT_DEFINITION.md) | Active Formal H3 Exit and Atlas Platform Complete definition |
 
 ## Next action
 
-Review ADR-033 and the H3 blueprint as one coherent architecture change. Do not begin
-H3-01 until the blueprint, decision, architecture consistency checks, security review
-scope, and H3-01 Definition of Ready are explicitly accepted. Do not begin any business
-agent or H4 work.
+The H3 architecture gate is open. Begin only the next explicitly authorized H3 slice
+after verifying its Definition of Ready and predecessor state. H3-01 has not started.
+Do not begin any business agent or H4 work.
