@@ -3,7 +3,7 @@
 Stage-specific engineering contract for the Atlas System Intelligence Layer.
 
 **Owner:** Atlas Platform Engineering  
-**Status:** Proposed for review; no implementation authorized  
+**Status:** Approved for implementation through explicitly authorized slices
 **Architecture:** [H3_ARCHITECTURE.md](H3_ARCHITECTURE.md)  
 **Exit contract:** [H3_EXIT_DEFINITION.md](H3_EXIT_DEFINITION.md)  
 **Base engineering contract:** [IMPLEMENTATION_GUIDE.md](IMPLEMENTATION_GUIDE.md)  
@@ -21,8 +21,36 @@ one dedicated branch and pull request unless an approved risk-reduction plan div
 slice into smaller numbered sub-slices. A slice may not absorb any capability owned by
 its successor.
 
-No H3 implementation may begin until this blueprint, ADR-033, Architecture Index
-updates, security review scope, and the H3-01 migration plan are accepted.
+PR #24 formally accepted the H3 blueprint and ADR-033. This governance closeout accepts
+the Architecture Index update, H3-01 security-review scope, and H3-01 migration plan
+below. H3 implementation may proceed only after explicit authorization of the next
+eligible slice.
+
+### 1.1 H3-01 accepted security-review scope
+
+H3-01 security review MUST cover direct registry insertion, unapproved resource types,
+orphan or duplicate typed projections, aggregate/resource identity substitution,
+cross-workspace read/write/join/traversal, invalid relationship endpoint types,
+direction and cardinality violations, ownership or resource-grant escalation,
+optimistic-concurrency bypass, provider external-reference substitution, deletion
+integrity, audit/outbox atomicity, EAV introduction, provider leakage, and H3-02+
+scope leakage. The required negative paths are owned by the H3-01 section of
+`H3_ARCHITECTURE.md`, the H0 entity-integrity contract, and the base security rules.
+
+### 1.2 H3-01 accepted migration plan
+
+H3-01 uses one additive expand-first migration from the accepted H2 head. It adds only
+the constrained Resource Graph schema required by H3-01, including workspace-inclusive
+candidate keys, composite tenant foreign keys, immutable identity constraints,
+optimistic versions, closed-workspace write protection, and enabled and forced RLS
+before runtime writes. It performs no destructive contraction, Phase 1 provider-data
+rewrite, or speculative later-slice backfill.
+
+Empty-state downgrade MUST be proven. Once accepted Resource Graph state, audit, or
+outbox evidence exists, downgrade MUST fail closed and require a reviewed forward-fix.
+Provider external-reference identity fields remain immutable and are never
+destructively rewritten. Migration implementation details remain subject to H3-01 Red
+tests and may not broaden this accepted plan.
 
 ## 2. Recommended implementation order
 

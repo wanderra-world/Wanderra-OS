@@ -3,7 +3,7 @@
 Formal acceptance contract for the reusable Atlas platform before business agents.
 
 **Owner:** Atlas Architecture Council  
-**Status:** Proposed for review  
+**Status:** Active; governs Formal H3 Exit
 **Architecture:** [H3_ARCHITECTURE.md](H3_ARCHITECTURE.md)  
 **Implementation contract:** [H3_IMPLEMENTATION_GUIDE.md](H3_IMPLEMENTATION_GUIDE.md)
 

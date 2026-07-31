@@ -13,8 +13,9 @@ working Google integrations for Gmail, Calendar, and Drive.
 The local Docker deployment is operational. Database migrations are at
 `0021_h2_connection_cutover`. Formal H0 Exit and Formal H1 Exit are accepted. H1-01
 through H1-10 and H2-01 through H2-08 are merged. The H2 platform specification is
-accepted. H2-01 through H2-10 are merged and Formal H2 Exit is accepted. H3 remains
-architecture-only: its proposed blueprint introduces no production code or migration.
+accepted. H2-01 through H2-10 are merged and Formal H2 Exit is accepted. PR #24
+formally approved the H3 blueprint and opened the sequential implementation gate.
+H3-01 production implementation has not started.
 Gmail/Calendar/Drive authorization has been completed for the current Wanderra user,
 and live end-to-end verification has succeeded for email, calendar events, and the
 full Drive file lifecycle.

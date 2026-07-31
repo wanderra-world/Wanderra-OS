@@ -43,12 +43,13 @@ def test_h3_documents_have_single_non_overlapping_owners() -> None:
     )
 
 
-def test_h3_sequencing_change_has_adr_and_no_implementation_authority() -> None:
+def test_h3_sequencing_change_is_accepted_without_starting_implementation() -> None:
     decisions = (ROOT / "DECISIONS.md").read_text()
     architecture = (ROOT / "H3_ARCHITECTURE.md").read_text()
     guide = (ROOT / "H3_IMPLEMENTATION_GUIDE.md").read_text()
     assert "## ADR-033:" in decisions
-    assert "no production implementation authorized" in architecture.casefold()
-    assert "no implementation authorized" in guide.casefold()
+    assert "**Status:** Accepted; formally approved through PR #24" in decisions
+    assert "**Status:** Approved;" in architecture
+    assert "**Status:** Approved for implementation" in guide
     assert "h4 or later-stage implementation" in architecture.casefold()
     assert not list((ROOT / "app").glob("h3*"))

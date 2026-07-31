@@ -4,7 +4,7 @@ Canonical architecture and slice decomposition for the final reusable Atlas plat
 layer before business agents.
 
 **Owner:** Atlas Architecture Council  
-**Status:** Proposed for review; no production implementation authorized  
+**Status:** Approved; sequential production implementation permitted through explicit slice authorization
 **Stage:** H3 — System Intelligence Layer  
 **Architecture entry point:** [README_ARCHITECTURE.md](README_ARCHITECTURE.md)  
 **Engineering contract:** [H3_IMPLEMENTATION_GUIDE.md](H3_IMPLEMENTATION_GUIDE.md)  
@@ -16,8 +16,9 @@ slice decomposition, dependencies, and slice acceptance criteria. Domain termino
 remains owned by `DOMAIN_MODEL.md`, architecture decisions by `DECISIONS.md`, and
 repository-wide engineering rules by `IMPLEMENTATION_GUIDE.md`.
 
-Approval of this blueprint does not authorize implementation. Each slice requires
-explicit authorization after its predecessor is accepted and merged.
+PR #24 formally approved this blueprint and ADR-033. H3 production implementation is
+architecturally permitted only through the sequence below. Each slice still requires
+explicit user authorization after its predecessor is accepted and merged.
 
 ## 1. Vision
 
