@@ -16,6 +16,7 @@ from app.connections.models import (
     ProviderCapability,
     ProviderRegistryEntry,
 )
+from app.email_capability.models import EmailCapabilityRoute, EmailShadowComparison
 from app.encryption.models import EncryptedEnvelope
 from app.identity.lifecycle_models import (
     IdentityLifecycleToken,
@@ -79,6 +80,8 @@ __all__ = [
     "DriveFileMetadata",
     "DriveOAuthState",
     "EncryptedEnvelope",
+    "EmailCapabilityRoute",
+    "EmailShadowComparison",
     "ExternalIdentityLink",
     "EventQuarantine",
     "FixedMembershipRole",

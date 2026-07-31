@@ -11,9 +11,9 @@ FastAPI service backed by PostgreSQL, with OpenAI-powered chat and durable memor
 working Google integrations for Gmail, Calendar, and Drive.
 
 The local Docker deployment is operational. Database migrations are at
-`0017_h2_provider_mirrors`. Formal H0 Exit and Formal H1 Exit are accepted. H1-01
-through H1-10 and H2-01 through H2-04 are merged. The H2 platform specification is
-accepted, and H2-05 is implemented on a dedicated branch pending pull-request
+`0018_h2_email_capability`. Formal H0 Exit and Formal H1 Exit are accepted. H1-01
+through H1-10 and H2-01 through H2-05 are merged. The H2 platform specification is
+accepted, and H2-06 is implemented on a dedicated branch pending pull-request
 acceptance.
 Gmail/Calendar/Drive authorization has been completed for the current Wanderra user,
 and live end-to-end verification has succeeded for email, calendar events, and the
@@ -285,6 +285,28 @@ full Drive file lifecycle.
   unchanged.
 - No production adapter, provider call, synchronization, shadow routing, cutover,
   webhook, worker, or H2-06 functionality is present.
+
+### Atlas Core H2-06
+
+- The production Gmail adapter implements the canonical H2-05 email port and
+  translates profiles, message pages, unread and query searches, drafts, sends,
+  cursors, timestamps, versions, and namespaced extensions.
+- Google SDK resources, payloads, and exceptions are confined to the adapter and
+  normalized into canonical DTOs and safe error categories.
+- Managed connection credentials are loaded through the H2-02 credential repository
+  and H1 envelope encryption only after workspace authorization.
+- Per-workspace connection routing supports legacy, shadow, and canonical modes;
+  shadow reads return the legacy result while recording deterministic equivalence.
+- Disabling the canonical route immediately restores the Phase 1 path without
+  changing credentials or duplicating provider effects.
+- Send requires an explicit approval reference and caller-owned idempotency; shadow
+  mode never performs dual writes, and the adapter re-reads the provider result.
+- Route changes are authorization-gated and emit transactional audit and outbox
+  evidence.
+- Additive routing and shadow-evidence tables use composite workspace keys, forced
+  RLS, immutable comparison evidence, and guarded rollback.
+- Phase 1 APIs remain unchanged. No continuous synchronization, webhook, polling,
+  worker, Calendar adapter, Drive adapter, or H2-07+ functionality is present.
 
 ### Atlas and memory
 

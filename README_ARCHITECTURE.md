@@ -5,7 +5,7 @@ The single entry point to the Atlas architecture documentation.
 **Owner:** Atlas Architecture Council  
 **Current phase:** Phase 2 — Atlas Core  
 **Status:** Formal H0 Exit accepted; Formal H1 Exit accepted; H2 specification accepted;
-H2-01 through H2-04 accepted; H2-05 implemented pending pull-request acceptance
+H2-01 through H2-05 accepted; H2-06 implemented pending pull-request acceptance
 **Last updated:** July 31, 2026
 
 ## Core principle
@@ -43,7 +43,7 @@ The Google Workspace Foundation is implemented and validated end to end:
 
 See [PROJECT_STATUS.md](PROJECT_STATUS.md) for the detailed implementation status.
 
-### Phase 2 — H1 and H2-01 through H2-04 accepted; H2-05 implementation review
+### Phase 2 — H1 and H2-01 through H2-05 accepted; H2-06 implementation review
 
 The architecture phase, Formal H0 Exit, and Formal H1 Exit are complete. H1-01
 through H1-10 are accepted and merged.
@@ -62,9 +62,9 @@ vertical-slice evidence. See
 [PROJECT_STATUS.md](PROJECT_STATUS.md).
 
 The accepted H2 production decomposition is defined in
-[H2_PLATFORM_SPEC.md](H2_PLATFORM_SPEC.md). H2-01 through H2-04 are accepted and
-merged. H2-05 is implemented on its dedicated branch with evidence in
-[H2_05_ACCEPTANCE_EVIDENCE.md](H2_05_ACCEPTANCE_EVIDENCE.md). H2-06 and later slices
+[H2_PLATFORM_SPEC.md](H2_PLATFORM_SPEC.md). H2-01 through H2-05 are accepted and
+merged. H2-06 is implemented on its dedicated branch with evidence in
+[H2_06_ACCEPTANCE_EVIDENCE.md](H2_06_ACCEPTANCE_EVIDENCE.md). H2-07 and later slices
 remain unauthorized and unimplemented.
 
 ## Recommended reading order
@@ -451,8 +451,9 @@ enforcement is owned by `IMPLEMENTATION_GUIDE.md`.
 | [H2_03_ACCEPTANCE_EVIDENCE.md](H2_03_ACCEPTANCE_EVIDENCE.md) | H2-03 implementation and verification evidence |
 | [H2_04_ACCEPTANCE_EVIDENCE.md](H2_04_ACCEPTANCE_EVIDENCE.md) | H2-04 implementation and verification evidence |
 | [H2_05_ACCEPTANCE_EVIDENCE.md](H2_05_ACCEPTANCE_EVIDENCE.md) | H2-05 implementation and verification evidence |
+| [H2_06_ACCEPTANCE_EVIDENCE.md](H2_06_ACCEPTANCE_EVIDENCE.md) | H2-06 implementation and verification evidence |
 
 ## Next action
 
-Review and merge the dedicated H2-05 pull request after all mandatory checks pass.
-Do not begin H2-06 before H2-05 is explicitly accepted and merged.
+Review and merge the dedicated H2-06 pull request after all mandatory checks pass.
+Do not begin H2-07 before H2-06 is explicitly accepted and merged.
