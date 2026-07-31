@@ -1,7 +1,7 @@
 # H3-01 Resource Graph Acceptance Evidence
 
 **Owner:** Atlas Platform Engineering  
-**Status:** Implementation complete; PR #26 ready for review with required gate passed  
+**Status:** Accepted and merged through PR #26
 **Governing specification:** [H3_ARCHITECTURE.md](H3_ARCHITECTURE.md#h3-01-resource-graph-foundation)  
 **Engineering contract:** [H3_IMPLEMENTATION_GUIDE.md](H3_IMPLEMENTATION_GUIDE.md)
 
@@ -14,6 +14,8 @@
 - The user explicitly authorized H3-01 only.
 - ADR-003, ADR-028, the H0 projection-integrity contract, and the accepted H3-01
   security and migration plans were reread before branching.
+- PR #26 passed all protected required checks and was merged into `origin/master` as
+  `a4602b6`.
 
 ## 2. Implemented scope
 
@@ -87,5 +89,6 @@ H3-02 leakage. No critical or high unresolved H3-01 finding is known.
 ## 8. Compatibility and next-slice boundary
 
 The change is additive and exposes no new Phase 1 API. Gmail, Calendar, Drive, H0,
-H1, and H2 runtime behavior remains unchanged. H3-02 has not been started and is not
-authorized by this evidence.
+H1, and H2 runtime behavior remains unchanged. H3-01 acceptance does not itself
+implement or accept H3-02; the separate H3-02 gate is governed by the Architecture
+Index and H3 Implementation Guide.
