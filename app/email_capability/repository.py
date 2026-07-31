@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import uuid
 
-from sqlalchemy import select
+from sqlalchemy import select, text
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.email_capability.contracts import EmailOperation, EmailRoute
@@ -34,9 +34,64 @@ class EmailRoutingRepository(ContextBoundRepository):
         )
         return EmailRoute(value or EmailRoute.LEGACY)
 
+    async def mutation_route(self) -> EmailRoute:
+        workspace_id = self.context.tenant.workspace_id
+        value = await self.session.scalar(
+            select(EmailCapabilityRoute.mutation_route).where(
+                EmailCapabilityRoute.workspace_id == workspace_id,
+                EmailCapabilityRoute.connection_id == self._connection_id,
+            )
+        )
+        return EmailRoute(value or EmailRoute.LEGACY)
+
     async def set_route(self, route: EmailRoute) -> EmailCapabilityRoute:
         workspace_id = self.context.tenant.workspace_id
         self.require_workspace(workspace_id)
+        if not await self._supports_mutation_route():
+            result = (
+                (
+                    await self.session.execute(
+                        text(
+                            """
+                        INSERT INTO email_capability_routes (
+                            workspace_id, connection_id, route, updated_by_user_id
+                        ) VALUES (:workspace_id, :connection_id, :route, :actor_id)
+                        ON CONFLICT (workspace_id, connection_id) DO UPDATE SET
+                            route = EXCLUDED.route,
+                            version = email_capability_routes.version + 1,
+                            updated_by_user_id = EXCLUDED.updated_by_user_id
+                        WHERE email_capability_routes.route <> EXCLUDED.route
+                        RETURNING route, version
+                        """
+                        ),
+                        {
+                            "workspace_id": workspace_id,
+                            "connection_id": self._connection_id,
+                            "route": route.value,
+                            "actor_id": self.context.actor.actor_id,
+                        },
+                    )
+                )
+                .mappings()
+                .first()
+            )
+            if result is None:
+                current = await self.session.execute(
+                    text(
+                        """SELECT route, version FROM email_capability_routes
+                        WHERE workspace_id=:workspace_id AND connection_id=:connection_id"""
+                    ),
+                    {"workspace_id": workspace_id, "connection_id": self._connection_id},
+                )
+                result = current.mappings().one()
+            return EmailCapabilityRoute(
+                workspace_id=workspace_id,
+                connection_id=self._connection_id,
+                route=result["route"],
+                mutation_route="legacy",
+                version=result["version"],
+                updated_by_user_id=self.context.actor.actor_id,
+            )
         row = await self.session.get(
             EmailCapabilityRoute,
             (workspace_id, self._connection_id),
@@ -57,9 +112,20 @@ class EmailRoutingRepository(ContextBoundRepository):
         await self.session.flush()
         return row
 
-    async def record_comparison(
-        self, operation: EmailOperation, equivalent: bool
-    ) -> None:
+    async def _supports_mutation_route(self) -> bool:
+        return bool(
+            await self.session.scalar(
+                text(
+                    """SELECT EXISTS (
+                    SELECT 1 FROM information_schema.columns
+                    WHERE table_schema='public'
+                      AND table_name='email_capability_routes'
+                      AND column_name='mutation_route')"""
+                )
+            )
+        )
+
+    async def record_comparison(self, operation: EmailOperation, equivalent: bool) -> None:
         workspace_id = self.context.tenant.workspace_id
         self.require_workspace(workspace_id)
         self.session.add(

@@ -24,9 +24,7 @@ from app.database.base import Base
 class EmailCapabilityRoute(Base):
     __tablename__ = "email_capability_routes"
     __table_args__ = (
-        PrimaryKeyConstraint(
-            "workspace_id", "connection_id", name="pk_email_capability_routes"
-        ),
+        PrimaryKeyConstraint("workspace_id", "connection_id", name="pk_email_capability_routes"),
         ForeignKeyConstraint(
             ["workspace_id", "connection_id"],
             ["connections.workspace_id", "connections.id"],
@@ -38,11 +36,16 @@ class EmailCapabilityRoute(Base):
             name="ck_email_capability_routes_route",
         ),
         CheckConstraint("version > 0", name="ck_email_capability_routes_version"),
+        CheckConstraint(
+            "mutation_route IN ('legacy', 'canonical')",
+            name="ck_email_capability_routes_mutation_route",
+        ),
     )
 
     workspace_id: Mapped[uuid.UUID] = mapped_column(Uuid)
     connection_id: Mapped[uuid.UUID] = mapped_column(Uuid)
     route: Mapped[str] = mapped_column(String(16), server_default="legacy")
+    mutation_route: Mapped[str] = mapped_column(String(16), server_default="legacy")
     version: Mapped[int] = mapped_column(Integer, server_default="1")
     updated_by_user_id: Mapped[uuid.UUID] = mapped_column(Uuid)
     updated_at: Mapped[datetime] = mapped_column(
@@ -53,9 +56,7 @@ class EmailCapabilityRoute(Base):
 class EmailShadowComparison(Base):
     __tablename__ = "email_shadow_comparisons"
     __table_args__ = (
-        PrimaryKeyConstraint(
-            "workspace_id", "id", name="pk_email_shadow_comparisons"
-        ),
+        PrimaryKeyConstraint("workspace_id", "id", name="pk_email_shadow_comparisons"),
         ForeignKeyConstraint(
             ["workspace_id", "connection_id"],
             ["connections.workspace_id", "connections.id"],

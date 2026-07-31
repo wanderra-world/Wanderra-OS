@@ -12,6 +12,10 @@ from app.connection_credentials.models import (
     ConnectionCredential,
     CredentialMigrationInventory,
 )
+from app.connection_cutover.models import (
+    CapabilityCutoverEvidence,
+    ConnectionBackfillEvidence,
+)
 from app.connections.models import (
     Connection,
     ConnectionCapabilityGrant,
@@ -76,10 +80,12 @@ __all__ = [
     "CommandIdempotency",
     "Connection",
     "ConnectionCredential",
+    "ConnectionBackfillEvidence",
     "ConnectionCapabilityGrant",
     "ConnectionKind",
     "ConnectionKindCapability",
     "ConsumerSequence",
+    "CapabilityCutoverEvidence",
     "CredentialMigrationInventory",
     "Conversation",
     "ConversationMessage",

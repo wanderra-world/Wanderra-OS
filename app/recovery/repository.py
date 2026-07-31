@@ -34,6 +34,23 @@ MANIFEST_TABLES = (
     "inbox_events",
     "consumer_sequences",
     "event_quarantine",
+    "connections",
+    "connection_capability_grants",
+    "connection_credentials",
+    "credential_migration_inventory",
+    "oauth_transactions",
+    "provider_mirrors",
+    "provider_external_references",
+    "provider_mirror_comparisons",
+    "provider_mirror_conflicts",
+    "email_capability_routes",
+    "email_shadow_comparisons",
+    "calendar_capability_routes",
+    "calendar_shadow_comparisons",
+    "storage_capability_routes",
+    "storage_shadow_comparisons",
+    "connection_backfill_evidence",
+    "capability_cutover_evidence",
 )
 
 
@@ -44,9 +61,7 @@ def manifest_payload(manifest: WorkspaceManifest) -> dict[str, object]:
         "created_at": manifest.created_at.isoformat(),
         "table_counts": manifest.table_counts,
         "table_digests": manifest.table_digests,
-        "provider_reconciliation_required": (
-            manifest.provider_reconciliation_required
-        ),
+        "provider_reconciliation_required": (manifest.provider_reconciliation_required),
     }
 
 
@@ -67,9 +82,7 @@ class RecoveryRepository(ContextBoundRepository):
         workspace_id = self.context.tenant.workspace_id
         self.require_workspace(workspace_id)
         workspace = await self.session.scalar(
-            select(Workspace)
-            .where(Workspace.id == workspace_id)
-            .with_for_update()
+            select(Workspace).where(Workspace.id == workspace_id).with_for_update()
         )
         assert workspace is not None
         return workspace
@@ -84,10 +97,16 @@ class RecoveryRepository(ContextBoundRepository):
         counts: dict[str, int] = {}
         digests: dict[str, str] = {}
         for table_name in MANIFEST_TABLES:
+            if not await self.session.scalar(
+                text("SELECT to_regclass(:table_name) IS NOT NULL"),
+                {"table_name": f"public.{table_name}"},
+            ):
+                continue
             result = (
-                await self.session.execute(
-                    text(
-                        f"""
+                (
+                    await self.session.execute(
+                        text(
+                            f"""
                         SELECT count(*) AS row_count,
                                encode(
                                    digest(
@@ -105,10 +124,13 @@ class RecoveryRepository(ContextBoundRepository):
                             WHERE workspace_id = :workspace_id
                         ) AS rows
                         """
-                    ),
-                    {"workspace_id": workspace_id},
+                        ),
+                        {"workspace_id": workspace_id},
+                    )
                 )
-            ).mappings().one()
+                .mappings()
+                .one()
+            )
             counts[table_name] = int(result["row_count"])
             digests[table_name] = str(result["row_digest"])
         return WorkspaceManifest(
