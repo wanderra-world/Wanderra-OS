@@ -108,6 +108,88 @@ slice gate if dispatch, recovery, isolation, fairness, or backpressure cannot be
 reproduced. These targets authorize H3-02 implementation only; later slices own their
 own content, search, model, notification, and agent objectives.
 
+### 1.6 H3-03 accepted security-review scope
+
+H3-03 security review MUST cover context-free or cross-workspace document access,
+object or version substitution, content-hash mismatch, mutable source evidence,
+unverified-content promotion, quarantine bypass, malware-result forgery, MIME/content
+confusion, classification downgrade, unauthorized signed-object access, extractor or
+chunk replay with changed inputs, derivative-lineage gaps, legal-hold or retention
+bypass, incomplete deletion, secret or governed-content leakage in logs and events,
+and H3-04+ scope leakage. The review inherits the accepted P0.7 custody controls in
+`H0_FOUNDATION_SPEC.md` and ADR-005, ADR-015, and ADR-027; it does not create a second
+security model.
+
+### 1.7 H3-03 accepted classification impact
+
+Every logical document, immutable version, extraction request, chunk, and derivative
+records its effective classification and the policy version that produced it.
+Classification may remain unchanged or become more restrictive during derivation; a
+downgrade requires the existing authorized governance path and durable evidence.
+Unclassified, unsupported, or policy-incompatible content fails closed before
+extraction, model egress, export, or signed-object access. Provider metadata is an
+untrusted classification input and never the final authority.
+
+### 1.8 H3-03 accepted custody impact
+
+H3-03 implements the existing H0 object-custody contract through a provider-neutral,
+injected object-storage port. A logical document owns immutable, content-addressed
+versions. Promotion from quarantine requires tenant placement, expected hash, MIME and
+content validation, malware/content verification, classification, encryption and key
+metadata, and durable custody evidence. H2 files are source placements or external
+references only; H3-03 does not add or bypass a storage-provider adapter. Object access
+is authorized before issuing a short-lived reference, and accepted versions are never
+overwritten in place.
+
+### 1.9 H3-03 accepted retention impact
+
+The precedence defined by `H0_FOUNDATION_SPEC.md` remains authoritative: legal hold,
+statutory or contractual minimum, approved security hold, workspace policy, user
+deletion, then expiry. Document versions and every registered derivative participate
+in the same workspace governance decision. Legal hold and minimum retention block
+physical deletion without making content generally readable. Export and workspace
+closure use the accepted H1 governance and recovery boundaries and preserve custody
+and lineage evidence.
+
+### 1.10 H3-03 accepted deletion impact
+
+Deletion is a durable, idempotent propagation process over the source version, object,
+chunks, and derivative inventory. It either verifies removal at every currently owned
+target or records an explicit auditable exception with target, reason, and retry or
+operator disposition. Legal hold or retention produces a governed blocked outcome,
+not a false success. H3-03 does not delete H2 provider files unless an already
+authorized H2 capability is explicitly invoked; provider-source disposition remains
+visible in the deletion evidence. Later knowledge, memory, search, and timeline
+derivatives are outside this slice.
+
+### 1.11 H3-03 accepted recovery impact
+
+Backups, restore manifests, workspace export, and closure inventories MUST include H3
+document metadata, immutable version identity, object custody references, derivative
+inventory, classification and policy versions, holds, retention state, and deletion
+exceptions. Restore verifies tenant placement and content hashes before making an
+object readable or extraction-eligible. Extraction jobs are replayed through H3-02
+using the original source digest and versioned processor contract; changed input is a
+new derivative execution. Recovery never silently resurrects a deleted or quarantined
+object.
+
+### 1.12 H3-03 accepted migration plan
+
+H3-03 uses one additive expand-first migration from accepted revision
+`0023_h3_durable_execution`. It adds only the document and governed-derivation schema
+defined by `H3_ARCHITECTURE.md`: logical documents, immutable versions, custody and
+verification metadata, chunks, derivative inventory, and retention/deletion state.
+Every tenant-owned key includes organization, workspace, and cell identity; composite
+foreign keys preserve it; enabled and forced RLS exist before runtime writes. The
+migration performs no H3-01 or H3-02 rewrite, provider-file migration, knowledge,
+memory, search, workflow, notification, agent, or business-data backfill.
+
+Empty-state downgrade MUST be proven. Once accepted custody, version, derivative,
+hold, deletion, audit, or outbox evidence exists, destructive schema downgrade MUST
+fail closed. Application processors and extraction workers may be disabled while
+objects and metadata remain readable through the authorized custody boundary; repair
+uses a reviewed forward-fix or export and MUST preserve immutable lineage.
+
 ## 2. Recommended implementation order
 
 | Order | Slice | Why it is next |

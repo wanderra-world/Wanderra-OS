@@ -55,16 +55,27 @@ def test_h3_sequencing_change_is_accepted_without_starting_implementation() -> N
     assert not list((ROOT / "app").glob("h3*"))
 
 
-def test_h3_02_governance_gate_has_one_normative_policy_owner() -> None:
+def test_h3_03_governance_gate_has_one_normative_policy_owner() -> None:
     index = (ROOT / "README_ARCHITECTURE.md").read_text()
     architecture = (ROOT / "H3_ARCHITECTURE.md").read_text()
     guide = (ROOT / "H3_IMPLEMENTATION_GUIDE.md").read_text()
     status = (ROOT / "PROJECT_STATUS.md").read_text()
+    evidence = (ROOT / "H3_02_ACCEPTANCE_EVIDENCE.md").read_text()
 
     assert "H3-01 is Accepted and merged" in index
-    assert "H3-02 implementation gate is open" in index
+    assert "H3-02 is Accepted and" in index
+    assert "H3-03 implementation gate is open" in index
     assert "H3-01 Resource Graph is Accepted and merged" in status
-    assert "H3-02 approved SLO and quota policy" in guide
-    assert "This section is the single normative owner" in guide
+    assert "H3-02 Durable\nExecution and Scheduler is Accepted and merged" in status
+    assert "**Status:** Accepted and merged through PR #28" in evidence
+    assert "`0023_h3_durable_execution`" in index
+    assert "`0023_h3_durable_execution`" in status
+    assert "H3-03 accepted security-review scope" in guide
+    assert "H3-03 accepted classification impact" in guide
+    assert "H3-03 accepted custody impact" in guide
+    assert "H3-03 accepted retention impact" in guide
+    assert "H3-03 accepted deletion impact" in guide
+    assert "H3-03 accepted recovery impact" in guide
+    assert "H3-03 accepted migration plan" in guide
     assert "H3-02 SLO and quota policy" in architecture
-    assert "H3-02 is not authorized" not in index
+    assert "H3-04 and later slices" in index
