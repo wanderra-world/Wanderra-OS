@@ -1,7 +1,7 @@
 # H3-02 Durable Execution and Scheduler Acceptance Evidence
 
 **Owner:** Atlas Platform Engineering
-**Status:** Implementation complete on dedicated branch; protected PR acceptance pending
+**Status:** Accepted and merged through PR #28 at `915386c`
 **Governing specification:** [H3_ARCHITECTURE.md](H3_ARCHITECTURE.md#h3-02-durable-execution-and-scheduler)
 **Engineering contract:** [H3_IMPLEMENTATION_GUIDE.md](H3_IMPLEMENTATION_GUIDE.md#13-h3-02-accepted-security-review-scope)
 
@@ -95,7 +95,7 @@ to the protected required workflow while all tests remained green.
 | Docker build | Passed with production image `atlas-h3-02` |
 | API image smoke | Passed |
 | Durable worker image smoke | Passed |
-| Protected GitHub required gate | Pending dedicated pull request |
+| Protected GitHub required gate | Passed for PR #28 before merge |
 
 The reference fairness load uses three simultaneously eligible synthetic workspaces.
 Each cumulative claim count differs by no more than one, and organization capacity
@@ -119,5 +119,8 @@ non-safety cleanup remains outside H3-02 scope.
 ## 8. Compatibility and next-slice boundary
 
 The change is additive and exposes no new HTTP API. Existing Gmail, Calendar, Drive,
-Atlas chat, H0, H1, H2, and H3-01 runtime behavior remains unchanged. H3-03 has not
-started and is not authorized by this evidence.
+Atlas chat, H0, H1, H2, and H3-01 runtime behavior remains unchanged. PR #28 merged
+the accepted H3-02 implementation into `origin/master` at `915386c`, establishing
+`0023_h3_durable_execution` as the accepted production migration baseline. H3-03 has
+not started; its implementation is authorized only by the separately approved gate
+in `README_ARCHITECTURE.md` and `H3_IMPLEMENTATION_GUIDE.md`.

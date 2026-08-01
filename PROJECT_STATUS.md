@@ -2,7 +2,7 @@
 
 **Owner:** Atlas Platform Engineering
 
-Last updated: 31 July 2026
+Last updated: 1 August 2026
 
 ## Summary
 
@@ -10,15 +10,15 @@ Atlas is the AI assistant layer of Wanderra OS. The current platform is a Python
 FastAPI service backed by PostgreSQL, with OpenAI-powered chat and durable memory plus
 working Google integrations for Gmail, Calendar, and Drive.
 
-The local Docker deployment is operational. The accepted production baseline remains
-`0022_h3_resource_graph`; the dedicated H3-02 branch adds pending revision
-`0023_h3_durable_execution`. Formal H0 Exit and Formal H1 Exit are accepted. H1-01
+The local Docker deployment is operational. The accepted production migration
+baseline is `0023_h3_durable_execution`. Formal H0 Exit and Formal H1 Exit are accepted. H1-01
 through H1-10 and H2-01 through H2-08 are merged. The H2 platform specification is
 accepted. H2-01 through H2-10 are merged and Formal H2 Exit is accepted. PR #24
 formally approved the H3 blueprint and opened the sequential implementation gate.
-H3-01 Resource Graph is Accepted and merged through PR #26 at `a4602b6`. Its protected
-required checks passed. H3-02 implementation is complete on its dedicated branch and
-awaiting protected pull-request review; H3-03 has not started.
+H3-01 Resource Graph is Accepted and merged through PR #26 at `a4602b6`. H3-02 Durable
+Execution and Scheduler is Accepted and merged through PR #28 at `915386c`; its
+protected required checks passed. The H3-03 governance gate is open, but H3-03
+production implementation has not started.
 Gmail/Calendar/Drive authorization has been completed for the current Wanderra user,
 and live end-to-end verification has succeeded for email, calendar events, and the
 full Drive file lifecycle.

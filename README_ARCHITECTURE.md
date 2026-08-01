@@ -496,10 +496,10 @@ enforcement is owned by `IMPLEMENTATION_GUIDE.md`.
 
 ## Next action
 
-H3-01 is Accepted and merged into `origin/master` through PR #26 at commit `a4602b6`.
-The H3-02 security-review scope, migration plan, and SLO/quota policy are approved in
-[H3_IMPLEMENTATION_GUIDE.md](H3_IMPLEMENTATION_GUIDE.md#13-h3-02-accepted-security-review-scope).
-The H3-02 implementation gate is open. Durable execution and scheduler implementation
-is complete on its dedicated review branch and must pass protected review and merge
-before it is Accepted. H3-03 and later slices, business agents, and H4 work remain
-unauthorized.
+H3-01 is Accepted and merged through PR #26 at `a4602b6`. H3-02 is Accepted and
+merged into `origin/master` through PR #28 at `915386c`; accepted production migration
+head is `0023_h3_durable_execution`. The H3-03 security, classification, custody,
+retention, deletion, recovery, and migration impacts are approved in
+[H3_IMPLEMENTATION_GUIDE.md](H3_IMPLEMENTATION_GUIDE.md#16-h3-03-accepted-security-review-scope).
+The H3-03 implementation gate is open for one explicitly authorized, dedicated slice.
+H3-04 and later slices, business agents, and H4 work remain unauthorized.
