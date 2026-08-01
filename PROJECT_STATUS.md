@@ -10,14 +10,15 @@ Atlas is the AI assistant layer of Wanderra OS. The current platform is a Python
 FastAPI service backed by PostgreSQL, with OpenAI-powered chat and durable memory plus
 working Google integrations for Gmail, Calendar, and Drive.
 
-The local Docker deployment is operational. The accepted production baseline is
-`0022_h3_resource_graph`. Formal H0 Exit and Formal H1 Exit are accepted. H1-01
+The local Docker deployment is operational. The accepted production baseline remains
+`0022_h3_resource_graph`; the dedicated H3-02 branch adds pending revision
+`0023_h3_durable_execution`. Formal H0 Exit and Formal H1 Exit are accepted. H1-01
 through H1-10 and H2-01 through H2-08 are merged. The H2 platform specification is
 accepted. H2-01 through H2-10 are merged and Formal H2 Exit is accepted. PR #24
 formally approved the H3 blueprint and opened the sequential implementation gate.
 H3-01 Resource Graph is Accepted and merged through PR #26 at `a4602b6`. Its protected
-required checks passed. The H3-02 governance prerequisites are approved and its
-implementation gate is open; no H3-02 production implementation has started.
+required checks passed. H3-02 implementation is complete on its dedicated branch and
+awaiting protected pull-request review; H3-03 has not started.
 Gmail/Calendar/Drive authorization has been completed for the current Wanderra user,
 and live end-to-end verification has succeeded for email, calendar events, and the
 full Drive file lifecycle.
@@ -371,7 +372,23 @@ full Drive file lifecycle.
   routing, cutover, rollback, approval, recovery, export, closure, and compatibility.
 - H2-10 is schema-free and changes no production runtime behavior. PR #23 passed the
   protected required gate, merged into `master`, and made Formal H2 Exit effective.
-- H3 production implementation has not started.
+- At H2-10 acceptance, H3 production implementation had not started.
+
+### H3-02 Durable Execution and Scheduler
+
+- Versioned provider-neutral job definitions, instances, attempts, leases,
+  heartbeats, retry taxonomy, deadlines, cancellation, dead letters, and replay.
+- Caller-owned idempotency with changed-input denial and concurrency-safe PostgreSQL
+  advisory locking.
+- One-time, interval, and daily-local schedules with explicit misfire and DST policy.
+- Workspace/definition pause controls, bounded concurrency, rate/backlog quotas,
+  organization capacity, deterministic tenant-fair ordering, and backpressure.
+- Context-bound repository and service layers with forced RLS, composite tenant keys,
+  H1 authorization, audit, and transactional outbox evidence.
+- Generic typed job-handler and deployable worker boundary with Docker smoke coverage.
+- Additive revision `0023_h3_durable_execution` with empty rollback and guarded
+  forward-fix/export after durable state exists.
+- No API or Phase 1 behavior change and no H3-03+ or business-agent functionality.
 
 ### Atlas and memory
 
@@ -496,6 +513,12 @@ The Docker Compose stack contains:
 | `resource_ownerships` | Explicit resource ownership assignments |
 | `resource_grants` | Exceptional resource-scoped permission grants |
 | `resource_external_links` | Immutable links to H2 provider external references |
+| `job_definitions` | Versioned handler, retry, concurrency, and rate contracts |
+| `job_instances` | Durable command eligibility, lifecycle, lease, deadline, and replay state |
+| `job_attempts` | Immutable attempt and heartbeat outcome evidence |
+| `job_dead_letters` | Terminal failure and authorized replay evidence |
+| `job_schedules` | One-time and recurring time-eligibility definitions |
+| `job_operator_controls` | Audited workspace and definition pause/resume state |
 
 `drive_file_metadata` stores the file name, MIME type, size, modification time, view
 link, MD5 checksum, parent IDs, the normalized provider payload, and synchronization
@@ -554,7 +577,7 @@ Interactive OpenAPI documentation is available at `/docs`.
 
 ## Test coverage
 
-The current PostgreSQL-backed automated suite contains 491 passing tests:
+The current PostgreSQL-backed automated suite contains 512 passing tests:
 
 - Health and Atlas chat API behavior.
 - Gmail MIME construction and message parsing.
@@ -567,6 +590,10 @@ The current PostgreSQL-backed automated suite contains 491 passing tests:
 - H3-01 constrained resource/projection identity, typed relationships, shared resource
   capabilities, optimistic concurrency, audit/outbox, external-reference linkage,
   forced RLS, migration, rollback, and cross-workspace isolation.
+- H3-02 typed job and retry contracts, idempotent enqueue, attempts, leases,
+  heartbeat/crash recovery, deadlines, cancellation, dead letters, authorized replay,
+  misfire and DST behavior, pause controls, quotas, tenant fairness, concurrent claim,
+  forced RLS, migration, guarded rollback, worker conformance, and architecture scope.
 - PDF and DOCX extraction helpers.
 - H0 architecture fitness, threat, isolation, authorization, encryption, custody,
   provider-conflict, lineage, AI security, entity integrity, and replay evidence.

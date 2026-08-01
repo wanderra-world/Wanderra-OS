@@ -492,12 +492,14 @@ enforcement is owned by `IMPLEMENTATION_GUIDE.md`.
 | [H3_IMPLEMENTATION_GUIDE.md](H3_IMPLEMENTATION_GUIDE.md) | Approved H3-specific engineering contract |
 | [H3_EXIT_DEFINITION.md](H3_EXIT_DEFINITION.md) | Active Formal H3 Exit and Atlas Platform Complete definition |
 | [H3_01_ACCEPTANCE_EVIDENCE.md](H3_01_ACCEPTANCE_EVIDENCE.md) | H3-01 Resource Graph implementation and verification evidence |
+| [H3_02_ACCEPTANCE_EVIDENCE.md](H3_02_ACCEPTANCE_EVIDENCE.md) | H3-02 durable execution and scheduler implementation evidence |
 
 ## Next action
 
 H3-01 is Accepted and merged into `origin/master` through PR #26 at commit `a4602b6`.
 The H3-02 security-review scope, migration plan, and SLO/quota policy are approved in
 [H3_IMPLEMENTATION_GUIDE.md](H3_IMPLEMENTATION_GUIDE.md#13-h3-02-accepted-security-review-scope).
-The sequential H3-02 implementation gate is open for an explicitly authorized,
-dedicated H3-02 implementation pull request. H3-03 and later slices, business agents,
-and H4 work remain unauthorized.
+The H3-02 implementation gate is open. Durable execution and scheduler implementation
+is complete on its dedicated review branch and must pass protected review and merge
+before it is Accepted. H3-03 and later slices, business agents, and H4 work remain
+unauthorized.

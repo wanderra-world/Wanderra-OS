@@ -32,6 +32,14 @@ from app.identity.lifecycle_models import (
     SecurityNotification,
 )
 from app.identity.models import ExternalIdentityLink, User
+from app.jobs.models import (
+    JobAttempt,
+    JobDeadLetter,
+    JobDefinition,
+    JobInstance,
+    JobOperatorControl,
+    JobSchedule,
+)
 from app.memberships.models import FixedMembershipRole, Role, WorkspaceMembership
 from app.messaging.models import (
     AggregateVersion,
@@ -112,6 +120,12 @@ __all__ = [
     "IdentityLifecycleToken",
     "IdentitySession",
     "InboxEvent",
+    "JobAttempt",
+    "JobDeadLetter",
+    "JobDefinition",
+    "JobInstance",
+    "JobOperatorControl",
+    "JobSchedule",
     "GmailCredential",
     "GmailOAuthState",
     "Organization",

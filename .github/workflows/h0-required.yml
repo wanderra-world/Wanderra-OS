@@ -91,6 +91,10 @@ jobs:
         run: >-
           docker run --rm --entrypoint python atlas-h0-ci
           -c "from app.main import app; assert app.title"
+      - name: Smoke-test durable worker
+        run: >-
+          docker run --rm --entrypoint python atlas-h0-ci
+          -m app.workers.durable --smoke
 
   required:
     name: H0 Required Gate
