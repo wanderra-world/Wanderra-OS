@@ -20,8 +20,10 @@ Execution and Scheduler is Accepted and merged through PR #28 at `915386c`; its
 protected required checks passed. H3-03 Documents and Governed Derivation is Accepted
 and merged through PR #30 at `3be4480`; its protected required checks passed and
 revision `0024_h3_document_custody` is the accepted production migration baseline.
-The governance-only H3-04 gate review is complete; H3-04 production implementation
-has not started.
+The governance-only H3-04 gate review is merged through PR #31 at `6392d11`. H3-04
+Knowledge Service and Timeline implementation is complete on its dedicated branch
+with additive revision `0025_h3_knowledge_timeline`; formal acceptance remains pending
+review and protected checks. H3-05 has not started.
 Gmail/Calendar/Drive authorization has been completed for the current Wanderra user,
 and live end-to-end verification has succeeded for email, calendar events, and the
 full Drive file lifecycle.
@@ -414,6 +416,25 @@ full Drive file lifecycle.
 - No API or Phase 1 behavior change and no H3-04+, knowledge, memory, search, or
   business-agent functionality.
 
+### H3-04 Knowledge Service and Timeline
+
+- Typed, evidence-backed claims with canonical identity, deterministic derivation
+  replay, confidence, validity, extraction provenance, review state, and immutable
+  H3-03 source spans.
+- Explicit contradiction and supersession relationships; knowledge never mutates
+  operational truth.
+- Classification monotonicity and retrieval-time source custody revalidation.
+- Deterministic, idempotent timeline projection, ordering, visibility, replay,
+  removal, rebuild, and checksums without copying or replacing H1 audit evidence.
+- Durable H3-02 source-disposition jobs with idempotent invalidation and timeline
+  propagation evidence.
+- Context-bound repository and service layers with H1 authorization, forced RLS,
+  composite tenant keys, audit evidence, and transactional outbox events.
+- Additive revision `0025_h3_knowledge_timeline` with empty rollback and guarded
+  forward-fix/export after knowledge or timeline state exists.
+- No API or Phase 1 behavior change and no H3-05+, memory, search, provider-specific,
+  H4, or business-agent functionality.
+
 ### Atlas and memory
 
 - Atlas chat endpoint backed by the configured OpenAI model.
@@ -543,6 +564,17 @@ The Docker Compose stack contains:
 | `job_dead_letters` | Terminal failure and authorized replay evidence |
 | `job_schedules` | One-time and recurring time-eligibility definitions |
 | `job_operator_controls` | Audited workspace and definition pause/resume state |
+| `documents` | Workspace-owned logical documents linked to typed resources |
+| `document_versions` | Immutable content-addressed custody versions |
+| `document_derivatives` | Versioned processor outputs with source lineage |
+| `document_chunks` | Classified source-linked governed text chunks |
+| `document_deletions` | Durable deletion, hold, retention, and exception evidence |
+| `knowledge_claims` | Typed evidence-backed claims distinct from operational truth |
+| `knowledge_evidence` | Immutable H3-03 source-version and source-span lineage |
+| `knowledge_relations` | Explicit contradiction and supersession evidence |
+| `knowledge_source_dispositions` | Durable source invalidation propagation state |
+| `timeline_entries` | Rebuildable user-facing activity projection |
+| `timeline_checkpoints` | Deterministic timeline rebuild checksums and cursors |
 
 `drive_file_metadata` stores the file name, MIME type, size, modification time, view
 link, MD5 checksum, parent IDs, the normalized provider payload, and synchronization
@@ -601,7 +633,7 @@ Interactive OpenAPI documentation is available at `/docs`.
 
 ## Test coverage
 
-The current PostgreSQL-backed automated suite contains 526 passing tests:
+The current PostgreSQL-backed automated suite contains 541 passing tests:
 
 - Health and Atlas chat API behavior.
 - Gmail MIME construction and message parsing.
@@ -623,6 +655,10 @@ The current PostgreSQL-backed automated suite contains 526 passing tests:
   extraction replay, governed chunks, legal hold and retention precedence, durable
   deletion recovery, export and restore integrity, forced RLS, migration, guarded
   rollback, and architecture scope.
+- H3-04 typed claim identity, changed-input replay denial, source-span custody,
+  confidence and validity, classification monotonicity, contradiction, review,
+  deterministic timeline ordering/rebuild/checkpoints, audit separation, durable
+  source disposition, forced RLS, migration, guarded rollback, and architecture scope.
 - PDF and DOCX extraction helpers.
 - H0 architecture fitness, threat, isolation, authorization, encryption, custody,
   provider-conflict, lineage, AI security, entity integrity, and replay evidence.

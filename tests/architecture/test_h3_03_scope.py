@@ -22,7 +22,7 @@ def test_h3_03_is_provider_neutral_and_excludes_later_slices() -> None:
         "business agent",
     ):
         assert forbidden not in production
-    for later_context in ("knowledge", "workflows", "notifications"):
+    for later_context in ("workflows", "notifications"):
         assert not (ROOT / "app" / later_context).exists()
 
 
@@ -60,5 +60,5 @@ def test_h3_03_reuses_h3_02_jobs_without_cross_context_repository_access() -> No
 def test_earlier_h3_scope_gates_now_defer_documents_to_h3_03() -> None:
     h3_01 = (ROOT / "tests" / "architecture" / "test_h3_01_scope.py").read_text()
     h3_02 = (ROOT / "tests" / "architecture" / "test_h3_02_scope.py").read_text()
-    assert 'later_context in ("knowledge", "workflows")' in h3_01
-    assert 'later_context in ("knowledge", "workflows", "notifications")' in h3_02
+    assert 'later_context in ("workflows",)' in h3_01
+    assert 'later_context in ("workflows", "notifications")' in h3_02
