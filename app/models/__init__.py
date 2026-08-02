@@ -56,6 +56,12 @@ from app.knowledge.models import (
     TimelineEntry,
 )
 from app.memberships.models import FixedMembershipRole, Role, WorkspaceMembership
+from app.memory.governed_models import (
+    GovernedMemoryDisposition,
+    GovernedMemoryFeedback,
+    GovernedMemoryItem,
+    GovernedMemorySource,
+)
 from app.messaging.models import (
     AggregateVersion,
     AuditChainHead,
@@ -152,6 +158,10 @@ __all__ = [
     "KnowledgeSourceDisposition",
     "GmailCredential",
     "GmailOAuthState",
+    "GovernedMemoryDisposition",
+    "GovernedMemoryFeedback",
+    "GovernedMemoryItem",
+    "GovernedMemorySource",
     "Organization",
     "OrganizationMembership",
     "OAuthTransaction",

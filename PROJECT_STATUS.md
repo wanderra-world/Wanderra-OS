@@ -11,7 +11,8 @@ FastAPI service backed by PostgreSQL, with OpenAI-powered chat and durable memor
 working Google integrations for Gmail, Calendar, and Drive.
 
 The local Docker deployment is operational. The accepted production migration
-baseline is `0025_h3_knowledge_timeline`. Formal H0 Exit and Formal H1 Exit are accepted. H1-01
+baseline remains `0025_h3_knowledge_timeline`; H3-05 proposes additive revision
+`0026_h3_governed_memory` pending review and merge. Formal H0 Exit and Formal H1 Exit are accepted. H1-01
 through H1-10 and H2-01 through H2-08 are merged. The H2 platform specification is
 accepted. H2-01 through H2-10 are merged and Formal H2 Exit is accepted. PR #24
 formally approved the H3 blueprint and opened the sequential implementation gate.
@@ -24,8 +25,8 @@ migration baseline.
 The governance-only H3-04 gate review is merged through PR #31 at `6392d11`. H3-04
 Knowledge Service and Timeline is Accepted and merged through PR #32 at `38c326d`;
 its protected required checks passed and revision `0025_h3_knowledge_timeline` is the
-accepted production migration baseline. H3-05 has not started; its implementation
-gate is explicitly open after this governance synchronization is merged.
+accepted production migration baseline. H3-05 Memory Manager is implemented on its
+dedicated review branch; it is not Accepted until its pull request is merged.
 Gmail/Calendar/Drive authorization has been completed for the current Wanderra user,
 and live end-to-end verification has succeeded for email, calendar events, and the
 full Drive file lifecycle.
@@ -436,6 +437,27 @@ full Drive file lifecycle.
   forward-fix/export after knowledge or timeline state exists.
 - No API or Phase 1 behavior change and no H3-05+, memory, search, provider-specific,
   H4, or business-agent functionality.
+
+### H3-05 Memory Manager (implemented; pending acceptance)
+
+- Provider-neutral governed memory items remain distinct from operational truth,
+  evidence-backed knowledge, source documents, timeline projections, and legacy
+  Phase 1 retrieval memory.
+- Typed provenance binds every item to current H3-01 resources, H3-03 document
+  versions, H3-04 claims, or governed-memory inputs; retrieval revalidates source
+  version and digest custody.
+- Deterministic identity replay, versioned consolidation, confidence, monotonic
+  classification, visibility, human confirmation, durable feedback, pinning,
+  expiry, supersession, deletion, and transitive source invalidation.
+- Restricted-memory model egress fails closed unless the approved private route is
+  selected; private memories are owner constrained.
+- Context-bound repository and service layers reuse H1 authorization and execution
+  context, forced RLS, composite tenant keys, audit evidence, and transactional
+  outbox events.
+- Additive revision `0026_h3_governed_memory` supports empty rollback and guarded
+  forward-fix/export after governed-memory state exists.
+- No HTTP API, Phase 1 behavior change, search, embeddings, recommendations,
+  provider-specific behavior, H3-06+, H4, or business-agent functionality.
 
 ### Atlas and memory
 
