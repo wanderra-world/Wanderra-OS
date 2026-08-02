@@ -75,7 +75,7 @@ deterministic export while the focused suite remained green.
 | Ruff required scope | Passed for Architecture Fitness and every changed Python file |
 | Repository-wide Ruff audit | 102 pre-existing Phase 1 findings remain outside H3-05; no new finding in changed scope |
 | Docker build and smoke | `atlas-h3-05` built; API import and durable-worker smoke passed |
-| Protected GitHub required gate | Pending pull-request execution |
+| Protected GitHub required gate | Passed on PR #34: Architecture Fitness, Regression Tests, Docker Build and Smoke, and H0 Required Gate |
 
 The local workspace contains unrelated untracked duplicate files suffixed ` 2.py`.
 They are excluded from this change; local repository-wide collection therefore has a
