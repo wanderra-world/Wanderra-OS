@@ -17,8 +17,11 @@ accepted. H2-01 through H2-10 are merged and Formal H2 Exit is accepted. PR #24
 formally approved the H3 blueprint and opened the sequential implementation gate.
 H3-01 Resource Graph is Accepted and merged through PR #26 at `a4602b6`. H3-02 Durable
 Execution and Scheduler is Accepted and merged through PR #28 at `915386c`; its
-protected required checks passed. The H3-03 governance gate is open, but H3-03
-production implementation has not started.
+protected required checks passed. PR #29 opened the H3-03 governance gate at
+`24284e8`. The dedicated H3-03 implementation branch now contains the complete
+Documents and Governed Derivation slice and additive revision
+`0024_h3_document_custody`; formal acceptance remains pending review and protected
+checks. H3-04 has not started.
 Gmail/Calendar/Drive authorization has been completed for the current Wanderra user,
 and live end-to-end verification has succeeded for email, calendar events, and the
 full Drive file lifecycle.
@@ -390,6 +393,27 @@ full Drive file lifecycle.
   forward-fix/export after durable state exists.
 - No API or Phase 1 behavior change and no H3-03+ or business-agent functionality.
 
+### H3-03 Documents and Governed Derivation
+
+- Canonical workspace-scoped documents, immutable content-addressed versions,
+  derivatives, chunks, and durable deletion records.
+- Quarantine-first custody with SHA-256 substitution detection, MIME verification,
+  malware evidence, explicit promotion, and fail-closed extraction gates.
+- Monotonic classification, versioned policy and encryption-key lineage, legal holds,
+  retention precedence, recovery manifests, and restore-integrity verification.
+- Provider-neutral object-storage, verifier, extractor, extraction-job, and
+  deletion-job ports; no provider SDK or business-agent dependency.
+- Deterministic extraction replay and source-linked chunks executed through the
+  accepted H3-02 durable-job boundary.
+- Two-phase deletion with revalidated policy, retryable exception evidence,
+  idempotent object cleanup, and PostgreSQL content redaction.
+- Context-bound repository and service layers with H1 authorization, forced RLS,
+  composite tenant keys, audit evidence, and transactional outbox events.
+- Additive revision `0024_h3_document_custody` with empty rollback and guarded
+  forward-fix/export after custody state exists.
+- No API or Phase 1 behavior change and no H3-04+, knowledge, memory, search, or
+  business-agent functionality.
+
 ### Atlas and memory
 
 - Atlas chat endpoint backed by the configured OpenAI model.
@@ -577,7 +601,7 @@ Interactive OpenAPI documentation is available at `/docs`.
 
 ## Test coverage
 
-The current PostgreSQL-backed automated suite contains 512 passing tests:
+The current PostgreSQL-backed automated suite contains 526 passing tests:
 
 - Health and Atlas chat API behavior.
 - Gmail MIME construction and message parsing.
@@ -594,6 +618,11 @@ The current PostgreSQL-backed automated suite contains 512 passing tests:
   heartbeat/crash recovery, deadlines, cancellation, dead letters, authorized replay,
   misfire and DST behavior, pause controls, quotas, tenant fairness, concurrent claim,
   forced RLS, migration, guarded rollback, worker conformance, and architecture scope.
+- H3-03 custody contracts, quarantine and verification, substitution and malware
+  rejection, classification monotonicity, immutable version lineage, deterministic
+  extraction replay, governed chunks, legal hold and retention precedence, durable
+  deletion recovery, export and restore integrity, forced RLS, migration, guarded
+  rollback, and architecture scope.
 - PDF and DOCX extraction helpers.
 - H0 architecture fitness, threat, isolation, authorization, encryption, custody,
   provider-conflict, lineage, AI security, entity integrity, and replay evidence.

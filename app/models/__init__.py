@@ -24,6 +24,13 @@ from app.connections.models import (
     ProviderCapability,
     ProviderRegistryEntry,
 )
+from app.documents.models import (
+    Document,
+    DocumentChunk,
+    DocumentDeletion,
+    DocumentDerivative,
+    DocumentVersion,
+)
 from app.email_capability.models import EmailCapabilityRoute, EmailShadowComparison
 from app.encryption.models import EncryptedEnvelope
 from app.identity.lifecycle_models import (
@@ -111,6 +118,11 @@ __all__ = [
     "DriveCredential",
     "DriveFileMetadata",
     "DriveOAuthState",
+    "Document",
+    "DocumentChunk",
+    "DocumentDeletion",
+    "DocumentDerivative",
+    "DocumentVersion",
     "EncryptedEnvelope",
     "EmailCapabilityRoute",
     "EmailShadowComparison",
