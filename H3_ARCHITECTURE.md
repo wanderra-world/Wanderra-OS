@@ -451,10 +451,10 @@ external search engine without measured need.
 **Dependencies:** H3-01 through H3-05; ADR-006/012/018/030/032; approved quality,
 latency, freshness, and egress thresholds.
 
-**Implementation gate:** Open for H3-06 only after H3-05 acceptance through PR #34
-and merger of the approved
-[H3-06 governance impacts](H3_IMPLEMENTATION_GUIDE.md#129-h3-06-accepted-security-review-scope).
-H3-07 and later behavior remains excluded.
+**Implementation status:** Accepted and merged through PR #36 at `a34322e`; revision
+`0027_h3_search_context` is the accepted production migration baseline. The H3-07
+gate is governed by the approved
+[H3-07 governance impacts](H3_IMPLEMENTATION_GUIDE.md#137-h3-07-accepted-security-review-scope).
 
 **Acceptance criteria:** Permission filters precede retrieval; revoked access expires
 within the approved SLO; results cite sources; model/chunk versions coexist during
@@ -483,6 +483,11 @@ event equivalence; agent-generated actions.
 
 **Dependencies:** H3-01 resources; H3-02 scheduling; H3-04 timeline; H3-06 search; H1
 authorization/audit.
+
+**Implementation gate:** Open for H3-07 only after H3-06 acceptance through PR #36
+and merger of the approved
+[H3-07 governance impacts](H3_IMPLEMENTATION_GUIDE.md#137-h3-07-accepted-security-review-scope).
+H3-08 and later behavior remains excluded.
 
 **Acceptance criteria:** Lifecycle and dependency cycles fail deterministically;
 assignment never grants access; overdue scheduling is idempotent; completion evidence

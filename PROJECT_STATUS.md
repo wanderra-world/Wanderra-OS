@@ -11,8 +11,7 @@ FastAPI service backed by PostgreSQL, with OpenAI-powered chat and durable memor
 working Google integrations for Gmail, Calendar, and Drive.
 
 The local Docker deployment is operational. The accepted production migration
-baseline is `0026_h3_governed_memory`; H3-06 proposes additive revision
-`0027_h3_search_context` for review. Formal H0 Exit and Formal H1 Exit are accepted. H1-01
+baseline is `0027_h3_search_context`. Formal H0 Exit and Formal H1 Exit are accepted. H1-01
 through H1-10 and H2-01 through H2-08 are merged. The H2 platform specification is
 accepted. H2-01 through H2-10 are merged and Formal H2 Exit is accepted. PR #24
 formally approved the H3 blueprint and opened the sequential implementation gate.
@@ -27,18 +26,19 @@ Knowledge Service and Timeline is Accepted and merged through PR #32 at `38c326d
 its protected required checks passed and revision `0025_h3_knowledge_timeline` is the
 accepted production migration baseline. H3-05 Memory Manager is Accepted and merged
 through PR #34 at `670205d`; its protected required checks passed. H3-06 Search and
-Context Assembly is implemented on its dedicated review branch with provider-neutral
+Context Assembly is Accepted and merged through PR #36 at `a34322e` with provider-neutral
 full-text/pgvector projections, pre-retrieval ACL enforcement, deterministic hybrid
 ranking, graph-bounded filters, safe cited context assembly, durable reindex contracts,
-reconciliation, forced RLS, and guarded rollback. Acceptance remains subject to its
-dedicated pull request and protected checks.
+reconciliation, forced RLS, and guarded rollback; its protected required checks passed.
+H3-07 is not implemented. Its governance gate is explicitly open after the
+governance-only pull request owning the approved H3-07 impacts is merged.
 Gmail/Calendar/Drive authorization has been completed for the current Wanderra user,
 and live end-to-end verification has succeeded for email, calendar events, and the
 full Drive file lifecycle.
 
 ## Implemented capabilities
 
-### H3-06 Search and Context Assembly (pending review)
+### H3-06 Search and Context Assembly (Accepted)
 
 - Rebuildable, versioned search generations over immutable resource, document,
   knowledge, and memory lineage.
@@ -678,7 +678,7 @@ Interactive OpenAPI documentation is available at `/docs`.
 
 ## Test coverage
 
-The current PostgreSQL-backed automated suite contains 554 passing tests:
+The current PostgreSQL-backed automated suite contains 557 passing tests:
 
 - Health and Atlas chat API behavior.
 - Gmail MIME construction and message parsing.
@@ -708,6 +708,10 @@ The current PostgreSQL-backed automated suite contains 554 passing tests:
   classification and model-egress controls, feedback, confirmation, expiry, pinning,
   supersession, transitive source invalidation, export, forced RLS, migration,
   guarded rollback, and architecture scope.
+- H3-06 permission-aware lexical/pgvector retrieval, structured and graph-bounded
+  filters, deterministic hybrid ranking, ACL and classification enforcement, cited
+  context budgets, reindex/cleanup job identities, source disposition, quality corpus,
+  forced RLS, migration, guarded rollback, and architecture scope.
 - PDF and DOCX extraction helpers.
 - H0 architecture fitness, threat, isolation, authorization, encryption, custody,
   provider-conflict, lineage, AI security, entity integrity, and replay evidence.
