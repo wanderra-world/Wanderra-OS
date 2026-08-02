@@ -70,8 +70,8 @@ Recorded local results on 2 August 2026:
   pass against PostgreSQL 16 with pgvector.
 - Docker: production image `atlas-h3-06` builds successfully; application import and
   durable worker smoke tests pass.
-- GitHub `H0 Required / H0 Required Gate`: pending the dedicated pull request; this
-  evidence must be updated by the protected check before merge acceptance.
+- GitHub PR #36 `H0 Required / H0 Required Gate`: **passed**, including Architecture
+  Fitness, Regression Tests, and Docker Build and Smoke.
 
 ## Slice isolation
 
