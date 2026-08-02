@@ -351,12 +351,112 @@ forward-fix or export and preserves provenance, feedback, and deletion receipts.
 
 ### 1.28 H3-05 implementation authorization
 
-H3-04 is Accepted and merged through PR #32 at `38c326d`, and revision
-`0025_h3_knowledge_timeline` is the accepted production migration baseline. The H3-05
-impacts above are approved and the H3-05 implementation gate is open for one dedicated
-slice after this governance synchronization is merged into `origin/master`. The
-acceptance-evidence target is `H3_05_ACCEPTANCE_EVIDENCE.md`. H3-06 and later slices,
-business agents, provider-specific logic, and H4 work remain unauthorized.
+H3-05 is Accepted and merged through PR #34 at `670205d`, its protected required
+checks passed, and revision `0026_h3_governed_memory` is the accepted production
+migration baseline.
+
+### 1.29 H3-06 accepted security-review scope
+
+H3-06 security review MUST cover context-free or cross-workspace index access,
+workspace/organization/cell substitution, ACL projection forgery or lag, authorization
+after candidate retrieval, vector-similarity authorization, source or citation
+substitution, stale source/version access, deleted-content resurrection, embedding or
+chunk-version confusion, query and filter injection, unbounded graph expansion,
+ranking manipulation, prompt-injection persistence, context-budget bypass,
+classification or model-route downgrade, governed-content leakage in logs/events,
+reindex replay with changed inputs, and H3-07+ scope leakage. The review inherits H1
+authorization/execution context, H3-01 resource identity, H3-03 custody, H3-04
+knowledge provenance, H3-05 memory governance, and ADR-006/012/018/030/032.
+
+### 1.30 H3-06 accepted classification and model-egress impact
+
+Every search document, chunk reference, embedding, ACL projection, result, citation,
+and assembled context records effective classification and policy/model/index version.
+Classification is at least as restrictive as every contributing source. Authorization,
+visibility, current source custody, and model-route policy are applied before candidate
+retrieval and revalidated before response assembly or model egress. Restricted content
+may use only the approved private model route. Unsupported or mixed-classification
+routes fail closed; similarity, ranking, or graph proximity never grants access.
+
+### 1.31 H3-06 accepted custody and lineage impact
+
+Search is a rebuildable derivative plane, never source custody or operational truth.
+Every indexed field, chunk, and embedding references an immutable source identity,
+source version/digest, producing chunker/embedding/index version, classification, and
+policy version. H3-06 does not copy provider payloads or bypass H3-03 document custody,
+H3-04 claim evidence, or H3-05 memory source validation. Missing, changed, quarantined,
+revoked, or inaccessible lineage makes the candidate unavailable and queues governed
+reconciliation instead of fabricating context.
+
+### 1.32 H3-06 accepted retention and deletion impact
+
+Search documents, ACL projections, chunks, embeddings, index generations, caches, and
+rebuild artifacts inherit source retention, hold, export, closure, and deletion
+decisions without extending source retention. Permission revocation and source
+disposition deny retrieval immediately through authoritative pre-retrieval filtering,
+even while derivative cleanup is pending. Cleanup is deterministic and idempotent;
+partial deletion records an auditable exception and retry/operator disposition, never
+a false completion. Old index generations remain inaccessible after cutover and are
+removed only after verified rollback and retention windows.
+
+### 1.33 H3-06 accepted recovery and reindex impact
+
+Search indexes are disposable projections rebuilt from authorized source inventories.
+Recovery manifests include source/version counts, index/chunker/embedding/model
+versions, ACL projection versions, checksums, cutover state, and deletion exceptions,
+but not reusable credentials or unnecessary governed content. Reindex uses H3-02
+durable jobs with deterministic inputs, bounded concurrency, resumable checkpoints,
+tenant fairness, and replay protection. Lexical retrieval remains the safe rollback
+path while vector indexing or a new generation is disabled or rebuilding.
+
+### 1.34 H3-06 approved quality, latency, freshness, and egress policy
+
+This section is the single normative owner of H3-06 acceptance thresholds. Tests use
+a versioned, deterministic provider-neutral corpus containing at least 100 judged
+queries across at least three workspaces, including exact identifiers, lexical,
+semantic, structured-filter, graph-neighborhood, stale-permission, deleted-source,
+prompt-injection, and mixed-classification cases. Raising exposure or budget limits
+requires measured evidence and architecture review.
+
+| Control | Approved threshold and required behavior |
+|---|---|
+| Tenant and permission safety | Zero tolerated unauthorized candidates or context fragments. Authoritative workspace, visibility, and source-access predicates run before candidate retrieval and again before assembly. |
+| Citation and lineage | 100% of returned results and context fragments identify an accessible source and immutable source/version plus index policy/version. Missing lineage fails closed. |
+| Exact and structured retrieval | Recall@10 is at least 0.95 for judged exact-identifier and structured-filter queries. Exact matches cannot be displaced solely by vector similarity. |
+| Hybrid relevance | NDCG@10 is at least 0.75 on the complete judged corpus and may not regress by more than 0.02 versus the accepted lexical baseline without review. |
+| Query latency | At a documented reference load of 100,000 searchable records and three active workspaces, warm p95 is at most 500 ms and p99 at most 1 second, excluding model and external-provider latency. Correctness takes precedence over latency. |
+| Index freshness | 95% of accepted source changes become searchable within 60 seconds and 99% within 5 minutes while the durable job SLO is available. Lag is observable and never weakens authoritative access checks. |
+| Revocation and deletion | Revoked or disposed content is non-retrievable in the next transaction through authoritative filtering; derivative removal completes within 60 seconds for 95% and 5 minutes for 99%, or records an explicit exception. |
+| Context budget | Assembly is deterministic and capped by caller policy, with a safe default of 8,192 input tokens and 20 source fragments. Truncation preserves citation boundaries and never silently drops classification metadata. |
+| Model egress | Restricted content requires the private route; unsupported routes deny. The evaluation corpus tolerates zero prompt-injection instruction execution, cross-workspace disclosure, citation loss, or classification downgrade. |
+
+### 1.35 H3-06 accepted migration plan
+
+H3-06 uses additive expand-first migration from accepted revision
+`0026_h3_governed_memory`. It adds only provider-neutral search documents, ACL
+projections, versioned chunks/embeddings/index generations, freshness/checkpoint, and
+reconciliation state required by `H3_ARCHITECTURE.md`. Tenant keys include
+organization, workspace, and cell identity; composite foreign keys preserve source
+identity; enabled and forced RLS exist before runtime access. PostgreSQL full text and
+pgvector remain the approved platform under ADR-006/032. The migration performs no
+rewrite of accepted H3-01 through H3-05 state and no task, workflow, notification,
+agent, provider, connector, business-data, H3-07+, or H4 backfill.
+
+Empty-state downgrade MUST be proven. Once accepted search, embedding, ACL, index,
+reconciliation, audit, or outbox evidence exists, destructive schema downgrade MUST
+fail closed. Application rollback disables the affected index generation and retains
+authorized lexical retrieval; old/new versions coexist until parity, deletion,
+freshness, quality, and rollback evidence permits reviewed contraction.
+
+### 1.36 H3-06 implementation authorization
+
+H3-05 is Accepted and merged through PR #34 at `670205d`; its protected checks passed
+and revision `0026_h3_governed_memory` is the accepted production migration baseline.
+The H3-06 impacts and thresholds above are approved. The H3-06 implementation gate is
+open for one dedicated slice after this governance synchronization is merged into
+`origin/master`. The acceptance-evidence target is `H3_06_ACCEPTANCE_EVIDENCE.md`.
+H3-07 and later slices, H4, provider-specific behavior, connectors, and business agents
+remain unauthorized.
 
 ## 2. Recommended implementation order
 
