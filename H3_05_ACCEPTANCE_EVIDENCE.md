@@ -2,7 +2,7 @@
 
 **Owner:** Atlas Platform Engineering
 
-**Status:** Implemented; pending pull-request acceptance
+**Status:** Accepted and merged through PR #34
 
 **Governing specification:** [H3_ARCHITECTURE.md](H3_ARCHITECTURE.md#h3-05-memory-manager)
 
@@ -99,6 +99,9 @@ outside this slice.
 
 The change is additive and exposes no new HTTP API. Existing Gmail, Calendar, Drive,
 Atlas chat, H0, H1, H2, and H3-01 through H3-04 behavior remains unchanged. Revision
-`0026_h3_governed_memory` is proposed, not accepted, until this pull request merges.
-H3-06 and later slices, H4, provider-specific behavior, and business agents remain
+PR #34 is merged into `origin/master` at `670205d`; revision
+`0026_h3_governed_memory` is the accepted production migration baseline and H3-05 is
+formally Accepted. H3-06 remains unimplemented; its implementation gate is owned by
+the governance impacts and authorization in `H3_IMPLEMENTATION_GUIDE.md`. H3-07 and
+later slices, H4, provider-specific behavior, connectors, and business agents remain
 unauthorized and have not started.

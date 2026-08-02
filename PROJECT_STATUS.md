@@ -11,8 +11,7 @@ FastAPI service backed by PostgreSQL, with OpenAI-powered chat and durable memor
 working Google integrations for Gmail, Calendar, and Drive.
 
 The local Docker deployment is operational. The accepted production migration
-baseline remains `0025_h3_knowledge_timeline`; H3-05 proposes additive revision
-`0026_h3_governed_memory` pending review and merge. Formal H0 Exit and Formal H1 Exit are accepted. H1-01
+baseline is `0026_h3_governed_memory`. Formal H0 Exit and Formal H1 Exit are accepted. H1-01
 through H1-10 and H2-01 through H2-08 are merged. The H2 platform specification is
 accepted. H2-01 through H2-10 are merged and Formal H2 Exit is accepted. PR #24
 formally approved the H3 blueprint and opened the sequential implementation gate.
@@ -25,8 +24,10 @@ migration baseline.
 The governance-only H3-04 gate review is merged through PR #31 at `6392d11`. H3-04
 Knowledge Service and Timeline is Accepted and merged through PR #32 at `38c326d`;
 its protected required checks passed and revision `0025_h3_knowledge_timeline` is the
-accepted production migration baseline. H3-05 Memory Manager is implemented on its
-dedicated review branch; it is not Accepted until its pull request is merged.
+accepted production migration baseline. H3-05 Memory Manager is Accepted and merged
+through PR #34 at `670205d`; its protected required checks passed. H3-06 is not
+implemented; its governance gate is explicitly open after the governance-only pull
+request that owns the approved H3-06 impacts is merged.
 Gmail/Calendar/Drive authorization has been completed for the current Wanderra user,
 and live end-to-end verification has succeeded for email, calendar events, and the
 full Drive file lifecycle.
@@ -438,7 +439,7 @@ full Drive file lifecycle.
 - No API or Phase 1 behavior change and no H3-05+, memory, search, provider-specific,
   H4, or business-agent functionality.
 
-### H3-05 Memory Manager (implemented; pending acceptance)
+### H3-05 Memory Manager (Accepted)
 
 - Provider-neutral governed memory items remain distinct from operational truth,
   evidence-backed knowledge, source documents, timeline projections, and legacy
@@ -657,7 +658,7 @@ Interactive OpenAPI documentation is available at `/docs`.
 
 ## Test coverage
 
-The current PostgreSQL-backed automated suite contains 541 passing tests:
+The current PostgreSQL-backed automated suite contains 554 passing tests:
 
 - Health and Atlas chat API behavior.
 - Gmail MIME construction and message parsing.
@@ -683,6 +684,10 @@ The current PostgreSQL-backed automated suite contains 541 passing tests:
   confidence and validity, classification monotonicity, contradiction, review,
   deterministic timeline ordering/rebuild/checkpoints, audit separation, durable
   source disposition, forced RLS, migration, guarded rollback, and architecture scope.
+- H3-05 governed-memory provenance, deterministic identity and consolidation,
+  classification and model-egress controls, feedback, confirmation, expiry, pinning,
+  supersession, transitive source invalidation, export, forced RLS, migration,
+  guarded rollback, and architecture scope.
 - PDF and DOCX extraction helpers.
 - H0 architecture fitness, threat, isolation, authorization, encryption, custody,
   provider-conflict, lineage, AI security, entity integrity, and replay evidence.

@@ -501,18 +501,14 @@ enforcement is owned by `IMPLEMENTATION_GUIDE.md`.
 
 H3-01 is Accepted and merged through PR #26 at `a4602b6`. H3-02 is Accepted and
 merged through PR #28 at `915386c`. H3-03 is Accepted and merged through PR #30 at
-`3be4480`. H3-04 is Accepted and merged through PR #32 at `38c326d`; accepted
-production migration head is `0025_h3_knowledge_timeline`.
+`3be4480`. H3-04 is Accepted and merged through PR #32 at `38c326d`. H3-05 is
+Accepted and merged through PR #34 at `670205d`; accepted production migration head
+is `0026_h3_governed_memory`.
 
-For traceability, the prior governance record stated that the "H3-04 implementation gate is open",
-used `0024_h3_document_custody` as its accepted baseline, and excluded
-"H3-05 and later slices". PR #32 acceptance and this governance synchronization
-supersede that prior gate state; those phrases have no current authorizing effect.
-
-The H3-05 Memory Manager security, classification, custody, retention, deletion,
-recovery, and migration impacts are approved in
-[H3_IMPLEMENTATION_GUIDE.md](H3_IMPLEMENTATION_GUIDE.md#121-h3-05-accepted-security-review-scope).
-The H3-05 implementation gate is explicitly open for one dedicated slice after this
-governance synchronization is merged into `origin/master`. Its implementation is now
-submitted for review but remains unaccepted until merge. H3-06 and later slices,
-business agents, provider-specific behavior, and H4 work remain unauthorized.
+H3-05 is formally Accepted. The H3-06 Search and Context Assembly security,
+classification, custody, retention, deletion, recovery, quality, latency, freshness,
+egress, and migration impacts are approved in
+[H3_IMPLEMENTATION_GUIDE.md](H3_IMPLEMENTATION_GUIDE.md#129-h3-06-accepted-security-review-scope).
+The H3-06 implementation gate is explicitly open for one dedicated slice after this
+governance synchronization is merged into `origin/master`. H3-07 and later slices,
+H4, provider-specific behavior, connectors, and business agents remain unauthorized.

@@ -418,10 +418,10 @@ cross-workspace memory; search implementation; recommendations; autonomous learn
 **Dependencies:** H3-01 resources; H3-03 lineage; H3-04 knowledge distinction; H1
 authorization/retention; ADR-005/018/030.
 
-**Implementation gate:** Open for H3-05 only after H3-04 acceptance through PR #32
-and merger of the approved
-[H3-05 governance impacts](H3_IMPLEMENTATION_GUIDE.md#121-h3-05-accepted-security-review-scope).
-H3-06 and later behavior remains excluded.
+**Implementation status:** Accepted and merged through PR #34 at `670205d`; revision
+`0026_h3_governed_memory` is the accepted production migration baseline. The H3-06
+gate is governed by the approved
+[H3-06 governance impacts](H3_IMPLEMENTATION_GUIDE.md#129-h3-06-accepted-security-review-scope).
 
 **Acceptance criteria:** Every memory is attributable and removable; expiry and
 supersession are deterministic; sensitive classes obey model-routing policy; memory
@@ -450,6 +450,11 @@ external search engine without measured need.
 
 **Dependencies:** H3-01 through H3-05; ADR-006/012/018/030/032; approved quality,
 latency, freshness, and egress thresholds.
+
+**Implementation gate:** Open for H3-06 only after H3-05 acceptance through PR #34
+and merger of the approved
+[H3-06 governance impacts](H3_IMPLEMENTATION_GUIDE.md#129-h3-06-accepted-security-review-scope).
+H3-07 and later behavior remains excluded.
 
 **Acceptance criteria:** Permission filters precede retrieval; revoked access expires
 within the approved SLO; results cite sources; model/chunk versions coexist during
