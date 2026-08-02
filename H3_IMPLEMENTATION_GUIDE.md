@@ -190,6 +190,91 @@ fail closed. Application processors and extraction workers may be disabled while
 objects and metadata remain readable through the authorized custody boundary; repair
 uses a reviewed forward-fix or export and MUST preserve immutable lineage.
 
+### 1.13 H3-04 accepted security-review scope
+
+H3-04 security review MUST cover context-free or cross-workspace claim and timeline
+access, resource or source-version substitution, source-span and content-hash mismatch,
+inaccessible or deleted evidence, forged extraction provenance or confidence,
+predicate/value type confusion, claim-identity replay with changed inputs,
+contradiction or supersession erasure, validity-interval manipulation, automatic
+operational-data mutation, timeline visibility bypass, audit/timeline conflation,
+event-order or checkpoint gaps, non-deterministic projection replay, deletion-lineage
+bypass, governed-content leakage in logs or events, and H3-05+ scope leakage. The
+review inherits H1 authorization/audit/messaging, H3-01 resource identity, H3-02
+durable execution, H3-03 source custody, ADR-005, ADR-017, and ADR-028 rather than
+creating parallel controls.
+
+### 1.14 H3-04 accepted classification impact
+
+Every claim, evidence link, source span, contradiction, review record, and timeline
+projection records its effective classification and the policy version that produced
+it. A derivative is never less restrictive than any source contributing to it.
+Provider metadata, extractor output, confidence, and timeline visibility are untrusted
+inputs and cannot lower classification or grant access. Authorization and source
+visibility are revalidated before claim or timeline retrieval.
+
+### 1.15 H3-04 accepted custody impact
+
+Knowledge references immutable H3-03 document versions and bounded source spans with
+content-hash lineage; it does not overwrite, replace, or become the custodian of source
+documents. Claims derived from operational resources use typed H3-01 references and
+explicit provenance. Timeline stores a rebuildable projection and source references,
+not copies of audit evidence. Missing, substituted, quarantined, or inaccessible
+source custody fails closed and leaves an explicit invalid or unavailable derivative
+state rather than fabricating evidence.
+
+### 1.16 H3-04 accepted retention impact
+
+Knowledge, Timeline, Documents, Operational Data, and Audit keep distinct retention
+and authority rules. Legal hold and minimum retention continue to take precedence.
+Knowledge and timeline records participate in workspace export, closure, and source
+disposition without extending the retention of source content by accident. Audit
+retention is unchanged; timeline retention cannot delete or rewrite audit evidence.
+
+### 1.17 H3-04 accepted deletion impact
+
+Source deletion or loss of access triggers a durable, idempotent H3-02 propagation
+that invalidates or removes dependent claims according to the governing policy and
+rebuilds affected timeline projections. Contradiction, supersession, and deletion
+receipts remain sufficient to explain the outcome without retaining governed source
+content beyond policy. Partial propagation records an auditable exception and retry or
+operator disposition; it never reports false completion.
+
+### 1.18 H3-04 accepted recovery impact
+
+Backups, restore manifests, workspace export, and closure inventories include claim
+identity, typed value and predicate versions, evidence/source references, confidence,
+validity, contradiction, supersession, review, classification, timeline checkpoint,
+and deletion state. Restore verifies tenant placement and accessible source lineage
+before making a claim active. Timeline is rebuilt deterministically from authorized,
+versioned source events; checkpoints accelerate replay but are not independent truth.
+
+### 1.19 H3-04 accepted migration plan
+
+H3-04 uses one additive expand-first migration from accepted revision
+`0024_h3_document_custody`. It adds only the Knowledge Service and Timeline schema
+defined by `H3_ARCHITECTURE.md`: typed claims, source spans and provenance,
+contradiction/supersession/review state, timeline projections, and rebuild checkpoints.
+Every tenant-owned key includes organization, workspace, and cell identity; composite
+foreign keys preserve it; enabled and forced RLS exist before runtime writes. The
+migration performs no rewrite of accepted H3-01 through H3-03 state and no memory,
+search, task, workflow, notification, agent, provider, or business-data backfill.
+
+Empty-state downgrade MUST be proven. Once accepted claim, contradiction, review,
+timeline, checkpoint, audit, or outbox evidence exists, destructive schema downgrade
+MUST fail closed. Projection consumers may be disabled and rebuilt while accepted
+claims and evidence remain readable through their authorized boundaries; repair uses
+a reviewed forward-fix or export and preserves provenance.
+
+### 1.20 H3-04 implementation authorization
+
+H3-03 is Accepted and merged through PR #30 at `3be4480`, and revision
+`0024_h3_document_custody` is the accepted production migration baseline. The H3-04
+impacts above are approved and the H3-04 implementation gate is open for one dedicated
+slice after this governance synchronization is merged into `origin/master`. H3-05 and
+later slices, business agents, provider-specific logic, and H4 work remain
+unauthorized.
+
 ## 2. Recommended implementation order
 
 | Order | Slice | Why it is next |

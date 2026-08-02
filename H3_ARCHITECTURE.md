@@ -383,7 +383,12 @@ rebuild/checkpoint, visibility, and resource linkage.
 **Excluded:** General ontology editor; arbitrary graph database; automatic operational
 updates; memory; search; recommendations.
 
-**Dependencies:** H3-01 resources; H3-02 jobs; H3-03 source lineage; ADR-005/017/028.
+**Dependencies:** Accepted H3-01 resources, H3-02 jobs, and H3-03 source lineage;
+ADR-005/017/028; the approved
+[H3-04 governance impacts](H3_IMPLEMENTATION_GUIDE.md#113-h3-04-accepted-security-review-scope).
+
+**Implementation gate:** Open for H3-04 only after H3-03 acceptance through PR #30.
+H3-05 and later behavior remains excluded.
 
 **Acceptance criteria:** Claims always cite accessible evidence; contradictions remain
 explicit; audit and timeline have separate schemas and retention; timeline rebuild is
