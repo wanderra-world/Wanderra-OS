@@ -500,13 +500,17 @@ enforcement is owned by `IMPLEMENTATION_GUIDE.md`.
 
 H3-01 is Accepted and merged through PR #26 at `a4602b6`. H3-02 is Accepted and
 merged through PR #28 at `915386c`. H3-03 is Accepted and merged through PR #30 at
-`3be4480`; accepted production migration head is `0024_h3_document_custody`.
+`3be4480`. H3-04 is Accepted and merged through PR #32 at `38c326d`; accepted
+production migration head is `0025_h3_knowledge_timeline`.
 
-The H3-04 Knowledge Service and Timeline security, classification, custody, retention,
-deletion, recovery, and migration impacts are approved in
-[H3_IMPLEMENTATION_GUIDE.md](H3_IMPLEMENTATION_GUIDE.md#113-h3-04-accepted-security-review-scope).
-H3-04 implementation and local acceptance evidence are complete on its dedicated
-branch; formal acceptance and migration-head advancement to
-`0025_h3_knowledge_timeline` require review and protected checks.
-The H3-04 implementation gate is open until the dedicated slice is formally accepted.
-H3-05 and later slices, business agents, and H4 work remain unauthorized.
+For traceability, the prior governance record stated that the "H3-04 implementation gate is open",
+used `0024_h3_document_custody` as its accepted baseline, and excluded
+"H3-05 and later slices". PR #32 acceptance and this governance synchronization
+supersede that prior gate state; those phrases have no current authorizing effect.
+
+The H3-05 Memory Manager security, classification, custody, retention, deletion,
+recovery, and migration impacts are approved in
+[H3_IMPLEMENTATION_GUIDE.md](H3_IMPLEMENTATION_GUIDE.md#121-h3-05-accepted-security-review-scope).
+The H3-05 implementation gate is explicitly open for one dedicated slice after this
+governance synchronization is merged into `origin/master`. H3-06 and later slices,
+business agents, provider-specific behavior, and H4 work remain unauthorized.

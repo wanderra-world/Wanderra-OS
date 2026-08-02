@@ -268,12 +268,95 @@ a reviewed forward-fix or export and preserves provenance.
 
 ### 1.20 H3-04 implementation authorization
 
-H3-03 is Accepted and merged through PR #30 at `3be4480`, and revision
-`0024_h3_document_custody` is the accepted production migration baseline. The H3-04
-impacts above are approved and the H3-04 implementation gate is open for one dedicated
-slice after this governance synchronization is merged into `origin/master`. H3-05 and
-later slices, business agents, provider-specific logic, and H4 work remain
-unauthorized.
+H3-04 is Accepted and merged through PR #32 at `38c326d`, its protected required
+checks passed, and revision `0025_h3_knowledge_timeline` is the accepted production
+migration baseline.
+
+### 1.21 H3-05 accepted security-review scope
+
+H3-05 security review MUST cover context-free or cross-workspace memory access,
+forged or inaccessible provenance, source/resource substitution, memory-type or scope
+confusion, confidence manipulation, expiry bypass, pinning abuse, consolidation replay
+with changed inputs, supersession or conflict erasure, feedback forgery, confirmation
+bypass, permission-revocation lag, prompt-injection persistence, model-egress policy
+bypass, governed-content leakage in logs or events, deletion-lineage gaps, and H3-06+
+scope leakage. The review inherits H1 authorization, retention, audit, messaging, and
+AI-egress controls plus H3-01 resource identity, H3-03 source custody, H3-04 knowledge
+distinction, ADR-005, ADR-018, and ADR-030 rather than creating parallel controls.
+
+### 1.22 H3-05 accepted classification impact
+
+Every memory item, source reference, consolidation input, supersession, feedback,
+confirmation, and deletion state records effective classification and policy version.
+A memory is never less restrictive than any source contributing to it. User or model
+labels, summaries, confidence, visibility, and feedback are untrusted inputs and
+cannot lower classification or grant access. Authorization, visibility, source access,
+and approved model-routing policy are revalidated before retrieval or model egress.
+
+### 1.23 H3-05 accepted custody impact
+
+Memory references immutable H3-03 document versions, H3-04 claims, or typed H3-01
+resources through explicit provenance; it does not become the custodian of operational
+truth, documents, or knowledge evidence. Consolidated memory preserves the complete
+input lineage and the policy/version that produced it. Missing, substituted,
+quarantined, revoked, or inaccessible source custody fails closed and leaves an
+explicit unavailable or invalid memory state rather than fabricating context.
+
+### 1.24 H3-05 accepted retention impact
+
+Memory has explicit expiry, pinning, confirmation, retention, and supersession state
+separate from Operational Data, Documents, Knowledge, Timeline, and Audit. Legal hold
+and minimum retention take precedence; pinning cannot override deletion, legal,
+workspace-closure, or source-access policy. Unbounded conversation retention and
+implicit expiry extension are prohibited. Memory and feedback participate in
+workspace export and closure without extending source-content retention by accident.
+
+### 1.25 H3-05 accepted deletion impact
+
+Source deletion, permission revocation, expiry, workspace closure, or loss of source
+access triggers deterministic, idempotent memory invalidation or removal according to
+policy. Consolidated and superseding items remain linked to every contributing source
+so disposition propagates transitively. Feedback and deletion receipts retain only
+the minimized evidence required to explain the outcome. Partial propagation records
+an auditable exception and retry or operator disposition; it never reports false
+completion.
+
+### 1.26 H3-05 accepted recovery impact
+
+Backups, restore manifests, workspace export, and closure inventories include memory
+identity and type, source/resource references, confidence, classification, visibility,
+feedback, confirmation, consolidation, expiry, pinning, supersession, and deletion
+state. Restore verifies tenant placement, policy version, source accessibility, and
+disposition before making memory available. Deterministic lifecycle evaluation is
+replayed from persisted timestamps and provenance; caches or future search indexes are
+not independent truth.
+
+### 1.27 H3-05 accepted migration plan
+
+H3-05 uses one additive expand-first migration from accepted revision
+`0025_h3_knowledge_timeline`. It adds only the Memory Manager schema defined by
+`H3_ARCHITECTURE.md`: governed memory items, provenance/source links, durable
+feedback, consolidation/supersession lineage, confirmation, pinning, expiry, and
+disposition state. Every tenant-owned key includes organization, workspace, and cell
+identity; composite foreign keys preserve it; enabled and forced RLS exist before
+runtime writes. The migration performs no rewrite of accepted H3-01 through H3-04
+state and no search, embedding, task, workflow, notification, agent, provider, or
+business-data backfill.
+
+Empty-state downgrade MUST be proven. Once accepted memory, feedback, confirmation,
+consolidation, deletion, audit, or outbox evidence exists, destructive schema
+downgrade MUST fail closed. Memory creation and consolidation may be disabled while
+accepted records remain readable through authorized boundaries; repair uses a reviewed
+forward-fix or export and preserves provenance, feedback, and deletion receipts.
+
+### 1.28 H3-05 implementation authorization
+
+H3-04 is Accepted and merged through PR #32 at `38c326d`, and revision
+`0025_h3_knowledge_timeline` is the accepted production migration baseline. The H3-05
+impacts above are approved and the H3-05 implementation gate is open for one dedicated
+slice after this governance synchronization is merged into `origin/master`. The
+acceptance-evidence target is `H3_05_ACCEPTANCE_EVIDENCE.md`. H3-06 and later slices,
+business agents, provider-specific logic, and H4 work remain unauthorized.
 
 ## 2. Recommended implementation order
 

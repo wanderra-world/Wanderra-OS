@@ -105,6 +105,7 @@ approved ports; H3-03 deliberately does not select a provider or expose an API.
 The change is additive and exposes no new HTTP API. Existing Gmail, Calendar, Drive,
 Atlas chat, H0, H1, H2, H3-01, and H3-02 runtime behavior remains unchanged. PR #30
 passed its protected checks and merged into `origin/master` at `3be4480`, establishing
-`0024_h3_document_custody` as the accepted production migration baseline. H3-04 has
-not started; its separately reviewed implementation gate is owned by
+`0024_h3_document_custody` as the H3-03 migration baseline. H3-04 was subsequently
+Accepted and merged through PR #32 at `38c326d`; the current accepted production
+migration baseline and next-slice authorization are owned by
 `README_ARCHITECTURE.md` and `H3_IMPLEMENTATION_GUIDE.md`.
