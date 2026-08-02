@@ -85,7 +85,7 @@ earlier contract.
 | Docker build | Passed with production image `atlas-h3-03` |
 | API image smoke | Passed |
 | Durable worker image smoke | Passed |
-| Protected GitHub required gate | Pending dedicated pull request checks |
+| Protected GitHub required gate | Passed for PR #30 (Architecture Fitness, Regression Tests, Docker Build and Smoke) |
 
 ## 7. Security and residual risk
 
