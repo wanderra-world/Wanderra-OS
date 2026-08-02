@@ -494,6 +494,7 @@ enforcement is owned by `IMPLEMENTATION_GUIDE.md`.
 | [H3_01_ACCEPTANCE_EVIDENCE.md](H3_01_ACCEPTANCE_EVIDENCE.md) | H3-01 Resource Graph implementation and verification evidence |
 | [H3_02_ACCEPTANCE_EVIDENCE.md](H3_02_ACCEPTANCE_EVIDENCE.md) | H3-02 durable execution and scheduler implementation evidence |
 | [H3_03_ACCEPTANCE_EVIDENCE.md](H3_03_ACCEPTANCE_EVIDENCE.md) | H3-03 document custody and governed derivation implementation evidence |
+| [H3_04_ACCEPTANCE_EVIDENCE.md](H3_04_ACCEPTANCE_EVIDENCE.md) | H3-04 Knowledge Service and Timeline implementation evidence |
 
 ## Next action
 
@@ -504,5 +505,8 @@ merged through PR #28 at `915386c`. H3-03 is Accepted and merged through PR #30 
 The H3-04 Knowledge Service and Timeline security, classification, custody, retention,
 deletion, recovery, and migration impacts are approved in
 [H3_IMPLEMENTATION_GUIDE.md](H3_IMPLEMENTATION_GUIDE.md#113-h3-04-accepted-security-review-scope).
-The H3-04 implementation gate is open for one explicitly authorized, dedicated slice.
+H3-04 implementation and local acceptance evidence are complete on its dedicated
+branch; formal acceptance and migration-head advancement to
+`0025_h3_knowledge_timeline` require review and protected checks.
+The H3-04 implementation gate is open until the dedicated slice is formally accepted.
 H3-05 and later slices, business agents, and H4 work remain unauthorized.

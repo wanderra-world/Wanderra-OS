@@ -47,6 +47,14 @@ from app.jobs.models import (
     JobOperatorControl,
     JobSchedule,
 )
+from app.knowledge.models import (
+    KnowledgeClaim,
+    KnowledgeEvidence,
+    KnowledgeRelation,
+    KnowledgeSourceDisposition,
+    TimelineCheckpoint,
+    TimelineEntry,
+)
 from app.memberships.models import FixedMembershipRole, Role, WorkspaceMembership
 from app.messaging.models import (
     AggregateVersion,
@@ -138,6 +146,10 @@ __all__ = [
     "JobInstance",
     "JobOperatorControl",
     "JobSchedule",
+    "KnowledgeClaim",
+    "KnowledgeEvidence",
+    "KnowledgeRelation",
+    "KnowledgeSourceDisposition",
     "GmailCredential",
     "GmailOAuthState",
     "Organization",
@@ -165,6 +177,8 @@ __all__ = [
     "ResourceRelationship",
     "ResourceTag",
     "SecurityNotification",
+    "TimelineCheckpoint",
+    "TimelineEntry",
     "StorageCapabilityRoute",
     "StorageShadowComparison",
     "User",
