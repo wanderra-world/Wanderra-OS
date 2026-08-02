@@ -11,7 +11,8 @@ FastAPI service backed by PostgreSQL, with OpenAI-powered chat and durable memor
 working Google integrations for Gmail, Calendar, and Drive.
 
 The local Docker deployment is operational. The accepted production migration
-baseline is `0026_h3_governed_memory`. Formal H0 Exit and Formal H1 Exit are accepted. H1-01
+baseline is `0026_h3_governed_memory`; H3-06 proposes additive revision
+`0027_h3_search_context` for review. Formal H0 Exit and Formal H1 Exit are accepted. H1-01
 through H1-10 and H2-01 through H2-08 are merged. The H2 platform specification is
 accepted. H2-01 through H2-10 are merged and Formal H2 Exit is accepted. PR #24
 formally approved the H3 blueprint and opened the sequential implementation gate.
@@ -25,14 +26,33 @@ The governance-only H3-04 gate review is merged through PR #31 at `6392d11`. H3-
 Knowledge Service and Timeline is Accepted and merged through PR #32 at `38c326d`;
 its protected required checks passed and revision `0025_h3_knowledge_timeline` is the
 accepted production migration baseline. H3-05 Memory Manager is Accepted and merged
-through PR #34 at `670205d`; its protected required checks passed. H3-06 is not
-implemented; its governance gate is explicitly open after the governance-only pull
-request that owns the approved H3-06 impacts is merged.
+through PR #34 at `670205d`; its protected required checks passed. H3-06 Search and
+Context Assembly is implemented on its dedicated review branch with provider-neutral
+full-text/pgvector projections, pre-retrieval ACL enforcement, deterministic hybrid
+ranking, graph-bounded filters, safe cited context assembly, durable reindex contracts,
+reconciliation, forced RLS, and guarded rollback. Acceptance remains subject to its
+dedicated pull request and protected checks.
 Gmail/Calendar/Drive authorization has been completed for the current Wanderra user,
 and live end-to-end verification has succeeded for email, calendar events, and the
 full Drive file lifecycle.
 
 ## Implemented capabilities
+
+### H3-06 Search and Context Assembly (pending review)
+
+- Rebuildable, versioned search generations over immutable resource, document,
+  knowledge, and memory lineage.
+- PostgreSQL full-text and pgvector hybrid retrieval with structured and bounded graph
+  filters; exact identifiers retain deterministic priority.
+- Workspace/user ACL projections and current resource-state predicates execute in SQL
+  before candidates leave PostgreSQL; context assembly reuses only authorized results.
+- Cited, classification-preserving, untrusted-data context fragments with a default
+  8,192-token/20-fragment ceiling and private-route enforcement for restricted data.
+- Idempotent indexing, source disposition, derivative reconciliation, old/new index
+  coexistence, lexical fallback, audit/outbox evidence, and H3-02 durable reindex and
+  cleanup commands.
+- Additive `0027_h3_search_context` migration with forced RLS and guarded populated
+  downgrade. No Phase 1 API or previous H-layer runtime behavior changes.
 
 ### Atlas Core H1-01
 

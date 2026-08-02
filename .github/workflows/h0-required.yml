@@ -21,7 +21,7 @@ jobs:
     timeout-minutes: 15
     services:
       postgres:
-        image: postgres:16-alpine
+        image: pgvector/pgvector:pg16
         env:
           POSTGRES_USER: atlas_ci
           POSTGRES_PASSWORD: atlas_ci
@@ -54,7 +54,7 @@ jobs:
     timeout-minutes: 15
     services:
       postgres:
-        image: postgres:16-alpine
+        image: pgvector/pgvector:pg16
         env:
           POSTGRES_USER: atlas_ci
           POSTGRES_PASSWORD: atlas_ci
