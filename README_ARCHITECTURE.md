@@ -496,6 +496,7 @@ enforcement is owned by `IMPLEMENTATION_GUIDE.md`.
 | [H3_03_ACCEPTANCE_EVIDENCE.md](H3_03_ACCEPTANCE_EVIDENCE.md) | H3-03 document custody and governed derivation implementation evidence |
 | [H3_04_ACCEPTANCE_EVIDENCE.md](H3_04_ACCEPTANCE_EVIDENCE.md) | H3-04 Knowledge Service and Timeline implementation evidence |
 | [H3_05_ACCEPTANCE_EVIDENCE.md](H3_05_ACCEPTANCE_EVIDENCE.md) | H3-05 governed Memory Manager implementation evidence |
+| [H3_06_ACCEPTANCE_EVIDENCE.md](H3_06_ACCEPTANCE_EVIDENCE.md) | H3-06 Search and Context Assembly implementation evidence |
 
 ## Next action
 

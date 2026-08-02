@@ -98,6 +98,13 @@ from app.resource_graph.models import (
     ResourceRelationship,
     ResourceTag,
 )
+from app.search_context.models import (
+    SearchAclProjection,
+    SearchDocument,
+    SearchEmbedding,
+    SearchIndexGeneration,
+    SearchReconciliation,
+)
 from app.storage_capability.models import StorageCapabilityRoute, StorageShadowComparison
 from app.tenancy.models import (
     AuditEvent,
@@ -187,6 +194,11 @@ __all__ = [
     "ResourceRelationship",
     "ResourceTag",
     "SecurityNotification",
+    "SearchAclProjection",
+    "SearchDocument",
+    "SearchEmbedding",
+    "SearchIndexGeneration",
+    "SearchReconciliation",
     "TimelineCheckpoint",
     "TimelineEntry",
     "StorageCapabilityRoute",

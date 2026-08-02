@@ -28,7 +28,7 @@ def test_fit_ci_002_architecture_job_runs_postgresql_rls_and_lint() -> None:
 
     workflow = workflow_text()
 
-    assert "image: postgres:16-alpine" in workflow
+    assert "image: pgvector/pgvector:pg16" in workflow
     assert "H0_TEST_DATABASE_URL:" in workflow
     assert "ruff check tests/architecture" in workflow
     assert "pytest -q tests/architecture" in workflow
