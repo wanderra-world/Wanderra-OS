@@ -2,7 +2,7 @@
 
 **Owner:** Atlas Platform Engineering
 
-Last updated: 1 August 2026
+Last updated: 2 August 2026
 
 ## Summary
 
@@ -11,17 +11,17 @@ FastAPI service backed by PostgreSQL, with OpenAI-powered chat and durable memor
 working Google integrations for Gmail, Calendar, and Drive.
 
 The local Docker deployment is operational. The accepted production migration
-baseline is `0023_h3_durable_execution`. Formal H0 Exit and Formal H1 Exit are accepted. H1-01
+baseline is `0024_h3_document_custody`. Formal H0 Exit and Formal H1 Exit are accepted. H1-01
 through H1-10 and H2-01 through H2-08 are merged. The H2 platform specification is
 accepted. H2-01 through H2-10 are merged and Formal H2 Exit is accepted. PR #24
 formally approved the H3 blueprint and opened the sequential implementation gate.
 H3-01 Resource Graph is Accepted and merged through PR #26 at `a4602b6`. H3-02 Durable
 Execution and Scheduler is Accepted and merged through PR #28 at `915386c`; its
-protected required checks passed. PR #29 opened the H3-03 governance gate at
-`24284e8`. The dedicated H3-03 implementation branch now contains the complete
-Documents and Governed Derivation slice and additive revision
-`0024_h3_document_custody`; formal acceptance remains pending review and protected
-checks. H3-04 has not started.
+protected required checks passed. H3-03 Documents and Governed Derivation is Accepted
+and merged through PR #30 at `3be4480`; its protected required checks passed and
+revision `0024_h3_document_custody` is the accepted production migration baseline.
+The governance-only H3-04 gate review is complete; H3-04 production implementation
+has not started.
 Gmail/Calendar/Drive authorization has been completed for the current Wanderra user,
 and live end-to-end verification has succeeded for email, calendar events, and the
 full Drive file lifecycle.

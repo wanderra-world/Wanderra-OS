@@ -120,7 +120,8 @@ non-safety cleanup remains outside H3-02 scope.
 
 The change is additive and exposes no new HTTP API. Existing Gmail, Calendar, Drive,
 Atlas chat, H0, H1, H2, and H3-01 runtime behavior remains unchanged. PR #28 merged
-the accepted H3-02 implementation into `origin/master` at `915386c`, establishing
-`0023_h3_durable_execution` as the accepted production migration baseline. H3-03 has
-not started; its implementation is authorized only by the separately approved gate
-in `README_ARCHITECTURE.md` and `H3_IMPLEMENTATION_GUIDE.md`.
+the accepted H3-02 implementation into `origin/master` at `915386c`, establishing its
+historical `0023_h3_durable_execution` migration baseline. At H3-02 acceptance, H3-03
+had not started. H3-03 is now Accepted and merged through PR #30 at `3be4480`; current
+stage status and next-slice authorization remain owned by `README_ARCHITECTURE.md` and
+`H3_IMPLEMENTATION_GUIDE.md`.

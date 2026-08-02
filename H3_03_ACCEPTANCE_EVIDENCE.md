@@ -1,7 +1,7 @@
 # H3-03 Documents and Governed Derivation Acceptance Evidence
 
 **Owner:** Atlas Platform Engineering  
-**Status:** Implementation complete on dedicated branch; formal acceptance pending  
+**Status:** Accepted and merged through PR #30 at `3be4480`
 **Governing specification:** [H3_ARCHITECTURE.md](H3_ARCHITECTURE.md#h3-03-documents-and-governed-derivation)  
 **Engineering contract:** [H3_IMPLEMENTATION_GUIDE.md](H3_IMPLEMENTATION_GUIDE.md#16-h3-03-accepted-security-review-scope)
 
@@ -103,7 +103,8 @@ approved ports; H3-03 deliberately does not select a provider or expose an API.
 ## 8. Compatibility and next-slice boundary
 
 The change is additive and exposes no new HTTP API. Existing Gmail, Calendar, Drive,
-Atlas chat, H0, H1, H2, H3-01, and H3-02 runtime behavior remains unchanged. The
-accepted production migration baseline remains `0023_h3_durable_execution` until the
-dedicated H3-03 pull request is reviewed, its protected checks pass, and it is merged.
-H3-04 has not started and remains unauthorized.
+Atlas chat, H0, H1, H2, H3-01, and H3-02 runtime behavior remains unchanged. PR #30
+passed its protected checks and merged into `origin/master` at `3be4480`, establishing
+`0024_h3_document_custody` as the accepted production migration baseline. H3-04 has
+not started; its separately reviewed implementation gate is owned by
+`README_ARCHITECTURE.md` and `H3_IMPLEMENTATION_GUIDE.md`.

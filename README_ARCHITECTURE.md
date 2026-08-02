@@ -6,7 +6,7 @@ The single entry point to the Atlas architecture documentation.
 **Current phase:** H3 — System Intelligence Layer
 **Status:** Formal H0, H1, and H2 Exits accepted; H3 architecture approved through
 PR #24; sequential H3 production implementation authorized by explicit slice approval
-**Last updated:** July 31, 2026
+**Last updated:** August 2, 2026
 
 ## Core principle
 
@@ -498,13 +498,11 @@ enforcement is owned by `IMPLEMENTATION_GUIDE.md`.
 ## Next action
 
 H3-01 is Accepted and merged through PR #26 at `a4602b6`. H3-02 is Accepted and
-merged into `origin/master` through PR #28 at `915386c`; accepted production migration
-head is `0023_h3_durable_execution`. PR #29 opened the H3-03 gate at `24284e8` under
-the approved security, classification, custody, retention, deletion, recovery, and
-migration constraints in
-[H3_IMPLEMENTATION_GUIDE.md](H3_IMPLEMENTATION_GUIDE.md#16-h3-03-accepted-security-review-scope).
-H3-03 implementation and local acceptance evidence are complete on its dedicated
-branch; formal acceptance and migration-head advancement to
-`0024_h3_document_custody` require review and protected checks. H3-04 and later slices,
-business agents, and H4 work remain unauthorized.
-The H3-03 implementation gate is open until the dedicated slice is formally accepted.
+merged through PR #28 at `915386c`. H3-03 is Accepted and merged through PR #30 at
+`3be4480`; accepted production migration head is `0024_h3_document_custody`.
+
+The H3-04 Knowledge Service and Timeline security, classification, custody, retention,
+deletion, recovery, and migration impacts are approved in
+[H3_IMPLEMENTATION_GUIDE.md](H3_IMPLEMENTATION_GUIDE.md#113-h3-04-accepted-security-review-scope).
+The H3-04 implementation gate is open for one explicitly authorized, dedicated slice.
+H3-05 and later slices, business agents, and H4 work remain unauthorized.
