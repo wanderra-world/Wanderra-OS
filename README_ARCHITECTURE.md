@@ -495,6 +495,7 @@ enforcement is owned by `IMPLEMENTATION_GUIDE.md`.
 | [H3_02_ACCEPTANCE_EVIDENCE.md](H3_02_ACCEPTANCE_EVIDENCE.md) | H3-02 durable execution and scheduler implementation evidence |
 | [H3_03_ACCEPTANCE_EVIDENCE.md](H3_03_ACCEPTANCE_EVIDENCE.md) | H3-03 document custody and governed derivation implementation evidence |
 | [H3_04_ACCEPTANCE_EVIDENCE.md](H3_04_ACCEPTANCE_EVIDENCE.md) | H3-04 Knowledge Service and Timeline implementation evidence |
+| [H3_05_ACCEPTANCE_EVIDENCE.md](H3_05_ACCEPTANCE_EVIDENCE.md) | H3-05 governed Memory Manager implementation evidence |
 
 ## Next action
 
@@ -512,5 +513,6 @@ The H3-05 Memory Manager security, classification, custody, retention, deletion,
 recovery, and migration impacts are approved in
 [H3_IMPLEMENTATION_GUIDE.md](H3_IMPLEMENTATION_GUIDE.md#121-h3-05-accepted-security-review-scope).
 The H3-05 implementation gate is explicitly open for one dedicated slice after this
-governance synchronization is merged into `origin/master`. H3-06 and later slices,
+governance synchronization is merged into `origin/master`. Its implementation is now
+submitted for review but remains unaccepted until merge. H3-06 and later slices,
 business agents, provider-specific behavior, and H4 work remain unauthorized.
