@@ -450,13 +450,108 @@ freshness, quality, and rollback evidence permits reviewed contraction.
 
 ### 1.36 H3-06 implementation authorization
 
-H3-05 is Accepted and merged through PR #34 at `670205d`; its protected checks passed
-and revision `0026_h3_governed_memory` is the accepted production migration baseline.
-The H3-06 impacts and thresholds above are approved. The H3-06 implementation gate is
+H3-06 is Accepted and merged through PR #36 at `a34322e`, its protected required
+checks passed, and revision `0027_h3_search_context` is the accepted production
+migration baseline.
+
+### 1.37 H3-07 accepted security-review scope
+
+H3-07 security review MUST cover context-free or cross-workspace task access,
+workspace/organization/cell substitution, assignment or watcher membership being
+mistaken for authorization, unauthorized lifecycle transitions, optimistic-version
+bypass, idempotency-key reuse with changed input, dependency-cycle and graph-amplification
+attacks, recurrence or overdue-reminder amplification, reminder replay after task
+completion or cancellation, mutable or substituted completion evidence, comment and
+external-reference injection, provider-authority confusion, sensitive task content in
+logs/events, deletion or closure resurrection, and H3-08+ scope leakage. The review
+inherits H1 authorization/execution context/audit/outbox, H3-01 resource identity,
+H3-02 scheduling, H3-04 timeline, H3-06 search isolation, and ADR-005/010/011/018/030.
+
+### 1.38 H3-07 accepted classification and authorization impact
+
+Every task, source reference, comment, completion-evidence reference, external
+reference, search projection, timeline event, reminder command, audit event, and
+outbox event records or inherits effective classification and policy version.
+Classification is at least as restrictive as every contributing source. Canonical H1
+authorization executes before every command and query and is revalidated when a
+scheduled reminder becomes eligible. Assignment, watching, ownership, dependency,
+source linkage, or external authority never grants access. H3-07 performs no model
+egress and stores no credentials or provider payloads.
+
+### 1.39 H3-07 accepted operational custody and lineage impact
+
+The Task Manager owns provider-neutral operational task truth. Every task has one
+canonical H3-01 resource identity and may reference, but never absorb, H3-03 document
+custody, H3-04 evidence/timeline records, or H3-06 derivative search state. Source and
+completion evidence use immutable resource/version/digest references. External task
+references identify provider-owned authority without treating Atlas as authoritative
+for provider state and without invoking provider APIs. Timeline and search remain
+rebuildable projections of accepted task events rather than alternate task truth.
+
+### 1.40 H3-07 accepted retention and deletion impact
+
+Tasks, participants, dependencies, comments, completion evidence, external references,
+reminder state, timeline entries, search projections, audit, and outbox evidence obey
+workspace retention, hold, export, closure, and deletion policy. Completion evidence is
+immutable; correction appends superseding evidence rather than rewriting history.
+Task deletion is a governed lifecycle transition that immediately removes the task
+from active queries and cancels future reminders while preserving required audit,
+retention, and deletion receipts. Derivative cleanup is idempotent and cannot extend
+source retention or falsely report completion after a partial failure.
+
+### 1.41 H3-07 accepted recovery and scheduling impact
+
+Recovery exports canonical task state, versions, participants, dependency edges,
+comments, evidence references, external references, reminder identities, and checksums
+without reusable credentials or provider payloads. Timeline and search projections are
+rebuilt from canonical tasks and versioned events. Overdue and recurrence scheduling
+uses H3-02 durable jobs with deterministic inputs, caller-owned idempotency, bounded
+expansion, explicit timezone/DST policy, cancellation on terminal state, and replay
+protection. Restore reconciles scheduled identities before dispatch so recovery cannot
+duplicate reminders or reopen terminal tasks.
+
+### 1.42 H3-07 approved lifecycle, concurrency, and scheduling policy
+
+This section is the single normative owner of H3-07 acceptance controls.
+
+| Control | Approved requirement |
+|---|---|
+| Authorization and isolation | Zero tolerated cross-workspace records, unauthorized commands, or unauthorized task/query projections. Assignment and watching never grant permission. |
+| Lifecycle | Only the versioned canonical transition table may change status. Invalid or terminal-state transitions fail closed and produce no task event. |
+| Concurrency and replay | Every material command requires expected version and caller-owned idempotency; changed-input replay fails and concurrent winners are deterministic. |
+| Dependencies | Self-dependencies and directed cycles are rejected before persistence. Traversal and mutation remain workspace-bound and bounded. |
+| Completion evidence | Every completed task has immutable evidence or an explicit evidence-not-required policy decision; accepted evidence coverage is 100%. |
+| Scheduling | Overdue and recurrence identities are deterministic across DST and recovery. Duplicate reminders or reminders after completion/cancellation are not tolerated. |
+| External authority | External references are unique within their authority boundary and never imply provider mutation, synchronization, access, or ownership. |
+| Projection freshness | Timeline/search changes use transactional outbox evidence; lag is observable and never weakens canonical authorization or task truth. |
+
+### 1.43 H3-07 accepted migration plan
+
+H3-07 uses additive expand-first migration from accepted revision
+`0027_h3_search_context`. It adds only provider-neutral canonical task state,
+participants, dependencies, comments, completion evidence, external references, and
+reminder/reconciliation state required by `H3_ARCHITECTURE.md`. Tenant keys include
+organization, workspace, and cell identity; composite foreign keys preserve task,
+resource, actor, source, and evidence boundaries; enabled and forced RLS exist before
+runtime access. The migration performs no rewrite of accepted H3-01 through H3-06
+state and no workflow, approval, notification, agent, UI, provider, connector,
+business-data, H3-08+, or H4 backfill.
+
+Empty-state downgrade MUST be proven. Once accepted task, participant, dependency,
+comment, completion, external-reference, reminder, audit, or outbox evidence exists,
+destructive schema downgrade MUST fail closed. Application rollback disables new task
+commands while retaining authorized read/export and cancellable durable reminders;
+populated rollback requires a reviewed forward fix or export.
+
+### 1.44 H3-07 implementation authorization
+
+H3-06 is Accepted and merged through PR #36 at `a34322e`; its protected checks passed
+and revision `0027_h3_search_context` is the accepted production migration baseline.
+The H3-07 impacts and controls above are approved. The H3-07 implementation gate is
 open for one dedicated slice after this governance synchronization is merged into
-`origin/master`. The acceptance-evidence target is `H3_06_ACCEPTANCE_EVIDENCE.md`.
-H3-07 and later slices, H4, provider-specific behavior, connectors, and business agents
-remain unauthorized.
+`origin/master`. The acceptance-evidence target is `H3_07_ACCEPTANCE_EVIDENCE.md`.
+H3-08 and later slices, H4, provider-specific integrations, connectors, business
+agents, and UI functionality remain unauthorized.
 
 ## 2. Recommended implementation order
 

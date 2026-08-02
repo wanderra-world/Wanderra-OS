@@ -2,7 +2,7 @@
 
 **Owner:** Atlas Platform Engineering
 
-**Status:** Implemented; pending pull-request review and protected checks
+**Status:** Accepted and merged through PR #36
 
 **Governing specification:** `H3_ARCHITECTURE.md` H3-06 and
 `H3_IMPLEMENTATION_GUIDE.md` sections 1.29–1.36
@@ -75,5 +75,10 @@ Recorded local results on 2 August 2026:
 
 ## Slice isolation
 
-No H3-07, H4, provider-specific integration, connector, external search service,
-business-agent functionality, or Phase 1 API behavior is introduced.
+PR #36 is merged into `origin/master` at `a34322e`; revision
+`0027_h3_search_context` is the accepted production migration baseline and H3-06 is
+formally Accepted. H3-07 remains unimplemented; its implementation gate is owned by
+the governance impacts and authorization in `H3_IMPLEMENTATION_GUIDE.md`. H3-08 and
+later slices, H4, provider-specific integrations, connectors, business agents, UI,
+external search services, and Phase 1 API changes remain unauthorized and have not
+started.

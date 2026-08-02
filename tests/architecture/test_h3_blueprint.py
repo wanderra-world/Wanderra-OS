@@ -55,30 +55,38 @@ def test_h3_sequencing_change_is_accepted_without_starting_implementation() -> N
     assert not list((ROOT / "app").glob("h3*"))
 
 
-def test_h3_06_governance_gate_has_one_normative_policy_owner() -> None:
+def test_h3_07_governance_gate_has_one_normative_policy_owner() -> None:
     index = (ROOT / "README_ARCHITECTURE.md").read_text()
     architecture = (ROOT / "H3_ARCHITECTURE.md").read_text()
     guide = (ROOT / "H3_IMPLEMENTATION_GUIDE.md").read_text()
     status = (ROOT / "PROJECT_STATUS.md").read_text()
-    evidence = (ROOT / "H3_05_ACCEPTANCE_EVIDENCE.md").read_text()
+    evidence = (ROOT / "H3_06_ACCEPTANCE_EVIDENCE.md").read_text()
 
     assert "H3-01 is Accepted and merged" in index
     assert "H3-02 is Accepted and" in index
-    assert "H3-05 is formally Accepted" in index
-    assert "H3-06 implementation gate is explicitly open" in index
+    assert "H3-06 is formally Accepted" in index
+    assert "H3-07 implementation gate is explicitly open" in index
     assert "H3-01 Resource Graph is Accepted and merged" in status
     assert "H3-02 Durable\nExecution and Scheduler is Accepted and merged" in status
-    assert "H3-05 Memory Manager is Accepted and merged" in status
-    assert "**Status:** Accepted and merged through PR #34" in evidence
-    assert "`0026_h3_governed_memory`" in index
-    assert "`0026_h3_governed_memory`" in status
-    assert "H3-06 accepted security-review scope" in guide
-    assert "H3-06 accepted classification and model-egress impact" in guide
-    assert "H3-06 accepted custody and lineage impact" in guide
-    assert "H3-06 accepted retention and deletion impact" in guide
-    assert "H3-06 accepted recovery and reindex impact" in guide
-    assert "H3-06 approved quality, latency, freshness, and egress policy" in guide
-    assert "H3-06 accepted migration plan" in guide
-    assert "H3-06 implementation authorization" in guide
-    assert "H3-06 governance impacts" in architecture
-    assert "H3-07 and later slices" in index
+    assert "H3-06 Search and\nContext Assembly is Accepted and merged" in status
+    assert "**Status:** Accepted and merged through PR #36" in evidence
+    assert "`0027_h3_search_context`" in index
+    assert "`0027_h3_search_context`" in status
+    assert "H3-07 accepted security-review scope" in guide
+    assert "H3-07 accepted classification and authorization impact" in guide
+    assert "H3-07 accepted operational custody and lineage impact" in guide
+    assert "H3-07 accepted retention and deletion impact" in guide
+    assert "H3-07 accepted recovery and scheduling impact" in guide
+    assert "H3-07 approved lifecycle, concurrency, and scheduling policy" in guide
+    assert "H3-07 accepted migration plan" in guide
+    assert "H3-07 implementation authorization" in guide
+    assert "H3-07 governance impacts" in architecture
+    assert "H3-08 and later slices" in index
+    for excluded in (
+        "H4",
+        "provider-specific integrations",
+        "connectors",
+        "business agents",
+        "UI functionality",
+    ):
+        assert excluded in index

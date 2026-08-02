@@ -503,13 +503,15 @@ enforcement is owned by `IMPLEMENTATION_GUIDE.md`.
 H3-01 is Accepted and merged through PR #26 at `a4602b6`. H3-02 is Accepted and
 merged through PR #28 at `915386c`. H3-03 is Accepted and merged through PR #30 at
 `3be4480`. H3-04 is Accepted and merged through PR #32 at `38c326d`. H3-05 is
-Accepted and merged through PR #34 at `670205d`; accepted production migration head
-is `0026_h3_governed_memory`.
+Accepted and merged through PR #34 at `670205d`. H3-06 is Accepted and merged through
+PR #36 at `a34322e`; accepted production migration head is
+`0027_h3_search_context`.
 
-H3-05 is formally Accepted. The H3-06 Search and Context Assembly security,
-classification, custody, retention, deletion, recovery, quality, latency, freshness,
-egress, and migration impacts are approved in
-[H3_IMPLEMENTATION_GUIDE.md](H3_IMPLEMENTATION_GUIDE.md#129-h3-06-accepted-security-review-scope).
-The H3-06 implementation gate is explicitly open for one dedicated slice after this
-governance synchronization is merged into `origin/master`. H3-07 and later slices,
-H4, provider-specific behavior, connectors, and business agents remain unauthorized.
+H3-06 is formally Accepted. The H3-07 Task Manager security, authorization,
+classification, custody, retention, deletion, recovery, lifecycle, concurrency,
+scheduling, and migration impacts are approved in
+[H3_IMPLEMENTATION_GUIDE.md](H3_IMPLEMENTATION_GUIDE.md#137-h3-07-accepted-security-review-scope).
+The H3-07 implementation gate is explicitly open for one dedicated slice after this
+governance synchronization is merged into `origin/master`. H3-08 and later slices,
+H4, provider-specific integrations, connectors, business agents, and UI functionality
+remain unauthorized.
