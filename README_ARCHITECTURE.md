@@ -493,13 +493,18 @@ enforcement is owned by `IMPLEMENTATION_GUIDE.md`.
 | [H3_EXIT_DEFINITION.md](H3_EXIT_DEFINITION.md) | Active Formal H3 Exit and Atlas Platform Complete definition |
 | [H3_01_ACCEPTANCE_EVIDENCE.md](H3_01_ACCEPTANCE_EVIDENCE.md) | H3-01 Resource Graph implementation and verification evidence |
 | [H3_02_ACCEPTANCE_EVIDENCE.md](H3_02_ACCEPTANCE_EVIDENCE.md) | H3-02 durable execution and scheduler implementation evidence |
+| [H3_03_ACCEPTANCE_EVIDENCE.md](H3_03_ACCEPTANCE_EVIDENCE.md) | H3-03 document custody and governed derivation implementation evidence |
 
 ## Next action
 
 H3-01 is Accepted and merged through PR #26 at `a4602b6`. H3-02 is Accepted and
 merged into `origin/master` through PR #28 at `915386c`; accepted production migration
-head is `0023_h3_durable_execution`. The H3-03 security, classification, custody,
-retention, deletion, recovery, and migration impacts are approved in
+head is `0023_h3_durable_execution`. PR #29 opened the H3-03 gate at `24284e8` under
+the approved security, classification, custody, retention, deletion, recovery, and
+migration constraints in
 [H3_IMPLEMENTATION_GUIDE.md](H3_IMPLEMENTATION_GUIDE.md#16-h3-03-accepted-security-review-scope).
-The H3-03 implementation gate is open for one explicitly authorized, dedicated slice.
-H3-04 and later slices, business agents, and H4 work remain unauthorized.
+H3-03 implementation and local acceptance evidence are complete on its dedicated
+branch; formal acceptance and migration-head advancement to
+`0024_h3_document_custody` require review and protected checks. H3-04 and later slices,
+business agents, and H4 work remain unauthorized.
+The H3-03 implementation gate is open until the dedicated slice is formally accepted.
