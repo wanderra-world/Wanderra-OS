@@ -1,7 +1,7 @@
 # H3-04 Knowledge Service and Timeline Acceptance Evidence
 
 **Owner:** Atlas Platform Engineering
-**Status:** Implementation complete on dedicated branch; formal acceptance pending
+**Status:** Accepted and merged through PR #32
 **Governing specification:** [H3_ARCHITECTURE.md](H3_ARCHITECTURE.md#h3-04-knowledge-service-and-timeline)
 **Engineering contract:** [H3_IMPLEMENTATION_GUIDE.md](H3_IMPLEMENTATION_GUIDE.md#113-h3-04-accepted-security-review-scope)
 
@@ -79,7 +79,7 @@ focused suite remained green.
 | Source disposition | Durable request, duplicate collapse, claim invalidation, timeline removal, and replay passed |
 | Changed-scope Ruff | Passed for every changed Python file |
 | Docker build and smoke | Production image `atlas-h3-04`, API import, and durable-worker smoke passed |
-| Protected GitHub required gate | Pending dedicated pull request checks |
+| Protected GitHub required gate | Passed on PR #32: Architecture Fitness, Regression Tests, Docker Build and Smoke, and H0 Required Gate |
 
 ## 7. Security and residual risk
 
@@ -99,6 +99,7 @@ does not replace immutable H1 audit evidence.
 
 The change is additive and exposes no new HTTP API. Existing Gmail, Calendar, Drive,
 Atlas chat, H0, H1, H2, and H3-01 through H3-03 runtime behavior remains unchanged.
-The accepted migration baseline remains `0024_h3_document_custody` until the dedicated
-H3-04 pull request is reviewed and merged. H3-05 has not started and remains
-unauthorized.
+PR #32 is merged into `origin/master` at `38c326d`; revision
+`0025_h3_knowledge_timeline` is the accepted production migration baseline. The H3-04
+slice is formally Accepted. H3-05 has not started; its implementation gate is owned by
+the governance impacts and authorization in `H3_IMPLEMENTATION_GUIDE.md`.

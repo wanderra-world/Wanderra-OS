@@ -387,8 +387,8 @@ updates; memory; search; recommendations.
 ADR-005/017/028; the approved
 [H3-04 governance impacts](H3_IMPLEMENTATION_GUIDE.md#113-h3-04-accepted-security-review-scope).
 
-**Implementation gate:** Open for H3-04 only after H3-03 acceptance through PR #30.
-H3-05 and later behavior remains excluded.
+**Implementation status:** Accepted and merged through PR #32 at `38c326d`; revision
+`0025_h3_knowledge_timeline` is the accepted production migration baseline.
 
 **Acceptance criteria:** Claims always cite accessible evidence; contradictions remain
 explicit; audit and timeline have separate schemas and retention; timeline rebuild is
@@ -417,6 +417,11 @@ cross-workspace memory; search implementation; recommendations; autonomous learn
 
 **Dependencies:** H3-01 resources; H3-03 lineage; H3-04 knowledge distinction; H1
 authorization/retention; ADR-005/018/030.
+
+**Implementation gate:** Open for H3-05 only after H3-04 acceptance through PR #32
+and merger of the approved
+[H3-05 governance impacts](H3_IMPLEMENTATION_GUIDE.md#121-h3-05-accepted-security-review-scope).
+H3-06 and later behavior remains excluded.
 
 **Acceptance criteria:** Every memory is attributable and removable; expiry and
 supersession are deterministic; sensitive classes obey model-routing policy; memory
