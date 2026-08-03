@@ -498,6 +498,7 @@ enforcement is owned by `IMPLEMENTATION_GUIDE.md`.
 | [H3_05_ACCEPTANCE_EVIDENCE.md](H3_05_ACCEPTANCE_EVIDENCE.md) | H3-05 governed Memory Manager implementation evidence |
 | [H3_06_ACCEPTANCE_EVIDENCE.md](H3_06_ACCEPTANCE_EVIDENCE.md) | H3-06 Search and Context Assembly implementation evidence |
 | [H3_07_ACCEPTANCE_EVIDENCE.md](H3_07_ACCEPTANCE_EVIDENCE.md) | H3-07 Task Manager implementation and verification evidence |
+| [H3_08_ACCEPTANCE_EVIDENCE.md](H3_08_ACCEPTANCE_EVIDENCE.md) | H3-08 Workflow and Approval Engine implementation and verification evidence |
 
 ## Next action
 

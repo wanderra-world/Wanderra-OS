@@ -123,6 +123,16 @@ from app.tenancy.models import (
     OutboxEvent,
     Workspace,
 )
+from app.workflows.models import (
+    WorkflowApproval,
+    WorkflowApprovalDecision,
+    WorkflowDefinitionRecord,
+    WorkflowDefinitionVersion,
+    WorkflowInstance,
+    WorkflowReceipt,
+    WorkflowToken,
+    WorkflowWait,
+)
 
 __all__ = [
     "AggregateVersion",
@@ -218,6 +228,14 @@ __all__ = [
     "TaskDependency",
     "TaskExternalReference",
     "TaskParticipant",
+    "WorkflowApproval",
+    "WorkflowApprovalDecision",
+    "WorkflowDefinitionRecord",
+    "WorkflowDefinitionVersion",
+    "WorkflowInstance",
+    "WorkflowReceipt",
+    "WorkflowToken",
+    "WorkflowWait",
     "TaskReminder",
     "User",
     "Workspace",

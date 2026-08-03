@@ -22,7 +22,7 @@ def test_h3_05_stays_inside_memory_and_excludes_later_slices() -> None:
         "business agent",
     ):
         assert forbidden not in production
-    for later_context in ("workflows", "notifications"):
+    for later_context in ("notifications",):
         assert not (ROOT / "app" / later_context).exists()
 
 
@@ -49,4 +49,4 @@ def test_h3_05_does_not_modify_legacy_memory_runtime_or_implement_search() -> No
 
 def test_h3_04_scope_gate_now_defers_memory_to_h3_05() -> None:
     previous = (ROOT / "tests" / "architecture" / "test_h3_04_scope.py").read_text()
-    assert 'for later_context in ("workflows", "notifications")' in previous
+    assert 'for later_context in ("notifications",)' in previous

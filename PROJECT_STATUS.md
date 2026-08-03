@@ -34,13 +34,26 @@ H3-07 Task Manager is Accepted and merged through PR #38 at `c26b35d` with canon
 lifecycle, participants, dependencies, immutable completion evidence, external
 authority references, durable reminder integration, forced RLS, audit/outbox evidence,
 and guarded rollback; its protected required checks passed. Revision
-`0028_h3_task_manager` is the accepted production migration baseline. H3-08 remains
-unimplemented and is authorized only after this governance synchronization merges.
+`0028_h3_task_manager` remains the accepted production migration baseline. H3-08 is
+implemented on its dedicated review branch with additive candidate revision
+`0029_h3_workflow_approval`; it is not accepted until its protected pull request merges.
 Gmail/Calendar/Drive authorization has been completed for the current Wanderra user,
 and live end-to-end verification has succeeded for email, calendar events, and the
 full Drive file lifecycle.
 
 ## Implemented capabilities
+
+### H3-08 Workflow and Approval Engine (Pending review)
+
+- Versioned provider-neutral workflow definitions and immutable instance bindings.
+- Typed registered command/query/task/wait/approval steps; arbitrary code, SQL,
+  provider SDK operations, and free-form prompt execution are rejected.
+- Deterministic transitions, optimistic concurrency, idempotency identities, waits,
+  receipts, explicit compensation and uncertain outcomes.
+- Digest-bound approval requests and decisions with risk, quorum, expiry, revocation,
+  and runtime authorization revalidation.
+- Additive candidate migration `0029_h3_workflow_approval` with composite tenant keys,
+  forced RLS, empty rollback, and populated-state forward-fix protection.
 
 ### H3-07 Task Manager (Accepted)
 
