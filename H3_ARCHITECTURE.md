@@ -517,10 +517,10 @@ free-form prompt execution; self-modifying definitions.
 **Dependencies:** H3-02 durable execution; H3-07 tasks; H1 authorization,
 audit/outbox/idempotency; ADR-010/011/024/029.
 
-**Implementation gate:** Open for H3-08 only after H3-07 acceptance through PR #38
-and merger of the approved
-[H3-08 governance impacts](H3_IMPLEMENTATION_GUIDE.md#145-h3-08-accepted-security-review-scope).
-H3-09 and later behavior remains excluded.
+**Implementation status:** Accepted and merged through PR #40 at `386d365`; revision
+`0029_h3_workflow_approval` is the accepted production migration baseline. The H3-09
+gate is governed by the approved
+[H3-09 governance impacts](H3_IMPLEMENTATION_GUIDE.md#153-h3-09-accepted-security-review-scope).
 
 **Acceptance criteria:** Instances bind immutably to a definition version; replay is
 deterministic; authorization and approvals are rechecked at execution; duplicate
@@ -549,6 +549,11 @@ workflow business policy; agent conversation UI.
 
 **Dependencies:** H3-02 jobs; H3-08 workflow events; H1 identity/authorization; H2
 email capability where explicitly approved.
+
+**Implementation gate:** Open for H3-09 only after H3-08 acceptance through PR #40
+and merger of the approved
+[H3-09 governance impacts](H3_IMPLEMENTATION_GUIDE.md#153-h3-09-accepted-security-review-scope).
+H3-10 and later behavior remains excluded.
 
 **Acceptance criteria:** Unauthorized or opted-out delivery fails before provider
 access; duplicates collapse by intent key; secrets and sensitive content are

@@ -2,7 +2,7 @@
 
 **Owner:** Atlas Platform Engineering
 
-**Status:** Implemented on dedicated H3-08 branch; pending review and merge
+**Status:** Accepted and merged through PR #40
 
 **Governing specification:** `H3_ARCHITECTURE.md` H3-08 and
 `H3_IMPLEMENTATION_GUIDE.md` sections 1.45–1.52
@@ -66,5 +66,7 @@ credential, provider payload, governed content, or raw prompt is persisted or lo
 
 ## Slice isolation
 
-H3-09, H3-10, H3-11, H4, UI, providers, connectors, external integrations, and
-business agents remain unauthorized and unimplemented.
+Revision `0029_h3_workflow_approval` is the accepted production migration baseline.
+H3-09 is authorized only through the governance controls owned by
+`H3_IMPLEMENTATION_GUIDE.md`; H3-10+, H4, UI, providers, connectors, external
+integrations, and business agents remain unauthorized and unimplemented.
