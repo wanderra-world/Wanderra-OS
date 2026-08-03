@@ -731,13 +731,111 @@ workers drain, and populated rollback requires a reviewed forward fix or export.
 
 ### 1.60 H3-09 implementation authorization
 
-H3-08 is Accepted and merged through PR #40 at `386d365`; its protected checks passed
-and revision `0029_h3_workflow_approval` is the accepted production migration baseline.
-The H3-09 impacts and controls above are approved. The H3-09 implementation gate is
-open for one dedicated slice after this governance synchronization is merged into
-`origin/master`. The acceptance-evidence target is `H3_09_ACCEPTANCE_EVIDENCE.md`.
-H3-10 and later slices, H4, provider-specific integrations, connectors, business
-agents, external integrations, and UI functionality remain unauthorized.
+H3-09 is Accepted and merged through PR #42 at `e4ae56b`; its protected checks passed
+and revision `0030_h3_notification_center` is the accepted production migration
+baseline. Its acceptance evidence is `H3_09_ACCEPTANCE_EVIDENCE.md`. The next gate is
+owned exclusively by the H3-10 governance sections below.
+
+### 1.61 H3-10 accepted security-review scope
+
+H3-10 security review MUST cover context-free or cross-workspace manifest, tool, plan,
+delegation, model-policy, budget, orchestration, receipt, and verification access;
+self-registration; manifest or tool-version substitution; direct SQL, repository,
+provider SDK, shell, or arbitrary-code tools; prompt or plan injection; free-form
+model output execution; delegation amplification; stale authorization; approval or
+action-digest substitution; budget bypass; model-policy or emergency-disable bypass;
+duplicate, reordered, cancelled, or replayed execution; unverifiable or ambiguous
+outcomes; sensitive data egress; and H3-11, H4, UI, provider, connector, external
+integration, or business-agent scope leakage. The review inherits H1 authorization,
+execution context, audit/outbox/inbox/idempotency, H3-02 durable execution, H3-06 safe
+context, H3-08 approvals, H3-09 notifications, and ADR-009/010/011/018/024/030.
+
+### 1.62 H3-10 accepted classification and authorization impact
+
+Every manifest/version, tool/version, delegation, plan/version, evidence reference,
+model-policy decision, budget reservation, orchestration transition, action digest,
+approval reference, command result, verification, receipt, audit event, and outbox
+event records or inherits effective classification and policy version. Classification
+is never less restrictive than contributing inputs. Canonical H1 authorization is
+checked before registration, discovery, planning, context access, budget reservation,
+approval use, command execution, replay, cancellation, verification, and receipt
+access. Manifest ownership, tool registration, plan inclusion, or synthetic-agent
+identity never grants permission; delegation only attenuates existing authority.
+
+### 1.63 H3-10 accepted custody and lineage impact
+
+The Agent Platform owns versioned manifests, registered tool metadata, typed inert
+plans, delegations, budget evidence, orchestration state, verification, and receipts.
+It does not own operational truth, provider state, credentials, documents, knowledge,
+memory, tasks, workflows, notifications, or authorization. Tools reference versioned
+application commands and queries, never SQL, repositories, SDK operations, shell
+commands, arbitrary Python, provider payloads, or free-form prompts. Every plan and
+receipt identifies its manifest/tool/model versions, evidence, actor/delegation,
+classification, correlation/causation, action digest, policy, budget, command result,
+verification, and explicit outcome.
+
+### 1.64 H3-10 accepted retention and deletion impact
+
+Manifests, tool versions, delegations, plans, evidence references, model-policy and
+budget decisions, orchestration state, verifications, and receipts participate in
+workspace retention, legal hold, export, closure, and deletion policy. Running work
+retains its immutable version bindings. Revocation, closure, or emergency disable
+prevents new execution and cancels eligible in-flight work while preserving minimum
+accountability and disposition evidence. Cleanup cannot turn denied, expired,
+cancelled, budget-exhausted, failed, or uncertain work into success.
+
+### 1.65 H3-10 accepted recovery and orchestration impact
+
+Recovery inventories manifest/tool/model versions, delegation scope, plan and evidence
+digests, budgets, approval references, command/idempotency identities, orchestration
+state, verifications, receipts, and checksums without reusable credentials, raw
+prompts, governed source content, or provider payloads. Restore reconciles command,
+approval, budget, and receipt identity before execution. Manifests, tools, models, and
+orchestration can be disabled independently while in-flight work remains inspectable
+and cancellable; no inert plan is promoted automatically during recovery.
+
+### 1.66 H3-10 approved model, tool, approval, budget, and evaluation policy
+
+This section is the single normative owner of H3-10 acceptance controls.
+
+| Control | Approved requirement |
+|---|---|
+| Registration | Manifests and tools are owner-approved, typed, versioned, risk-classified, independently disableable, and immutable once referenced. Self-registration is prohibited. |
+| Tool confinement | Every tool maps to a registered application command/query. Direct database, repository, provider SDK, shell, arbitrary-code, and free-form-prompt execution is prohibited. |
+| Plans | Model output is untrusted; plans are typed, evidence-linked, versioned, budgeted, validated, and inert until explicitly accepted. |
+| Delegation and authorization | Delegation only attenuates authority. Authorization, policy, resource version, action digest, and approval are revalidated at execution time. |
+| Models and egress | Model selection follows approved classification and routing policy; context is minimized, cited, injection-resistant, and excludes secrets or disallowed data. |
+| Budgets | Token, cost, tool-call, time, and concurrency ceilings fail closed and are reserved and receipted deterministically. |
+| Execution and replay | Orchestration coordinates registered contracts through H3-02 jobs and H1 idempotency. Duplicate/reordered delivery and replay cannot duplicate accepted effects. |
+| Verification and outcomes | Every action has immutable evidence and is verified or explicitly marked uncertain; model assertions never substitute for verification. |
+| Evaluation and disable | Only synthetic conformance agents and versioned evaluation datasets are permitted. Emergency disable prevents new work and cancels eligible work within the accepted boundary. |
+
+### 1.67 H3-10 accepted migration plan
+
+H3-10 uses additive expand-first migration from accepted revision
+`0030_h3_notification_center`. It adds only provider-neutral manifest/version,
+tool/version, delegation, typed plan/version, model-policy, budget, orchestration,
+verification, receipt, and synthetic-conformance state required by
+`H3_ARCHITECTURE.md`. Tenant keys include organization, workspace, and cell identity;
+composite foreign keys and enabled/forced RLS precede runtime access. The migration
+rewrites no accepted H3-01 through H3-09 state and performs no business-agent, H3-11,
+H4, UI, provider, connector, external-integration, or business-data backfill.
+
+Empty-state downgrade MUST be proven. Once accepted manifest, tool, delegation, plan,
+budget, orchestration, verification, receipt, audit, or outbox evidence exists,
+destructive schema downgrade MUST fail closed. Application rollback disables new
+planning and orchestration while retaining authorized inspection, cancellation, and
+export; populated rollback requires a reviewed forward fix or export.
+
+### 1.68 H3-10 implementation authorization
+
+H3-09 is Accepted and merged through PR #42 at `e4ae56b`; its protected checks passed
+and revision `0030_h3_notification_center` is the accepted production migration
+baseline. The H3-10 impacts and controls above are approved. The H3-10 implementation
+gate is open for one dedicated slice after this governance synchronization is merged
+into `origin/master`. The acceptance-evidence target is
+`H3_10_ACCEPTANCE_EVIDENCE.md`. H3-11, H4, provider-specific integrations, connectors,
+business agents, external integrations, and UI functionality remain unauthorized.
 
 ## 2. Recommended implementation order
 

@@ -2,7 +2,7 @@
 
 **Owner:** Atlas Platform Engineering
 
-**Status:** Implementation complete; awaiting pull-request review and merge
+**Status:** Accepted and merged through PR #42
 
 **Governing specification:** `H3_ARCHITECTURE.md` H3-09 and
 `H3_IMPLEMENTATION_GUIDE.md` sections 1.53–1.60
@@ -62,7 +62,8 @@ orchestrator, H3-10+, H4, or business-agent behavior is included.
   pgvector/PostgreSQL 16.
 - Production Docker image `atlas-h3-09`: **built successfully**.
 - Production application import smoke and durable-worker smoke: **passed**.
-- Protected GitHub results are recorded on the dedicated pull request before merge.
+- Protected GitHub Architecture Fitness, Regression, Docker Build and Smoke, and H0
+  Required Gate checks passed on PR #42 before merge at `e4ae56b`.
 
 ## Compatibility and rollback
 
@@ -74,5 +75,6 @@ export, and in-app access.
 
 ## Slice isolation
 
-H3-10, H3-11, H4, UI, providers, connectors, external integrations, and business
-agents remain unauthorized and unimplemented.
+H3-10 is authorized only through the governance controls owned by
+`H3_IMPLEMENTATION_GUIDE.md`. H3-11, H4, UI, providers, connectors, external
+integrations, and business agents remain unauthorized and unimplemented.
