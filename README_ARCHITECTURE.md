@@ -524,6 +524,7 @@ H3-10 is formally Accepted. The H3-11 Platform Hardening and Formal H3 Exit secu
 tenancy, classification, custody, retention, deletion, recovery, SLO, evaluation, and
 migration impacts are approved in
 [H3_IMPLEMENTATION_GUIDE.md](H3_IMPLEMENTATION_GUIDE.md#169-h3-11-accepted-security-review-scope).
+H3-11 implementation gate is explicitly open.
 H3-11 Platform Hardening and Formal H3 Exit is implemented on its dedicated review
 branch with candidate migration `0032_h3_platform_hardening`. Formal H3 Exit remains
 pending protected checks, review, and merge into `origin/master`. H4,
