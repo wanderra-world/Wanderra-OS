@@ -11,7 +11,7 @@ FastAPI service backed by PostgreSQL, with OpenAI-powered chat and durable memor
 working Google integrations for Gmail, Calendar, and Drive.
 
 The local Docker deployment is operational. The accepted production migration
-baseline is `0028_h3_task_manager`. Formal H0 Exit and Formal H1 Exit are accepted. H1-01
+baseline is `0029_h3_workflow_approval`. Formal H0 Exit and Formal H1 Exit are accepted. H1-01
 through H1-10 and H2-01 through H2-08 are merged. The H2 platform specification is
 accepted. H2-01 through H2-10 are merged and Formal H2 Exit is accepted. PR #24
 formally approved the H3 blueprint and opened the sequential implementation gate.
@@ -34,16 +34,17 @@ H3-07 Task Manager is Accepted and merged through PR #38 at `c26b35d` with canon
 lifecycle, participants, dependencies, immutable completion evidence, external
 authority references, durable reminder integration, forced RLS, audit/outbox evidence,
 and guarded rollback; its protected required checks passed. Revision
-`0028_h3_task_manager` remains the accepted production migration baseline. H3-08 is
-implemented on its dedicated review branch with additive candidate revision
-`0029_h3_workflow_approval`; it is not accepted until its protected pull request merges.
+H3-08 Workflow and Approval Engine is Accepted and merged through PR #40 at `386d365`;
+its protected required checks passed. Revision `0029_h3_workflow_approval` is the
+accepted production migration baseline. H3-09 is unimplemented and authorized only
+after this governance synchronization merges into `origin/master`.
 Gmail/Calendar/Drive authorization has been completed for the current Wanderra user,
 and live end-to-end verification has succeeded for email, calendar events, and the
 full Drive file lifecycle.
 
 ## Implemented capabilities
 
-### H3-08 Workflow and Approval Engine (Pending review)
+### H3-08 Workflow and Approval Engine (Accepted)
 
 - Versioned provider-neutral workflow definitions and immutable instance bindings.
 - Typed registered command/query/task/wait/approval steps; arbitrary code, SQL,

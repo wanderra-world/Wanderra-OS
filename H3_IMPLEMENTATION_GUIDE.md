@@ -639,12 +639,104 @@ populated rollback requires a reviewed forward fix or export.
 
 ### 1.52 H3-08 implementation authorization
 
-H3-07 is Accepted and merged through PR #38 at `c26b35d`; its protected checks passed
-and revision `0028_h3_task_manager` is the accepted production migration baseline.
-The H3-08 impacts and controls above are approved. The H3-08 implementation gate is
+H3-08 is Accepted and merged through PR #40 at `386d365`; its protected checks passed
+and revision `0029_h3_workflow_approval` is the accepted production migration
+baseline. Its acceptance evidence is `H3_08_ACCEPTANCE_EVIDENCE.md`. The next gate is
+owned exclusively by the H3-09 governance sections below.
+
+### 1.53 H3-09 accepted security-review scope
+
+H3-09 security review MUST cover context-free or cross-workspace intent, template,
+preference, inbox, attempt, and receipt access; identity or destination substitution;
+preference and opt-out bypass; classification downgrade; template injection; secrets
+or governed-content leakage; duplicate delivery; quiet-period, digest, escalation, and
+rate-limit bypass; stale authorization; forged receipts; bounce or provider-outage
+confusion; replay after cancellation, deletion, or workspace closure; channel routing
+outside registered provider-neutral capabilities; and H3-10+ scope leakage. The review
+inherits H1 authorization, execution context, audit/outbox/inbox/idempotency, H3-02
+durable execution, H3-08 workflow evidence, and ADR-010/011/018/024/029.
+
+### 1.54 H3-09 accepted classification and authorization impact
+
+Every notification intent, rendered artifact, preference decision, digest membership,
+delivery attempt, receipt, failure, inbox entry, audit event, and outbox event records
+or inherits effective classification and policy version. Classification is never less
+restrictive than contributing inputs. Canonical H1 authorization is checked before
+intent creation/query/mutation, preference changes, rendering, scheduling, channel
+routing, delivery, replay, and receipt access. A destination, workflow participant,
+task assignment, inbox entry, or prior delivery never grants permission.
+
+### 1.55 H3-09 accepted custody and lineage impact
+
+Notification Center owns provider-neutral intents, template versions, preferences,
+delivery decisions, attempts, receipts, and in-app inbox state. It does not own the
+business event, workflow truth, task truth, provider credentials, provider payloads,
+or authorization. Every intent cites its source event or aggregate, template version,
+classification, actor, correlation/causation, normalized destination reference, and
+deduplication identity. Templates are inert typed data and cannot contain executable
+code, SQL, prompts, repository calls, SDK operations, or provider-specific payloads.
+
+### 1.56 H3-09 accepted retention and deletion impact
+
+Intents, rendered artifacts, preferences, attempts, receipts, failures, and inbox state
+participate in workspace retention, legal hold, export, closure, and deletion policy.
+Rendered content is minimized and may expire before immutable delivery evidence.
+Deletion or closure prevents new delivery and cancels eligible queued attempts while
+preserving the minimum evidence required for accountability and disposition. No
+cleanup may turn an opted-out, suppressed, failed, bounced, cancelled, or uncertain
+delivery into success.
+
+### 1.57 H3-09 accepted recovery and delivery impact
+
+Recovery inventories intent identity, source lineage, template version, preference and
+policy decisions, schedule/job identity, deduplication key, attempt state, receipt,
+failure classification, and checksums without reusable credentials or provider
+payloads. H3-02 jobs resume only from committed notification state. Restore reconciles
+intent/attempt/receipt identity before delivery so accepted effects are not duplicated.
+Channel workers can be disabled while intents remain inspectable, cancellable,
+exportable, and deliverable to the canonical in-app inbox.
+
+### 1.58 H3-09 approved determinism and delivery policy
+
+This section is the single normative owner of H3-09 acceptance controls.
+
+| Control | Approved requirement |
+|---|---|
+| Intent identity | Caller-owned intent and deduplication keys bind normalized source, recipient, template version, classification, and purpose. Key reuse with changed input fails closed. |
+| Authorization and preference | Current authorization, membership, destination eligibility, opt-out, and preference policy are checked before scheduling and again before delivery. |
+| Classification and minimization | Channel capability must support the effective classification. Rendered content is minimized, redacted, and never contains credentials, raw provider payloads, or unnecessary governed content. |
+| Quiet periods and digesting | Timezone, DST, quiet-period, digest-window, escalation, and misfire behavior are explicit and deterministic under an injected clock. |
+| Concurrency and retry | Attempts use H3-02 jobs, optimistic state, inbox/outbox deduplication, typed retry categories, bounded rate/concurrency, and terminal bounce/failure states. |
+| Provider neutrality | Delivery uses a registered provider-neutral channel port. H3-09 adds no provider adapter, connector, SDK dependency, or provider-name business branch. |
+| Receipts and uncertainty | Attempts and receipts are immutable evidence. Success requires a verified receipt; ambiguous external outcomes remain explicit and operator-visible. |
+| In-app fallback | The canonical in-app inbox is durable and independently available; external channel outage never silently discards an accepted intent. |
+
+### 1.59 H3-09 accepted migration plan
+
+H3-09 uses additive expand-first migration from accepted revision
+`0029_h3_workflow_approval`. It adds only provider-neutral notification intent,
+template/version, preference, digest, attempt, receipt, failure, and in-app inbox state
+required by `H3_ARCHITECTURE.md`. Tenant keys include organization, workspace, and cell
+identity; composite foreign keys preserve source, workflow, task, actor, destination,
+job, attempt, and receipt boundaries; enabled and forced RLS exist before runtime
+access. The migration rewrites no accepted H3-01 through H3-08 state and performs no
+agent, UI, provider, connector, external-integration, business-data, H3-10+, or H4
+backfill.
+
+Empty-state downgrade MUST be proven. Once accepted intent, template, preference,
+digest, attempt, receipt, failure, inbox, audit, or outbox evidence exists, destructive
+schema downgrade MUST fail closed. Application rollback disables new external delivery
+while retaining authorized read/export, cancellation, and in-app access; compatible
+workers drain, and populated rollback requires a reviewed forward fix or export.
+
+### 1.60 H3-09 implementation authorization
+
+H3-08 is Accepted and merged through PR #40 at `386d365`; its protected checks passed
+and revision `0029_h3_workflow_approval` is the accepted production migration baseline.
+The H3-09 impacts and controls above are approved. The H3-09 implementation gate is
 open for one dedicated slice after this governance synchronization is merged into
-`origin/master`. The acceptance-evidence target is `H3_08_ACCEPTANCE_EVIDENCE.md`.
-H3-09 and later slices, H4, provider-specific integrations, connectors, business
+`origin/master`. The acceptance-evidence target is `H3_09_ACCEPTANCE_EVIDENCE.md`.
+H3-10 and later slices, H4, provider-specific integrations, connectors, business
 agents, external integrations, and UI functionality remain unauthorized.
 
 ## 2. Recommended implementation order
