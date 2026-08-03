@@ -497,6 +497,7 @@ enforcement is owned by `IMPLEMENTATION_GUIDE.md`.
 | [H3_04_ACCEPTANCE_EVIDENCE.md](H3_04_ACCEPTANCE_EVIDENCE.md) | H3-04 Knowledge Service and Timeline implementation evidence |
 | [H3_05_ACCEPTANCE_EVIDENCE.md](H3_05_ACCEPTANCE_EVIDENCE.md) | H3-05 governed Memory Manager implementation evidence |
 | [H3_06_ACCEPTANCE_EVIDENCE.md](H3_06_ACCEPTANCE_EVIDENCE.md) | H3-06 Search and Context Assembly implementation evidence |
+| [H3_07_ACCEPTANCE_EVIDENCE.md](H3_07_ACCEPTANCE_EVIDENCE.md) | H3-07 Task Manager implementation and verification evidence |
 
 ## Next action
 

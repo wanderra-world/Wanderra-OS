@@ -106,6 +106,15 @@ from app.search_context.models import (
     SearchReconciliation,
 )
 from app.storage_capability.models import StorageCapabilityRoute, StorageShadowComparison
+from app.tasks.models import (
+    Task,
+    TaskComment,
+    TaskCompletionEvidence,
+    TaskDependency,
+    TaskExternalReference,
+    TaskParticipant,
+    TaskReminder,
+)
 from app.tenancy.models import (
     AuditEvent,
     Cell,
@@ -203,6 +212,13 @@ __all__ = [
     "TimelineEntry",
     "StorageCapabilityRoute",
     "StorageShadowComparison",
+    "Task",
+    "TaskComment",
+    "TaskCompletionEvidence",
+    "TaskDependency",
+    "TaskExternalReference",
+    "TaskParticipant",
+    "TaskReminder",
     "User",
     "Workspace",
     "WorkspaceClosure",
