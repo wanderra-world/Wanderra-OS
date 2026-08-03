@@ -74,6 +74,16 @@ from app.models.calendar import CalendarCredential, CalendarOAuthState
 from app.models.drive import DriveCredential, DriveFileMetadata, DriveOAuthState
 from app.models.gmail import GmailCredential, GmailOAuthState
 from app.models.memory import Conversation, ConversationMessage, Project
+from app.notifications.models import (
+    NotificationAttempt,
+    NotificationDigest,
+    NotificationInboxEntry,
+    NotificationIntentRecord,
+    NotificationPreferenceRecord,
+    NotificationReceipt,
+    NotificationTemplateRecord,
+    NotificationTemplateVersion,
+)
 from app.oauth_transactions.models import OAuthTransaction
 from app.provider_mirrors.models import (
     ProviderExternalReference,
@@ -191,6 +201,14 @@ __all__ = [
     "Organization",
     "OrganizationMembership",
     "OAuthTransaction",
+    "NotificationAttempt",
+    "NotificationDigest",
+    "NotificationInboxEntry",
+    "NotificationIntentRecord",
+    "NotificationPreferenceRecord",
+    "NotificationReceipt",
+    "NotificationTemplateRecord",
+    "NotificationTemplateVersion",
     "OutboxEvent",
     "Project",
     "ProviderCapability",

@@ -21,7 +21,7 @@ def test_h3_01_is_provider_neutral_and_contains_no_later_slice_modules() -> None
         "vector",
     ):
         assert forbidden not in production
-    for later_context in ("notifications",):
+    for later_context in ("agent_platform",):
         assert not (ROOT / "app" / later_context).exists()
 
 

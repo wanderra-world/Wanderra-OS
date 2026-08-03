@@ -20,7 +20,7 @@ def test_h3_04_knowledge_is_provider_neutral_and_excludes_later_slices() -> None
         "business agent",
     ):
         assert forbidden not in production
-    for later_context in ("notifications",):
+    for later_context in ("agent_platform",):
         assert not (ROOT / "app" / later_context).exists()
 
 
@@ -55,4 +55,4 @@ def test_h3_04_uses_h3_02_jobs_without_cross_context_repository_access() -> None
 
 def test_h3_03_scope_gate_now_defers_knowledge_to_h3_04() -> None:
     previous = (ROOT / "tests" / "architecture" / "test_h3_03_scope.py").read_text()
-    assert 'later_context in ("notifications",)' in previous
+    assert 'later_context in ("agent_platform",)' in previous
