@@ -36,13 +36,27 @@ authority references, durable reminder integration, forced RLS, audit/outbox evi
 and guarded rollback; its protected required checks passed. Revision
 H3-08 Workflow and Approval Engine is Accepted and merged through PR #40 at `386d365`;
 its protected required checks passed. Revision `0029_h3_workflow_approval` is the
-accepted production migration baseline. H3-09 is unimplemented and authorized only
-after this governance synchronization merges into `origin/master`.
+accepted production migration baseline. H3-09 Notification Center is implemented on
+its dedicated review branch with additive candidate revision
+`0030_h3_notification_center`; it is not Accepted until its protected pull request is
+reviewed and merged.
 Gmail/Calendar/Drive authorization has been completed for the current Wanderra user,
 and live end-to-end verification has succeeded for email, calendar events, and the
 full Drive file lifecycle.
 
 ## Implemented capabilities
+
+### H3-09 Notification Center (Awaiting review)
+
+- Provider-neutral, workspace-owned notification intents, immutable template versions,
+  user/channel preferences, classification enforcement, quiet periods, digest state,
+  delivery attempts and receipts, and a durable in-app inbox.
+- Deterministic caller-owned deduplication, authorization and preference revalidation,
+  minimized inert rendering, typed retry/bounce/uncertain outcomes, and verified
+  receipt requirements.
+- Additive candidate migration `0030_h3_notification_center` with composite tenant
+  keys, forced RLS, empty rollback, and populated-state forward-fix protection.
+- No provider adapter, connector, external integration, UI, agent, or H3-10+ behavior.
 
 ### H3-08 Workflow and Approval Engine (Accepted)
 
