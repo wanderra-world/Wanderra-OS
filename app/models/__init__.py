@@ -98,6 +98,12 @@ from app.notifications.models import (
     NotificationTemplateVersion,
 )
 from app.oauth_transactions.models import OAuthTransaction
+from app.platform_hardening.models import (
+    PlatformEvaluationRun,
+    PlatformOperatorAction,
+    PlatformRecoveryDrill,
+    PlatformTelemetryRecord,
+)
 from app.provider_mirrors.models import (
     ProviderExternalReference,
     ProviderMirror,
@@ -242,6 +248,10 @@ __all__ = [
     "ProviderMirrorConflict",
     "ProviderRegistryEntry",
     "Permission",
+    "PlatformEvaluationRun",
+    "PlatformOperatorAction",
+    "PlatformRecoveryDrill",
+    "PlatformTelemetryRecord",
     "Role",
     "RolePermission",
     "RecoveryEvidence",

@@ -27,7 +27,7 @@ def test_h3_10_is_provider_neutral_and_excludes_future_product_work() -> None:
     ):
         assert forbidden not in production
     assert "protocol" in production
-    assert not (ROOT / "app" / "platform_hardening").exists()
+    assert not (ROOT / "app" / "h4").exists()
     assert not (ROOT / "app" / "business_agents").exists()
 
 

@@ -501,6 +501,13 @@ enforcement is owned by `IMPLEMENTATION_GUIDE.md`.
 | [H3_08_ACCEPTANCE_EVIDENCE.md](H3_08_ACCEPTANCE_EVIDENCE.md) | H3-08 Workflow and Approval Engine implementation and verification evidence |
 | [H3_09_ACCEPTANCE_EVIDENCE.md](H3_09_ACCEPTANCE_EVIDENCE.md) | H3-09 Notification Center implementation and verification evidence |
 | [H3_10_ACCEPTANCE_EVIDENCE.md](H3_10_ACCEPTANCE_EVIDENCE.md) | H3-10 Agent Platform Contracts implementation and verification evidence |
+| [H3_11_ACCEPTANCE_EVIDENCE.md](H3_11_ACCEPTANCE_EVIDENCE.md) | H3-11 Platform Hardening and Formal H3 Exit implementation evidence |
+| [H3_EVIDENCE_MATRIX.md](H3_EVIDENCE_MATRIX.md) | H3 slice and exit-gate evidence traceability |
+| [H3_SECURITY_REVIEW.md](H3_SECURITY_REVIEW.md) | Formal H3 threat review and residual-risk disposition |
+| [H3_RECOVERY_REPORT.md](H3_RECOVERY_REPORT.md) | H3 recovery, export, closure, and deletion drill evidence |
+| [H3_EVALUATION_REPORT.md](H3_EVALUATION_REPORT.md) | H3 search, AI, agent, cost, and reliability evaluation |
+| [H3_OPERATIONS_RUNBOOK.md](H3_OPERATIONS_RUNBOOK.md) | Provider-neutral H3 incident, operator-control, and recovery procedure |
+| [H3_EXIT_REPORT.md](H3_EXIT_REPORT.md) | Candidate Formal H3 Exit decision pending merge |
 
 ## Next action
 
@@ -517,7 +524,8 @@ H3-10 is formally Accepted. The H3-11 Platform Hardening and Formal H3 Exit secu
 tenancy, classification, custody, retention, deletion, recovery, SLO, evaluation, and
 migration impacts are approved in
 [H3_IMPLEMENTATION_GUIDE.md](H3_IMPLEMENTATION_GUIDE.md#169-h3-11-accepted-security-review-scope).
-The H3-11 implementation gate is explicitly open for one dedicated slice after this
-governance synchronization is merged into `origin/master`. H4, provider-specific
-integrations, connectors, business agents, external integrations, and UI functionality
-remain unauthorized.
+H3-11 Platform Hardening and Formal H3 Exit is implemented on its dedicated review
+branch with candidate migration `0032_h3_platform_hardening`. Formal H3 Exit remains
+pending protected checks, review, and merge into `origin/master`. H4,
+provider-specific integrations, connectors, business agents, external integrations,
+and UI functionality remain unauthorized.
