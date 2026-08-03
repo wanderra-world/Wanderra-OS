@@ -550,10 +550,13 @@ workflow business policy; agent conversation UI.
 **Dependencies:** H3-02 jobs; H3-08 workflow events; H1 identity/authorization; H2
 email capability where explicitly approved.
 
-**Implementation gate:** Open for H3-09 only after H3-08 acceptance through PR #40
-and merger of the approved
-[H3-09 governance impacts](H3_IMPLEMENTATION_GUIDE.md#153-h3-09-accepted-security-review-scope).
-H3-10 and later behavior remains excluded.
+**Implementation status:** Accepted and merged through PR #42 at `e4ae56b`; revision
+`0030_h3_notification_center` is the accepted production migration baseline. The
+H3-10 gate is governed by the approved
+[H3-10 governance impacts](H3_IMPLEMENTATION_GUIDE.md#161-h3-10-accepted-security-review-scope).
+
+**Next gate:** H3-10 is authorized only through the approved governance impacts linked
+above. H3-11 and later behavior remains excluded.
 
 **Acceptance criteria:** Unauthorized or opted-out delivery fails before provider
 access; duplicates collapse by intent key; secrets and sensitive content are
@@ -584,6 +587,12 @@ database tools; self-registration; multi-agent social protocols; broad autonomy.
 
 **Dependencies:** H3-01 through H3-09; ADR-009/010/011/018/024/030; approved model,
 tool-risk, approval, budget, and evaluation policies.
+
+**Implementation gate:** Open for H3-10 only after H3-09 acceptance through PR #42
+at `e4ae56b`, with revision `0030_h3_notification_center` as the accepted production
+migration baseline and the approved
+[H3-10 governance impacts](H3_IMPLEMENTATION_GUIDE.md#161-h3-10-accepted-security-review-scope).
+H3-11 and later behavior remains excluded.
 
 **Acceptance criteria:** Unregistered tools cannot execute; plans are inert until
 validated; delegation only attenuates permission; every command is authorized at
