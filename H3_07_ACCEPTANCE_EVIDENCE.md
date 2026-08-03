@@ -2,7 +2,7 @@
 
 **Owner:** Atlas Platform Engineering
 
-**Status:** Implemented; pending protected pull-request acceptance
+**Status:** Implemented in PR #38; pending review and merge
 
 **Governing specification:** `H3_ARCHITECTURE.md` H3-07 and
 `H3_IMPLEMENTATION_GUIDE.md` sections 1.37–1.44
@@ -61,7 +61,8 @@ Recorded local results on 2 August 2026:
   pass.
 - Docker production image `atlas-h3-07`, application/task import smoke, and
   durable-worker smoke: **passed**.
-- Protected GitHub required checks: pending dedicated H3-07 pull request.
+- GitHub PR #38 run `30792292594`: Architecture Fitness, Regression Tests, Docker
+  Build and Smoke, and `H0 Required / H0 Required Gate` all passed.
 
 The four skipped tests are existing environment-gated cases. Pre-existing untracked
 duplicate files whose names end in ` 2.py` are not part of Git or this pull request and
