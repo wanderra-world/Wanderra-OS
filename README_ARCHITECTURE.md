@@ -505,14 +505,14 @@ H3-01 is Accepted and merged through PR #26 at `a4602b6`. H3-02 is Accepted and
 merged through PR #28 at `915386c`. H3-03 is Accepted and merged through PR #30 at
 `3be4480`. H3-04 is Accepted and merged through PR #32 at `38c326d`. H3-05 is
 Accepted and merged through PR #34 at `670205d`. H3-06 is Accepted and merged through
-PR #36 at `a34322e`; accepted production migration head is
-`0027_h3_search_context`.
+PR #36 at `a34322e`. H3-07 is Accepted and merged through PR #38 at `c26b35d`;
+accepted production migration head is `0028_h3_task_manager`.
 
-H3-06 is formally Accepted. The H3-07 Task Manager security, authorization,
-classification, custody, retention, deletion, recovery, lifecycle, concurrency,
-scheduling, and migration impacts are approved in
-[H3_IMPLEMENTATION_GUIDE.md](H3_IMPLEMENTATION_GUIDE.md#137-h3-07-accepted-security-review-scope).
-The H3-07 implementation gate is explicitly open for one dedicated slice after this
-governance synchronization is merged into `origin/master`. H3-08 and later slices,
-H4, provider-specific integrations, connectors, business agents, and UI functionality
-remain unauthorized.
+H3-07 is formally Accepted. The H3-08 Workflow and Approval Engine security,
+authorization, classification, custody, retention, deletion, recovery, determinism,
+approval, execution, and migration impacts are approved in
+[H3_IMPLEMENTATION_GUIDE.md](H3_IMPLEMENTATION_GUIDE.md#145-h3-08-accepted-security-review-scope).
+The H3-08 implementation gate is explicitly open for one dedicated slice after this
+governance synchronization is merged into `origin/master`. H3-09 and later slices,
+H4, provider-specific integrations, connectors, business agents, external
+integrations, and UI functionality remain unauthorized.
