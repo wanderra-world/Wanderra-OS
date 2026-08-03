@@ -38,14 +38,25 @@ H3-08 Workflow and Approval Engine is Accepted and merged through PR #40 at `386
 its protected required checks passed. Revision `0029_h3_workflow_approval` is the
 accepted production migration baseline. H3-09 Notification Center is Accepted and
 merged through PR #42 at `e4ae56b`; its protected required checks passed and revision
-`0030_h3_notification_center` is the accepted production migration baseline. H3-10 is
-unimplemented and authorized only after the governance synchronization opening its
-dedicated gate is merged into `origin/master`.
+`0030_h3_notification_center` is the accepted production migration baseline. H3-10
+Agent Platform Contracts is implemented on its dedicated review branch with candidate
+revision `0031_h3_agent_platform`; it remains awaiting review and formal acceptance.
 Gmail/Calendar/Drive authorization has been completed for the current Wanderra user,
 and live end-to-end verification has succeeded for email, calendar events, and the
 full Drive file lifecycle.
 
 ## Implemented capabilities
+
+### H3-10 Agent Platform Contracts (Awaiting review)
+
+- Versioned agent manifests, provider-neutral application command/query tool registry,
+  attenuating delegations, typed inert evidence-linked plans, risk/model policy,
+  deterministic budgets, orchestration, cancellation, verification, and receipts.
+- Execution-time authorization and digest-bound approval enforcement, emergency
+  disable, synthetic conformance evaluation evidence, and atomic audit/outbox records.
+- Additive candidate migration `0031_h3_agent_platform` with eleven composite-tenant
+  tables, forced RLS, empty rollback, and populated-state forward-fix protection.
+- No business agents, provider-specific behavior, connectors, UI, H3-11, or H4 work.
 
 ### H3-09 Notification Center (Accepted)
 

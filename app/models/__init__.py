@@ -3,6 +3,19 @@
 Import every model here to make it discoverable by Alembic migrations.
 """
 
+from app.agent_platform.models import (
+    AgentBudgetReservation,
+    AgentDelegation,
+    AgentEvaluationRun,
+    AgentExecutionReceipt,
+    AgentManifestRecord,
+    AgentManifestVersion,
+    AgentOrchestration,
+    AgentPlan,
+    AgentPlanStep,
+    AgentToolRecord,
+    AgentToolVersion,
+)
 from app.authorization.models import Permission, RolePermission
 from app.calendar_capability.models import (
     CalendarCapabilityRoute,
@@ -145,6 +158,17 @@ from app.workflows.models import (
 )
 
 __all__ = [
+    "AgentBudgetReservation",
+    "AgentDelegation",
+    "AgentEvaluationRun",
+    "AgentExecutionReceipt",
+    "AgentManifestRecord",
+    "AgentManifestVersion",
+    "AgentOrchestration",
+    "AgentPlan",
+    "AgentPlanStep",
+    "AgentToolRecord",
+    "AgentToolVersion",
     "AggregateVersion",
     "AuditChainHead",
     "CalendarCredential",
