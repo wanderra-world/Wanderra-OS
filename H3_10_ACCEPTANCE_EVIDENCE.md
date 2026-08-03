@@ -63,7 +63,8 @@ protocol, H3-11, H4, or later roadmap functionality is included.
   downgrade/re-upgrade, forced RLS, and populated downgrade refusal passed.
 - Production Docker image `atlas-h3-10`: **built successfully**.
 - Production application import smoke and durable-worker smoke: **passed**.
-- GitHub required checks: pending PR.
+- PR #44: protected Architecture Fitness, Regression Tests, Docker Build and Smoke,
+  and aggregate H0 Required Gate checks passed.
 
 ## Compatibility and rollback
 
