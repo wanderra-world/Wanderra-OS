@@ -30,13 +30,27 @@ Context Assembly is Accepted and merged through PR #36 at `a34322e` with provide
 full-text/pgvector projections, pre-retrieval ACL enforcement, deterministic hybrid
 ranking, graph-bounded filters, safe cited context assembly, durable reindex contracts,
 reconciliation, forced RLS, and guarded rollback; its protected required checks passed.
-H3-07 is not implemented. Its governance gate is explicitly open after the
-governance-only pull request owning the approved H3-07 impacts is merged.
+H3-07 Task Manager is implemented on its dedicated review branch with canonical task
+lifecycle, participants, dependencies, immutable completion evidence, external
+authority references, durable reminder integration, forced RLS, audit/outbox evidence,
+and guarded rollback. It remains pending protected pull-request acceptance; the
+accepted production migration baseline therefore remains `0027_h3_search_context`.
 Gmail/Calendar/Drive authorization has been completed for the current Wanderra user,
 and live end-to-end verification has succeeded for email, calendar events, and the
 full Drive file lifecycle.
 
 ## Implemented capabilities
+
+### H3-07 Task Manager (Pending review)
+
+- Provider-neutral canonical task truth bound one-to-one to an H3-01 task resource.
+- Explicit lifecycle, optimistic concurrency, bounded dependency-cycle rejection,
+  member assignees/watchers without permission implication, and deterministic queries.
+- Classified comments, immutable completion evidence, external authority references,
+  and H3-02 durable reminder command integration with terminal-state cancellation.
+- Transactional audit/outbox evidence for rebuildable Timeline/Search projections.
+- Additive `0028_h3_task_manager` migration with composite tenant keys, forced RLS,
+  empty rollback, and populated forward-fix guard.
 
 ### H3-06 Search and Context Assembly (Accepted)
 
