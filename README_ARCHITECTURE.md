@@ -510,14 +510,14 @@ merged through PR #28 at `915386c`. H3-03 is Accepted and merged through PR #30 
 Accepted and merged through PR #34 at `670205d`. H3-06 is Accepted and merged through
 PR #36 at `a34322e`. H3-07 is Accepted and merged through PR #38 at `c26b35d`. H3-08
 is Accepted and merged through PR #40 at `386d365`. H3-09 is Accepted and merged
-through PR #42 at `e4ae56b`; accepted production migration head is
-`0030_h3_notification_center`.
+through PR #42 at `e4ae56b`. H3-10 is Accepted and merged through PR #44 at
+`a44af1b`; accepted production migration head is `0031_h3_agent_platform`.
 
-H3-09 is formally Accepted. The H3-10 Agent Platform Contracts security,
-authorization, classification, custody, retention, deletion, recovery, model/tool,
-approval, budget, evaluation, and migration impacts are approved in
-[H3_IMPLEMENTATION_GUIDE.md](H3_IMPLEMENTATION_GUIDE.md#161-h3-10-accepted-security-review-scope).
-The H3-10 implementation gate is explicitly open for one dedicated slice after this
-governance synchronization is merged into `origin/master`. H3-11, H4,
-provider-specific integrations, connectors, business agents, external integrations,
-and UI functionality remain unauthorized.
+H3-10 is formally Accepted. The H3-11 Platform Hardening and Formal H3 Exit security,
+tenancy, classification, custody, retention, deletion, recovery, SLO, evaluation, and
+migration impacts are approved in
+[H3_IMPLEMENTATION_GUIDE.md](H3_IMPLEMENTATION_GUIDE.md#169-h3-11-accepted-security-review-scope).
+The H3-11 implementation gate is explicitly open for one dedicated slice after this
+governance synchronization is merged into `origin/master`. H4, provider-specific
+integrations, connectors, business agents, external integrations, and UI functionality
+remain unauthorized.

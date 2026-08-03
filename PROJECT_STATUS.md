@@ -11,7 +11,7 @@ FastAPI service backed by PostgreSQL, with OpenAI-powered chat and durable memor
 working Google integrations for Gmail, Calendar, and Drive.
 
 The local Docker deployment is operational. The accepted production migration
-baseline is `0030_h3_notification_center`. Formal H0 Exit and Formal H1 Exit are accepted. H1-01
+baseline is `0031_h3_agent_platform`. Formal H0 Exit and Formal H1 Exit are accepted. H1-01
 through H1-10 and H2-01 through H2-08 are merged. The H2 platform specification is
 accepted. H2-01 through H2-10 are merged and Formal H2 Exit is accepted. PR #24
 formally approved the H3 blueprint and opened the sequential implementation gate.
@@ -38,25 +38,28 @@ H3-08 Workflow and Approval Engine is Accepted and merged through PR #40 at `386
 its protected required checks passed. Revision `0029_h3_workflow_approval` is the
 accepted production migration baseline. H3-09 Notification Center is Accepted and
 merged through PR #42 at `e4ae56b`; its protected required checks passed and revision
-`0030_h3_notification_center` is the accepted production migration baseline. H3-10
-Agent Platform Contracts is implemented on its dedicated review branch with candidate
-revision `0031_h3_agent_platform`; it remains awaiting review and formal acceptance.
+`0030_h3_notification_center` is the prior accepted production migration baseline.
+H3-10 Agent Platform Contracts is Accepted and merged through PR #44 at `a44af1b`;
+its protected required checks passed and revision `0031_h3_agent_platform` is the
+accepted production migration baseline. H3-11 becomes the only authorized next slice
+after this governance synchronization is merged into `origin/master`.
 Gmail/Calendar/Drive authorization has been completed for the current Wanderra user,
 and live end-to-end verification has succeeded for email, calendar events, and the
 full Drive file lifecycle.
 
 ## Implemented capabilities
 
-### H3-10 Agent Platform Contracts (Awaiting review)
+### H3-10 Agent Platform Contracts (Accepted)
 
 - Versioned agent manifests, provider-neutral application command/query tool registry,
   attenuating delegations, typed inert evidence-linked plans, risk/model policy,
   deterministic budgets, orchestration, cancellation, verification, and receipts.
 - Execution-time authorization and digest-bound approval enforcement, emergency
   disable, synthetic conformance evaluation evidence, and atomic audit/outbox records.
-- Additive candidate migration `0031_h3_agent_platform` with eleven composite-tenant
+- Additive migration `0031_h3_agent_platform` with eleven composite-tenant
   tables, forced RLS, empty rollback, and populated-state forward-fix protection.
-- No business agents, provider-specific behavior, connectors, UI, H3-11, or H4 work.
+- No business agents, provider-specific behavior, connectors, UI, H3-11, or H4 work
+  was introduced by H3-10.
 
 ### H3-09 Notification Center (Accepted)
 

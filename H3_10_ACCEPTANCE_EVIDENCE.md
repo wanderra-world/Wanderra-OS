@@ -2,12 +2,12 @@
 
 **Owner:** Atlas Platform Engineering
 
-**Status:** Implementation complete; awaiting review
+**Status:** Accepted and merged through PR #44
 
 **Governing specification:** `H3_ARCHITECTURE.md` H3-10 and
 `H3_IMPLEMENTATION_GUIDE.md` sections 1.61–1.68
 
-**Migration:** candidate `0031_h3_agent_platform`, additive from accepted
+**Migration:** accepted `0031_h3_agent_platform`, additive from accepted
 `0030_h3_notification_center`
 
 ## Scope delivered
@@ -59,7 +59,7 @@ protocol, H3-11, H4, or later roadmap functionality is included.
 - Complete Architecture Fitness: **313 passed**.
 - Ruff for the complete Architecture Fitness suite and every H3-10 production,
   migration, test, and model-registry file: **passed**.
-- Alembic: candidate single head `0031_h3_agent_platform`; upgrade, empty
+- Alembic: accepted single head `0031_h3_agent_platform`; upgrade, empty
   downgrade/re-upgrade, forced RLS, and populated downgrade refusal passed.
 - Production Docker image `atlas-h3-10`: **built successfully**.
 - Production application import smoke and durable-worker smoke: **passed**.
@@ -77,7 +77,8 @@ immutable evidence.
 
 ## Slice isolation
 
-Only H3-10 Agent Platform Contracts are implemented. H3-11 remains closed pending
-separate governance and authorization. H4, UI, provider-specific integrations,
-connectors, external integrations, and business agents remain unauthorized and
-unimplemented.
+Only H3-10 Agent Platform Contracts were implemented by PR #44 at `a44af1b`. H3-11 is
+authorized exclusively by the governance controls owned by
+`H3_IMPLEMENTATION_GUIDE.md` sections 1.69–1.76. H4, UI, provider-specific
+integrations, connectors, external integrations, and business agents remain
+unauthorized and unimplemented.

@@ -555,8 +555,8 @@ email capability where explicitly approved.
 H3-10 gate is governed by the approved
 [H3-10 governance impacts](H3_IMPLEMENTATION_GUIDE.md#161-h3-10-accepted-security-review-scope).
 
-**Next gate:** H3-10 is authorized only through the approved governance impacts linked
-above. H3-11 and later behavior remains excluded.
+**Successor status:** H3-10 is Accepted through PR #44. H3-11 is governed only by its
+approved controls in `H3_IMPLEMENTATION_GUIDE.md`; no later behavior is implied.
 
 **Acceptance criteria:** Unauthorized or opted-out delivery fails before provider
 access; duplicates collapse by intent key; secrets and sensitive content are
@@ -588,11 +588,10 @@ database tools; self-registration; multi-agent social protocols; broad autonomy.
 **Dependencies:** H3-01 through H3-09; ADR-009/010/011/018/024/030; approved model,
 tool-risk, approval, budget, and evaluation policies.
 
-**Implementation gate:** Open for H3-10 only after H3-09 acceptance through PR #42
-at `e4ae56b`, with revision `0030_h3_notification_center` as the accepted production
-migration baseline and the approved
-[H3-10 governance impacts](H3_IMPLEMENTATION_GUIDE.md#161-h3-10-accepted-security-review-scope).
-H3-11 and later behavior remains excluded.
+**Implementation status:** Accepted and merged through PR #44 at `a44af1b`; revision
+`0031_h3_agent_platform` is the accepted production migration baseline. The H3-11
+gate is governed by the approved
+[H3-11 governance impacts](H3_IMPLEMENTATION_GUIDE.md#169-h3-11-accepted-security-review-scope).
 
 **Acceptance criteria:** Unregistered tools cannot execute; plans are inert until
 validated; delegation only attenuates permission; every command is authorized at
@@ -623,6 +622,13 @@ observation/evaluation/operator control; business agents; business workflows; H4
 future roadmap work.
 
 **Dependencies:** H3-01 through H3-10 accepted and merged.
+
+**Implementation gate:** Open for H3-11 only after H3-10 acceptance through PR #44
+at `a44af1b`, with revision `0031_h3_agent_platform` as the accepted production
+migration baseline and the approved
+[H3-11 governance impacts](H3_IMPLEMENTATION_GUIDE.md#169-h3-11-accepted-security-review-scope).
+H4, UI, provider-specific integrations, connectors, external integrations, and
+business agents remain excluded.
 
 **Acceptance criteria:** Every criterion in `H3_EXIT_DEFINITION.md` has passing
 evidence; no unresolved critical/high risk lacks explicit time-bounded acceptance;

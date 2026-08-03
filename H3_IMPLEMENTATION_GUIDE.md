@@ -829,13 +829,98 @@ export; populated rollback requires a reviewed forward fix or export.
 
 ### 1.68 H3-10 implementation authorization
 
-H3-09 is Accepted and merged through PR #42 at `e4ae56b`; its protected checks passed
-and revision `0030_h3_notification_center` is the accepted production migration
-baseline. The H3-10 impacts and controls above are approved. The H3-10 implementation
-gate is open for one dedicated slice after this governance synchronization is merged
-into `origin/master`. The acceptance-evidence target is
-`H3_10_ACCEPTANCE_EVIDENCE.md`. H3-11, H4, provider-specific integrations, connectors,
-business agents, external integrations, and UI functionality remain unauthorized.
+H3-10 is Accepted and merged through PR #44 at `a44af1b`; its protected checks passed
+and revision `0031_h3_agent_platform` is the accepted production migration baseline.
+Its acceptance evidence is `H3_10_ACCEPTANCE_EVIDENCE.md`. The next gate is owned
+exclusively by the H3-11 governance sections below. H4, provider-specific
+integrations, connectors, business agents, external integrations, and UI functionality
+remain unauthorized.
+
+### 1.69 H3-11 accepted security-review scope
+
+H3-11 security review MUST cover every threat and mandatory gate already owned by
+`H3_EXIT_DEFINITION.md`, including cross-workspace access; authorization, delegation,
+approval, budget, tool, model-route, and emergency-control bypass; prompt injection
+and sensitive-data egress; replay, duplicate effects, stale policy, forged evidence,
+and unverifiable outcomes; backup, restore, export, closure, deletion, and derivative
+lineage failure; worker, workflow, scheduler, search, notification, and orchestration
+recovery; SLO, capacity, and cost failure; and H4, UI, provider, connector, external
+integration, or business-agent scope leakage. H3-11 adds evidence, observation,
+evaluation, operator controls, and approved remediation only; it adds no business or
+provider capability.
+
+### 1.70 H3-11 accepted classification and authorization impact
+
+All telemetry, evaluations, drills, evidence, exports, recovery artifacts, operator
+actions, and exit findings inherit the highest effective classification and policy
+version of their inputs. Canonical H1 authorization and execution context apply before
+collection, inspection, export, restore, replay, cancellation, operator action, and
+evidence access. Metrics and reports are minimized and must not contain secrets, raw
+prompts, provider payloads, or governed source content. Observation never grants
+authority and no successful test substitutes for runtime authorization.
+
+### 1.71 H3-11 accepted custody, evidence, and audit impact
+
+The source bounded context remains authoritative for operational state. H3-11 owns
+only reproducible platform evidence, evaluation results, telemetry definitions,
+operator-control records, recovery drill results, and the formal exit decision.
+Evidence cites immutable commits, migration heads, test identities, policy versions,
+correlation/causation, timestamps, accountable actors, checksums, and explicit
+outcomes. Audit/outbox records remain append-only; failed, cancelled, uncertain, and
+unresolved outcomes cannot be rewritten as success.
+
+### 1.72 H3-11 accepted retention, deletion, and recovery impact
+
+H3-11 artifacts participate in workspace retention, legal hold, export, closure, and
+deletion policy while preserving the minimum immutable evidence required for
+accountability. Backup/restore and deletion drills use synthetic, isolated data and
+prove transitive disposition without weakening production policy. Recovery must
+reconcile tenant identity, policy, versions, idempotency, receipts, and checksums
+before resuming work. No recovery path may reactivate revoked authority, disabled
+tools/models, expired approvals, cancelled work, or deleted data.
+
+### 1.73 H3-11 accepted SLO, telemetry, and operator-control policy
+
+This section is the single normative owner of H3-11 operational acceptance controls.
+
+| Control | Approved requirement |
+|---|---|
+| Telemetry | Provider-neutral structured metrics, logs, and traces use bounded cardinality, tenant-safe identifiers, explicit schema versions, and no governed payload content. |
+| SLOs | Every measured threshold and error budget is traceable to an existing H3 exit gate; an unmeasured mandatory threshold fails closed. |
+| Evaluation | Synthetic, versioned datasets exercise security, retrieval, planning, tools, outcomes, latency, cost, and reliability deterministically where inputs are controlled. |
+| Operator controls | Pause, disable, cancel, drain, inspect, replay, and recovery actions require canonical authorization and immutable audit evidence. |
+| Adversarial and chaos tests | Fault injection is bounded to isolated synthetic tenants and cannot invoke providers, connectors, external systems, or business data. |
+| Exit decision | Formal acceptance requires every artifact and criterion owned by `H3_EXIT_DEFINITION.md`; missing, uncertain, critical, or unresolved high-risk evidence rejects exit. |
+
+### 1.74 H3-11 accepted migration and rollback plan
+
+The accepted production migration baseline is `0031_h3_agent_platform`. H3-11 is
+evidence and hardening first. Any persistence required solely for approved telemetry,
+evaluation, or operator controls MUST be additive, provider-neutral, tenant-keyed,
+forced-RLS protected, and independently rollback-safe. It must not rewrite accepted
+H0–H3-10 state. Empty-state downgrade is required; populated destructive downgrade
+fails closed and requires a reviewed forward fix or export. Remediation that changes
+an accepted contract requires architecture review before implementation.
+
+### 1.75 H3-11 accepted evidence and completion boundary
+
+H3-11 produces exactly the evidence set owned by `H3_EXIT_DEFINITION.md`: the H3
+evidence matrix, security review, recovery report, evaluation report, exit report,
+acceptance evidence, and protected CI evidence. Formal H3 Exit cannot be declared by
+the implementation branch alone; the decision becomes effective only after review,
+required checks, and merge into the protected default branch. No business agent,
+business workflow, H4, UI, provider, connector, or external integration may be used as
+completion evidence.
+
+### 1.76 H3-11 implementation authorization
+
+H3-10 is Accepted and merged through PR #44 at `a44af1b`; its protected checks passed
+and revision `0031_h3_agent_platform` is the accepted production migration baseline.
+Its acceptance evidence is `H3_10_ACCEPTANCE_EVIDENCE.md`. The H3-11 impacts and
+controls above are approved. The H3-11 implementation gate is open for one dedicated
+slice after this governance synchronization is merged into `origin/master`. H4,
+provider-specific integrations, connectors, business agents, external integrations,
+and UI functionality remain unauthorized.
 
 ## 2. Recommended implementation order
 
