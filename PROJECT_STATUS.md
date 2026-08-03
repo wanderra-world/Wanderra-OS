@@ -41,13 +41,25 @@ merged through PR #42 at `e4ae56b`; its protected required checks passed and rev
 `0030_h3_notification_center` is the prior accepted production migration baseline.
 H3-10 Agent Platform Contracts is Accepted and merged through PR #44 at `a44af1b`;
 its protected required checks passed and revision `0031_h3_agent_platform` is the
-accepted production migration baseline. H3-11 becomes the only authorized next slice
-after this governance synchronization is merged into `origin/master`.
+accepted production migration baseline. H3-11 Platform Hardening and Formal H3 Exit is
+implemented on its dedicated review branch with candidate additive revision
+`0032_h3_platform_hardening`; Formal H3 Exit remains pending review, protected checks,
+and merge.
 Gmail/Calendar/Drive authorization has been completed for the current Wanderra user,
 and live end-to-end verification has succeeded for email, calendar events, and the
 full Drive file lifecycle.
 
 ## Implemented capabilities
+
+### H3-11 Platform Hardening and Formal H3 Exit (Awaiting review)
+
+- Provider-neutral typed telemetry, deterministic SLO evaluation, synthetic evaluation
+  evidence, authorized operator-action evidence, and checksum-verified recovery drills.
+- Formal H3 evidence matrix, security review, recovery report, evaluation report, and
+  candidate exit decision.
+- Additive candidate migration `0032_h3_platform_hardening` with four tenant-scoped,
+  forced-RLS tables and guarded rollback.
+- No H4, UI, provider, connector, external integration, or business-agent behavior.
 
 ### H3-10 Agent Platform Contracts (Accepted)
 

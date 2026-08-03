@@ -20,7 +20,7 @@ def test_h3_09_is_provider_neutral_and_excludes_future_slices() -> None:
     ):
         assert forbidden not in production
     assert "protocol" in production
-    assert not (ROOT / "app" / "platform_hardening").exists()
+    assert not (ROOT / "app" / "h4").exists()
 
 
 def test_h3_09_migration_is_additive_forced_rls_and_guarded() -> None:
