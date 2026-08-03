@@ -2,7 +2,7 @@
 
 **Owner:** Atlas Platform Engineering
 
-**Status:** Implemented in PR #38; pending review and merge
+**Status:** Accepted and merged through PR #38
 
 **Governing specification:** `H3_ARCHITECTURE.md` H3-07 and
 `H3_IMPLEMENTATION_GUIDE.md` sections 1.37–1.44
@@ -51,7 +51,7 @@ reminders remain cancellable.
 
 ## Verification
 
-Recorded local results on 2 August 2026:
+Recorded results through 3 August 2026:
 
 - H3-07 acceptance tests: **9 passed**, including two real PostgreSQL tests.
 - Architecture Fitness with PostgreSQL/RLS: **301 passed, 4 skipped**.
@@ -70,7 +70,10 @@ were excluded from the tracked-equivalent verification command.
 
 ## Slice isolation
 
-H3-07 contains no H3-08 workflow/approval behavior, H4 behavior, provider-specific
+PR #38 is merged into `origin/master` at `c26b35d`; revision
+`0028_h3_task_manager` is the accepted production migration baseline and H3-07 is
+formally Accepted. H3-07 contains no H3-08 workflow/approval behavior, H4 behavior, provider-specific
 integration, connector, business-agent logic, or UI. Existing Phase 1 APIs and accepted
-H0–H3-06 runtime contracts are unchanged. Formal acceptance and the accepted production
-migration baseline remain pending protected review and merge.
+H0–H3-06 runtime contracts are unchanged. The H3-08 implementation gate is owned by
+the approved impacts and authorization in `H3_IMPLEMENTATION_GUIDE.md`; H3-09 and
+later slices remain unauthorized.

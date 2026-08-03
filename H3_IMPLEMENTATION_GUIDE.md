@@ -545,13 +545,107 @@ populated rollback requires a reviewed forward fix or export.
 
 ### 1.44 H3-07 implementation authorization
 
-H3-06 is Accepted and merged through PR #36 at `a34322e`; its protected checks passed
-and revision `0027_h3_search_context` is the accepted production migration baseline.
-The H3-07 impacts and controls above are approved. The H3-07 implementation gate is
+H3-07 is Accepted and merged through PR #38 at `c26b35d`, its protected required
+checks passed, and revision `0028_h3_task_manager` is the accepted production
+migration baseline.
+
+### 1.45 H3-08 accepted security-review scope
+
+H3-08 security review MUST cover context-free or cross-workspace definition and
+instance access, definition/version substitution, mutable running definitions,
+unregistered command or query references, arbitrary code/SQL/prompt execution,
+condition or token injection, duplicate or reordered step delivery, wait/resume race,
+timeout/cancellation/replay confusion, forged approval requests or decisions,
+action-digest substitution, self-approval, approval expiry/revocation bypass, changed
+actor/policy/permission/resource preconditions, compensation being mistaken for
+rollback, secret or governed-content leakage in state/events, operator-control bypass,
+and H3-09+ scope leakage. The review inherits H1 authorization, execution context,
+idempotency, audit/outbox/inbox, H3-02 durable execution, H3-07 tasks, and
+ADR-010/011/024/029 rather than creating parallel controls.
+
+### 1.46 H3-08 accepted classification and authorization impact
+
+Every definition version, instance, step input/output reference, token, wait,
+approval request/decision, action digest, receipt, compensation declaration, audit
+event, and outbox event records or inherits effective classification and policy
+version. Classification is never less restrictive than contributing inputs.
+Canonical H1 authorization is checked before definition administration, instance
+start/query/mutation, approval decisions, resume/replay, and every registered command
+execution. Workflow participation, task assignment, step ownership, or approval never
+grants permission. Approval is an additional execution precondition, not authority.
+
+### 1.47 H3-08 accepted custody and lineage impact
+
+The Workflow Engine owns versioned definitions, immutable instance bindings, state
+transitions, tokens, and receipts; it does not own task truth, job execution evidence,
+documents, knowledge, memory, provider state, or authorization. Definitions reference
+versioned registered application command/query identifiers and typed schemas, never
+Python callables, repository methods, SDK operations, SQL, or free-form prompts.
+Every transition and receipt identifies definition version, prior state/version,
+input digest, actor, correlation/causation, command result, and applicable approval.
+
+### 1.48 H3-08 accepted retention and deletion impact
+
+Definitions, instances, tokens, waits, approvals, decisions, receipts, and
+compensation evidence participate in workspace retention, legal hold, export, closure,
+and deletion policy. Running instances bind immutably to retained definition versions.
+Deletion or closure prevents new starts and cancels eligible work while preserving the
+minimal evidence required for accountability and disposition. Approval revocation and
+expiry remain visible; no cleanup may turn a denied, expired, cancelled, or uncertain
+outcome into success.
+
+### 1.49 H3-08 accepted recovery and execution impact
+
+Recovery inventories definition versions, instance state/version, step tokens, waits,
+deadlines, idempotency identities, approvals, receipts, compensations, and checksums
+without reusable credentials or provider payloads. H3-02 jobs resume only from the
+last committed deterministic transition. Restore reconciles job/token/receipt identity
+before dispatch so accepted effects are not duplicated. New starts can be disabled
+while compatible workers drain; incompatible versions remain deployable or require a
+reviewed forward fix.
+
+### 1.50 H3-08 approved determinism, approval, and execution policy
+
+This section is the single normative owner of H3-08 acceptance controls.
+
+| Control | Approved requirement |
+|---|---|
+| Definition integrity | Activated versions are immutable; running instances remain bound to one version. Compatibility is validated before activation. |
+| Deterministic execution | Persisted state, typed input, definition version, and recorded outcomes fully determine the next transition. Duplicate/reordered delivery cannot duplicate a transition or effect. |
+| Command confinement | Steps invoke only versioned registered application commands/queries through typed ports. Arbitrary code, SQL, prompts, repositories, SDKs, and provider payloads are prohibited. |
+| Authorization and approval | Authorization is revalidated at execution. High-risk steps also require an unexpired, unrevoked approval bound to the immutable normalized action digest; approval never grants permission. |
+| Concurrency and replay | Every material transition uses expected state version and caller-owned idempotency. Replay creates new authorized execution evidence and never edits history. |
+| Waits and deadlines | Wait/resume, timeout, cancellation, and H3-02 job identity are deterministic and race-safe. Terminal instances cannot resume. |
+| Compensation | Compensation is explicit, separately authorized, idempotent, and receipted. It never implies that an external effect was rolled back. |
+| Failure outcome | Success, failure, cancellation, compensation failure, and uncertain external outcome remain explicit, auditable, and operator-visible. |
+
+### 1.51 H3-08 accepted migration plan
+
+H3-08 uses additive expand-first migration from accepted revision
+`0028_h3_task_manager`. It adds only provider-neutral workflow definition/version,
+instance, step/token/wait, approval request/decision, action-digest, receipt,
+compensation, and reconciliation state required by `H3_ARCHITECTURE.md`. Tenant keys
+include organization, workspace, and cell identity; composite foreign keys preserve
+definition, instance, task, job, actor, approval, and receipt boundaries; enabled and
+forced RLS exist before runtime access. The migration performs no rewrite of accepted
+H3-01 through H3-07 state and no notification, agent, UI, provider, connector,
+business-data, H3-09+, or H4 backfill.
+
+Empty-state downgrade MUST be proven. Once accepted definition, instance, token, wait,
+approval, receipt, compensation, audit, or outbox evidence exists, destructive schema
+downgrade MUST fail closed. Application rollback disables new starts while compatible
+workers drain and accepted instances remain inspectable, cancellable, and exportable;
+populated rollback requires a reviewed forward fix or export.
+
+### 1.52 H3-08 implementation authorization
+
+H3-07 is Accepted and merged through PR #38 at `c26b35d`; its protected checks passed
+and revision `0028_h3_task_manager` is the accepted production migration baseline.
+The H3-08 impacts and controls above are approved. The H3-08 implementation gate is
 open for one dedicated slice after this governance synchronization is merged into
-`origin/master`. The acceptance-evidence target is `H3_07_ACCEPTANCE_EVIDENCE.md`.
-H3-08 and later slices, H4, provider-specific integrations, connectors, business
-agents, and UI functionality remain unauthorized.
+`origin/master`. The acceptance-evidence target is `H3_08_ACCEPTANCE_EVIDENCE.md`.
+H3-09 and later slices, H4, provider-specific integrations, connectors, business
+agents, external integrations, and UI functionality remain unauthorized.
 
 ## 2. Recommended implementation order
 

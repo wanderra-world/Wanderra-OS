@@ -484,10 +484,10 @@ event equivalence; agent-generated actions.
 **Dependencies:** H3-01 resources; H3-02 scheduling; H3-04 timeline; H3-06 search; H1
 authorization/audit.
 
-**Implementation gate:** Open for H3-07 only after H3-06 acceptance through PR #36
-and merger of the approved
-[H3-07 governance impacts](H3_IMPLEMENTATION_GUIDE.md#137-h3-07-accepted-security-review-scope).
-H3-08 and later behavior remains excluded.
+**Implementation status:** Accepted and merged through PR #38 at `c26b35d`; revision
+`0028_h3_task_manager` is the accepted production migration baseline. The H3-08 gate
+is governed by the approved
+[H3-08 governance impacts](H3_IMPLEMENTATION_GUIDE.md#145-h3-08-accepted-security-review-scope).
 
 **Acceptance criteria:** Lifecycle and dependency cycles fail deterministically;
 assignment never grants access; overdue scheduling is idempotent; completion evidence
@@ -516,6 +516,11 @@ free-form prompt execution; self-modifying definitions.
 
 **Dependencies:** H3-02 durable execution; H3-07 tasks; H1 authorization,
 audit/outbox/idempotency; ADR-010/011/024/029.
+
+**Implementation gate:** Open for H3-08 only after H3-07 acceptance through PR #38
+and merger of the approved
+[H3-08 governance impacts](H3_IMPLEMENTATION_GUIDE.md#145-h3-08-accepted-security-review-scope).
+H3-09 and later behavior remains excluded.
 
 **Acceptance criteria:** Instances bind immutably to a definition version; replay is
 deterministic; authorization and approvals are rechecked at execution; duplicate
