@@ -48,8 +48,11 @@ and Formal H3 Exit is Accepted. IP-01 Provider-Neutral Integration Layer Foundat
 Accepted and merged through PR #48 at `4bee069`; its protected checks passed and it
 added no migration, so `0032_h3_platform_hardening` remains the accepted production
 migration baseline. IP-02 Gmail OAuth Workspace Connection is the only authorized next
-implementation slice. IP-02 must reuse H2 and IP-01 and authorizes no other provider,
-UI, product workflow, or business-agent behavior.
+implementation slice and is in implementation review. Its candidate implementation
+reuses H2 and IP-01 for workspace binding, replay-safe OAuth, encrypted credentials,
+provider/account validation, refresh, RLS, authorization, and audit evidence. IP-02
+authorizes no other provider, UI, product workflow, or business-agent behavior and is
+not Accepted until its dedicated pull request is reviewed and merged.
 Gmail/Calendar/Drive authorization has been completed for the current Wanderra user,
 and live end-to-end verification has succeeded for email, calendar events, and the
 full Drive file lifecycle.
@@ -65,6 +68,20 @@ full Drive file lifecycle.
 - No migration, provider adapter, OAuth rollout, external call, UI, workflow, or
   business-agent behavior.
 - Acceptance evidence: `IP_01_ACCEPTANCE_EVIDENCE.md`.
+
+### IP-02 Gmail OAuth Workspace Connection (Candidate)
+
+- Gmail is the first concrete provider adapter over the accepted H2/IP-01 boundaries.
+- Each canonical Gmail connection belongs to exactly one workspace and one declared
+  Google account; independent workspaces and accounts cannot resolve each other's
+  authorization state or encrypted credential generations.
+- The canonical H2 OAuth transaction owns state, PKCE, issuer, redirect, expiry,
+  replay, actor, workspace, and scope validation.
+- Google grants are account-validated, stored as managed encrypted generations,
+  refreshed through the provider boundary, and denied when missing, revoked,
+  disabled, mismatched, or invalid.
+- The candidate adds no migration and does not alter the Phase 1 Gmail API.
+- Acceptance evidence: `IP_02_ACCEPTANCE_EVIDENCE.md`.
 
 ### H3-11 Platform Hardening and Formal H3 Exit (Accepted)
 

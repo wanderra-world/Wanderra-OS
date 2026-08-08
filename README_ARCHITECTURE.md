@@ -5,7 +5,7 @@ The single entry point to the Atlas architecture documentation.
 **Owner:** Atlas Architecture Council  
 **Current phase:** Post-H3 Integration Platform
 **Status:** Formal H0, H1, H2, and H3 Exits accepted; IP-01 accepted; IP-02 is the only
-authorized post-H3 implementation slice after this governance milestone merges
+authorized post-H3 implementation slice and is in implementation review
 **Last updated:** August 8, 2026
 
 ## Core principle
@@ -77,16 +77,18 @@ PR #24 is the formal architecture acceptance. H3-01 through H3-11 are accepted a
 merged, PR #46 completed all protected checks, and Formal H3 Exit is Accepted. The
 accepted production migration baseline is `0032_h3_platform_hardening`.
 
-### Post-H3 Integration Platform — IP-01 accepted; IP-02 gate open
+### Post-H3 Integration Platform — IP-01 accepted; IP-02 in implementation review
 
 ADR-034 requires all post-H3 Integration Platform work to reuse the accepted H2
 connection, credential, OAuth transaction, provider capability, routing, encryption,
 audit, and RLS boundaries. IP-01 Provider-Neutral Integration Layer Foundation is
 Accepted and merged through PR #48 at `4bee069`; its protected checks passed and it
-added no migration. IP-02 Gmail OAuth Workspace Connection is the only authorized next
-implementation slice after this governance pull request is accepted and merged. It
-must implement Gmail as the first workspace-aware provider over H2/IP-01 without a
-global Google account or parallel integration architecture.
+added no migration. IP-02 Gmail OAuth Workspace Connection is the only authorized
+implementation slice. Its candidate implementation composes Gmail authorization,
+managed credential generations, provider/account binding, refresh, capability grants,
+audit evidence, and workspace isolation over H2/IP-01 without a global Google account
+or parallel integration architecture. IP-02 is not Accepted until its dedicated pull
+request and protected evidence are reviewed and merged.
 
 ## Recommended reading order
 
