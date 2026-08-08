@@ -54,6 +54,16 @@ full Drive file lifecycle.
 
 ## Implemented capabilities
 
+### IP-01 Provider-Neutral Integration Layer Foundation (Awaiting review)
+
+- Workspace-aware, provider-neutral integration resolution over the accepted H2
+  connection, account, capability, credential, authorization, and audit boundaries.
+- Deterministic fail-closed validation before any adapter boundary, returning only
+  inert non-secret metadata and immutable correlated audit evidence.
+- No migration, provider adapter, OAuth rollout, external call, UI, workflow, or
+  business-agent behavior.
+- Acceptance evidence: `IP_01_ACCEPTANCE_EVIDENCE.md`.
+
 ### H3-11 Platform Hardening and Formal H3 Exit (Accepted)
 
 - Provider-neutral typed telemetry, deterministic SLO evaluation, synthetic evaluation

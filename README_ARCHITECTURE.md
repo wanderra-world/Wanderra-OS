@@ -5,7 +5,7 @@ The single entry point to the Atlas architecture documentation.
 **Owner:** Atlas Architecture Council  
 **Current phase:** Post-H3 Integration Platform
 **Status:** Formal H0, H1, H2, and H3 Exits accepted; IP-01 is the only authorized
-post-H3 implementation slice after this governance milestone is accepted and merged
+post-H3 implementation slice
 **Last updated:** August 8, 2026
 
 ## Core principle
@@ -82,9 +82,8 @@ accepted production migration baseline is `0032_h3_platform_hardening`.
 ADR-034 requires all post-H3 Integration Platform work to reuse the accepted H2
 connection, credential, OAuth transaction, provider capability, routing, encryption,
 audit, and RLS boundaries. The provider-neutral IP-01 Integration Layer Foundation is
-the only authorized implementation slice after this governance pull request is
-accepted and merged. Gmail OAuth and every provider adapter, external connector, UI,
-agent, and business behavior remain unauthorized.
+the only authorized implementation slice. Gmail OAuth and every provider adapter,
+external connector, UI, agent, and business behavior remain unauthorized.
 
 ## Recommended reading order
 
@@ -518,6 +517,7 @@ enforcement is owned by `IMPLEMENTATION_GUIDE.md`.
 | [H3_EVALUATION_REPORT.md](H3_EVALUATION_REPORT.md) | H3 search, AI, agent, cost, and reliability evaluation |
 | [H3_OPERATIONS_RUNBOOK.md](H3_OPERATIONS_RUNBOOK.md) | Provider-neutral H3 incident, operator-control, and recovery procedure |
 | [H3_EXIT_REPORT.md](H3_EXIT_REPORT.md) | Accepted Formal H3 Exit decision and completed platform baseline |
+| [IP_01_ACCEPTANCE_EVIDENCE.md](IP_01_ACCEPTANCE_EVIDENCE.md) | IP-01 provider-neutral Integration Layer implementation evidence |
 
 ## Next action
 
@@ -535,8 +535,8 @@ Accepted and merged through PR #46 at `93a01f4`; its protected checks passed and
 `0032_h3_platform_hardening` is the accepted production migration baseline. Formal H3
 Exit is Accepted and Atlas Platform Complete is effective on protected `master`.
 
-After this governance pull request is accepted and merged, IP-01 Provider-Neutral
-Integration Layer Foundation is the only authorized implementation slice. It is
+IP-01 Provider-Neutral Integration Layer Foundation is the only authorized
+implementation slice. It is
 governed by
 [IMPLEMENTATION_GUIDE.md](IMPLEMENTATION_GUIDE.md#ip-01-provider-neutral-integration-layer-foundation)
 and [ADR-034](DECISIONS.md#adr-034-reuse-the-accepted-h2-integration-architecture-after-formal-h3-exit),
@@ -544,3 +544,9 @@ and must reuse the accepted H2 architecture. Gmail OAuth, provider adapters, ext
 connectors, UI, agents, and business logic remain unauthorized. H4,
 provider-specific integrations, connectors, business agents, external integrations,
 and UI functionality remain unauthorized.
+
+IP-01 is implemented on its dedicated review branch without a migration. It composes
+the accepted H2 workspace connection, provider account, capability, encrypted
+credential metadata, authorization, execution-context, and immutable audit boundaries.
+Acceptance and merge remain pending. No later Integration Platform slice is
+authorized.
