@@ -3,10 +3,10 @@
 The single entry point to the Atlas architecture documentation.
 
 **Owner:** Atlas Architecture Council  
-**Current phase:** H3 — System Intelligence Layer
-**Status:** Formal H0, H1, and H2 Exits accepted; H3 architecture approved through
-PR #24; sequential H3 production implementation authorized by explicit slice approval
-**Last updated:** August 2, 2026
+**Current phase:** Post-H3 Integration Platform
+**Status:** Formal H0, H1, H2, and H3 Exits accepted; IP-01 is the only authorized
+post-H3 implementation slice after this governance milestone is accepted and merged
+**Last updated:** August 8, 2026
 
 ## Core principle
 
@@ -66,16 +66,25 @@ The accepted H2 production decomposition is defined in
 merged. The accepted decision and evidence are recorded in
 [H2_EXIT_REPORT.md](H2_EXIT_REPORT.md).
 
-### H3 — architecture approved; implementation gate open
+### H3 — formally accepted and closed
 
 The approved final reusable platform layer is defined by
 [H3_ARCHITECTURE.md](H3_ARCHITECTURE.md), with stage-specific engineering gates in
 [H3_IMPLEMENTATION_GUIDE.md](H3_IMPLEMENTATION_GUIDE.md) and the meaning of Atlas
 Platform Complete in [H3_EXIT_DEFINITION.md](H3_EXIT_DEFINITION.md). Accepted ADR-033
 consolidates the former H3–H8 delivery packaging into eleven sequential H3 slices.
-PR #24 is the formal architecture acceptance. H3 production implementation is
-authorized only one explicitly requested slice at a time; no business agent or H4 work
-is authorized.
+PR #24 is the formal architecture acceptance. H3-01 through H3-11 are accepted and
+merged, PR #46 completed all protected checks, and Formal H3 Exit is Accepted. The
+accepted production migration baseline is `0032_h3_platform_hardening`.
+
+### Post-H3 Integration Platform — IP-01 gate open
+
+ADR-034 requires all post-H3 Integration Platform work to reuse the accepted H2
+connection, credential, OAuth transaction, provider capability, routing, encryption,
+audit, and RLS boundaries. The provider-neutral IP-01 Integration Layer Foundation is
+the only authorized implementation slice after this governance pull request is
+accepted and merged. Gmail OAuth and every provider adapter, external connector, UI,
+agent, and business behavior remain unauthorized.
 
 ## Recommended reading order
 
@@ -398,6 +407,7 @@ text and status remain canonical only in `DECISIONS.md`.
 | [ADR-030](DECISIONS.md#adr-030-treat-untrusted-content-as-data-and-govern-ai-egress) | AI security and egress |
 | [ADR-031](DECISIONS.md#adr-031-enforce-architecture-invariants-with-fitness-tests) | Architecture fitness tests |
 | [ADR-033](DECISIONS.md#adr-033-consolidate-the-remaining-reusable-platform-foundation-into-h3) | H3 final-platform sequencing and post-H3 business-agent boundary |
+| [ADR-034](DECISIONS.md#adr-034-reuse-the-accepted-h2-integration-architecture-after-formal-h3-exit) | Post-H3 Integration Platform reuse and IP-01 authorization |
 
 ## P0 Architecture Gate
 
@@ -507,7 +517,7 @@ enforcement is owned by `IMPLEMENTATION_GUIDE.md`.
 | [H3_RECOVERY_REPORT.md](H3_RECOVERY_REPORT.md) | H3 recovery, export, closure, and deletion drill evidence |
 | [H3_EVALUATION_REPORT.md](H3_EVALUATION_REPORT.md) | H3 search, AI, agent, cost, and reliability evaluation |
 | [H3_OPERATIONS_RUNBOOK.md](H3_OPERATIONS_RUNBOOK.md) | Provider-neutral H3 incident, operator-control, and recovery procedure |
-| [H3_EXIT_REPORT.md](H3_EXIT_REPORT.md) | Candidate Formal H3 Exit decision pending merge |
+| [H3_EXIT_REPORT.md](H3_EXIT_REPORT.md) | Accepted Formal H3 Exit decision and completed platform baseline |
 
 ## Next action
 
@@ -520,13 +530,17 @@ is Accepted and merged through PR #40 at `386d365`. H3-09 is Accepted and merged
 through PR #42 at `e4ae56b`. H3-10 is Accepted and merged through PR #44 at
 `a44af1b`; accepted production migration head is `0031_h3_agent_platform`.
 
-H3-10 is formally Accepted. The H3-11 Platform Hardening and Formal H3 Exit security,
-tenancy, classification, custody, retention, deletion, recovery, SLO, evaluation, and
-migration impacts are approved in
-[H3_IMPLEMENTATION_GUIDE.md](H3_IMPLEMENTATION_GUIDE.md#169-h3-11-accepted-security-review-scope).
-H3-11 implementation gate is explicitly open.
-H3-11 Platform Hardening and Formal H3 Exit is implemented on its dedicated review
-branch with candidate migration `0032_h3_platform_hardening`. Formal H3 Exit remains
-pending protected checks, review, and merge into `origin/master`. H4,
+H3-10 remains formally Accepted. H3-11 Platform Hardening and Formal H3 Exit is
+Accepted and merged through PR #46 at `93a01f4`; its protected checks passed and
+`0032_h3_platform_hardening` is the accepted production migration baseline. Formal H3
+Exit is Accepted and Atlas Platform Complete is effective on protected `master`.
+
+After this governance pull request is accepted and merged, IP-01 Provider-Neutral
+Integration Layer Foundation is the only authorized implementation slice. It is
+governed by
+[IMPLEMENTATION_GUIDE.md](IMPLEMENTATION_GUIDE.md#ip-01-provider-neutral-integration-layer-foundation)
+and [ADR-034](DECISIONS.md#adr-034-reuse-the-accepted-h2-integration-architecture-after-formal-h3-exit),
+and must reuse the accepted H2 architecture. Gmail OAuth, provider adapters, external
+connectors, UI, agents, and business logic remain unauthorized. H4,
 provider-specific integrations, connectors, business agents, external integrations,
 and UI functionality remain unauthorized.

@@ -144,7 +144,7 @@ def test_h3_11_governance_gate_accepts_h3_10_and_excludes_future_work() -> None:
     assert "H3-11 accepted evidence and completion boundary" in guide
     assert "H3-11 implementation authorization" in guide
     assert "H3-11 governance impacts" in architecture
-    assert "H3-11 implementation gate is explicitly open" in index
+    assert "H3-11 Platform Hardening and Formal H3 Exit is Accepted" in normalized_index
     for excluded in (
         "H4",
         "provider-specific integrations",

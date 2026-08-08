@@ -922,6 +922,15 @@ slice after this governance synchronization is merged into `origin/master`. H4,
 provider-specific integrations, connectors, business agents, external integrations,
 and UI functionality remain unauthorized.
 
+### 1.77 H3-11 acceptance and handoff
+
+H3-11 is Accepted and merged through PR #46 at `93a01f4`; its protected checks passed,
+revision `0032_h3_platform_hardening` is the accepted production migration baseline,
+and Formal H3 Exit is Accepted. H3 is closed. This guide authorizes no additional H3
+slice. The separately authorized post-H3 IP-01 boundary is owned by
+`IMPLEMENTATION_GUIDE.md` under ADR-034 and must reuse the accepted H2 integration
+architecture.
+
 ## 2. Recommended implementation order
 
 | Order | Slice | Why it is next |

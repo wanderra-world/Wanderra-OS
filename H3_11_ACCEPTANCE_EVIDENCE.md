@@ -2,8 +2,8 @@
 
 **Owner:** Atlas Platform Engineering
 
-**Status:** Implementation complete; awaiting review and merge
-**Migration:** candidate additive `0032_h3_platform_hardening`
+**Status:** Accepted and merged through PR #46 at `93a01f4`
+**Migration:** accepted additive `0032_h3_platform_hardening`
 
 ## Scope delivered
 
@@ -30,10 +30,10 @@
   Starlette/httpx deprecation warning.
 - Ruff for Architecture Fitness and every H3-11 production, migration, test, and model
   registry file: **passed**.
-- Alembic: single candidate head `0032_h3_platform_hardening`.
+- Alembic: single accepted head `0032_h3_platform_hardening`.
 - Production Docker image `atlas-h3-11`: **built successfully**.
 - Production application import smoke and durable-worker smoke: **passed**.
-- GitHub Required Gate: pending implementation PR.
+- GitHub Required Gate: passed before PR #46 merged into protected `master`.
 
 ## Compatibility and rollback
 
@@ -46,5 +46,5 @@ uncertainty, or unresolved risk into success.
 ## Slice isolation
 
 No H4, UI, provider-specific behavior, connector, external integration, business
-workflow, or business agent is included. Formal H3 Exit remains pending merge into the
-protected default branch.
+workflow, or business agent is included. PR #46 is merged into the protected default
+branch and Formal H3 Exit is Accepted.

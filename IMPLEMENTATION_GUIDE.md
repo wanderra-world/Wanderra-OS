@@ -264,6 +264,66 @@ is owned by [H3_EXIT_DEFINITION.md](H3_EXIT_DEFINITION.md).
 The historical sections below preserve the pre-ADR-033 review record only. They have
 no implementation-authorizing or normative effect.
 
+### IP-01 Provider-Neutral Integration Layer Foundation
+
+ADR-034 authorizes IP-01 as the first post-H3 implementation slice after this
+governance milestone is accepted and merged. IP-01 extends, and does not replace, the
+accepted H2 integration architecture.
+
+**Prerequisites**
+
+- Formal H3 Exit is Accepted through PR #46 at `93a01f4`.
+- `0032_h3_platform_hardening` is the accepted migration baseline.
+- H2 connection, credential, OAuth transaction, capability, routing, encryption,
+  audit, execution-context, and RLS contracts remain canonical.
+- The IP-01 implementation branch starts only after this governance pull request is
+  accepted and merged.
+
+**Deliverables**
+
+- One provider-neutral application composition boundary over the existing canonical
+  H2 integration contracts.
+- Workspace, organization, actor, connection, capability, and correlation context is
+  required before any integration operation can be dispatched.
+- Verified gaps only are closed without duplicating H2 models or changing accepted
+  provider behavior.
+- Architecture evidence maps every IP-01 contract to its existing H2 owner.
+
+**Excluded work**
+
+- Provider adapters and external network calls.
+- Gmail or any other OAuth implementation or endpoint.
+- Calendar, Drive, messaging, social, CRM, UI, synchronization, webhook, worker,
+  agent, workflow, or business behavior.
+- Credential migration, cutover, or removal of Phase 1 compatibility paths.
+
+**Required tests**
+
+- Unit tests for deterministic provider-neutral composition and fail-closed context.
+- PostgreSQL/RLS tests for cross-workspace isolation if persistence changes are
+  strictly required.
+- Architecture Fitness tests rejecting provider SDKs, provider payloads, duplicated
+  canonical models, context-free dispatch, and future-slice leakage.
+- Complete regression, migration/rollback, Ruff, Docker, and smoke verification.
+
+**Exit criteria**
+
+- A provider-neutral caller can resolve an authorized workspace-owned connection and
+  capability through existing H2 contracts without invoking a provider.
+- Missing, mismatched, revoked, disabled, or unauthorized context fails before any
+  adapter boundary.
+- No H0-H3 contract or Phase 1 behavior changes.
+- No provider implementation or external effect exists.
+- Acceptance evidence and protected required checks pass, and the dedicated IP-01
+  pull request is accepted and merged.
+
+**Rollback**
+
+IP-01 must be additive and independently disableable. Any additive persistence must
+support empty downgrade and guarded populated rollback under the existing migration
+policy. Removing the composition boundary restores the accepted H2 behavior without
+credential, provider-state, or audit loss.
+
 ### Historical H3: Minimum universal core (superseded by ADR-033)
 
 **Architecture purpose:**

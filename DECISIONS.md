@@ -468,3 +468,33 @@ or permitting a big-bang implementation.
 stage sequence is historical and superseded for future implementation. Each H3 slice
 still requires explicit authorization, dedicated evidence, protected CI, acceptance,
 and merge. This ADR does not authorize production code, H4 work, or a business agent.
+
+## ADR-034: Reuse the accepted H2 integration architecture after Formal H3 Exit
+
+**Status:** Accepted upon merge of the Formal H3 Exit governance synchronization
+
+**Decision:** Post-H3 Integration Platform work extends the accepted H2 connection,
+credential, OAuth transaction, provider capability, mirror, routing, audit, encryption,
+and cutover boundaries. It MUST NOT create parallel connection, credential, OAuth,
+capability, or provider abstractions. The first authorized implementation slice is
+IP-01 Provider-Neutral Integration Layer Foundation as defined by
+`IMPLEMENTATION_GUIDE.md`. IP-01 may close verified composition or contract gaps in
+those existing boundaries, but includes no provider adapter, provider OAuth flow,
+external network call, synchronization, webhook, UI, agent, or business behavior.
+
+Gmail OAuth may be proposed as the first concrete provider implementation only after
+the IP-01 pull request is accepted and merged and a separate slice is explicitly
+authorized. That future authorization must preserve workspace ownership, forced RLS,
+managed envelope encryption, deterministic authorization, audit/outbox evidence,
+replay-safe PKCE, and provider-neutral application boundaries.
+
+**Why:** H2 already delivered the canonical integration architecture. A second
+“integration layer” would create conflicting ownership, credential custody, routing,
+and migration paths. A narrowly gated composition milestone allows future providers
+to reuse the proven platform without duplicating models or prematurely authorizing an
+external connector.
+
+**Consequences:** H3 remains formally closed and no H4 stage is created. IP-01 is the
+only post-H3 implementation slice authorized by this decision. Gmail, Calendar,
+Drive, messaging, social, CRM, UI, external connectors, and business agents remain
+unauthorized until separately reviewed and approved.

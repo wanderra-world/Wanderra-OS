@@ -2,7 +2,7 @@
 
 **Owner:** Atlas Platform Engineering
 
-Last updated: 3 August 2026
+Last updated: 8 August 2026
 
 ## Summary
 
@@ -11,7 +11,7 @@ FastAPI service backed by PostgreSQL, with OpenAI-powered chat and durable memor
 working Google integrations for Gmail, Calendar, and Drive.
 
 The local Docker deployment is operational. The accepted production migration
-baseline is `0031_h3_agent_platform`. Formal H0 Exit and Formal H1 Exit are accepted. H1-01
+baseline is `0032_h3_platform_hardening`. Formal H0 Exit and Formal H1 Exit are accepted. H1-01
 through H1-10 and H2-01 through H2-08 are merged. The H2 platform specification is
 accepted. H2-01 through H2-10 are merged and Formal H2 Exit is accepted. PR #24
 formally approved the H3 blueprint and opened the sequential implementation gate.
@@ -41,23 +41,26 @@ merged through PR #42 at `e4ae56b`; its protected required checks passed and rev
 `0030_h3_notification_center` is the prior accepted production migration baseline.
 H3-10 Agent Platform Contracts is Accepted and merged through PR #44 at `a44af1b`;
 its protected required checks passed and revision `0031_h3_agent_platform` is the
-accepted production migration baseline. H3-11 Platform Hardening and Formal H3 Exit is
-implemented on its dedicated review branch with candidate additive revision
-`0032_h3_platform_hardening`; Formal H3 Exit remains pending review, protected checks,
-and merge.
+prior accepted production migration baseline. H3-11 Platform Hardening and Formal H3
+Exit is Accepted and merged through PR #46 at `93a01f4`; its protected checks passed,
+revision `0032_h3_platform_hardening` is the accepted production migration baseline,
+and Formal H3 Exit is Accepted. The next authorized milestone after this governance
+synchronization is IP-01, the provider-neutral Integration Layer Foundation defined
+by `IMPLEMENTATION_GUIDE.md` and ADR-034. IP-01 reuses H2 and authorizes no provider
+implementation or external connector.
 Gmail/Calendar/Drive authorization has been completed for the current Wanderra user,
 and live end-to-end verification has succeeded for email, calendar events, and the
 full Drive file lifecycle.
 
 ## Implemented capabilities
 
-### H3-11 Platform Hardening and Formal H3 Exit (Awaiting review)
+### H3-11 Platform Hardening and Formal H3 Exit (Accepted)
 
 - Provider-neutral typed telemetry, deterministic SLO evaluation, synthetic evaluation
   evidence, authorized operator-action evidence, and checksum-verified recovery drills.
 - Formal H3 evidence matrix, security review, recovery report, evaluation report, and
   candidate exit decision.
-- Additive candidate migration `0032_h3_platform_hardening` with four tenant-scoped,
+- Additive accepted migration `0032_h3_platform_hardening` with four tenant-scoped,
   forced-RLS tables and guarded rollback.
 - No H4, UI, provider, connector, external integration, or business-agent behavior.
 
