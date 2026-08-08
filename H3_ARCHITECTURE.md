@@ -643,6 +643,12 @@ Docker; production smoke; formal evidence checks.
 **Rollback:** Evidence/remediation only unless an approved defect requires a guarded
 fix. Formal exit is rejected if rollback, recovery, or forward-fix cannot be proven.
 
+**Implementation status:** Accepted and merged through PR #46 at `93a01f4`; revision
+`0032_h3_platform_hardening` is the accepted production migration baseline and Formal
+H3 Exit is Accepted. Post-H3 implementation is governed separately by ADR-034 and the
+repository-wide implementation contract; this H3 specification authorizes no further
+slice.
+
 **Complexity:** High.
 
 ## 10. Dependency graph

@@ -35,7 +35,7 @@ def test_h3_11_formal_evidence_set_is_complete_and_traceable() -> None:
         "H3_SECURITY_REVIEW.md": ("critical", "high", "residual risk"),
         "H3_RECOVERY_REPORT.md": ("RPO", "RTO", "restore", "deletion"),
         "H3_EVALUATION_REPORT.md": ("search", "prompt injection", "planning", "cost"),
-        "H3_EXIT_REPORT.md": ("Formal H3 Exit", "pending merge", "H4"),
+        "H3_EXIT_REPORT.md": ("Formal H3 Exit", "Accepted", "PR #46", "H4"),
         "H3_11_ACCEPTANCE_EVIDENCE.md": ("Architecture Fitness", "PostgreSQL", "Docker"),
         "H3_OPERATIONS_RUNBOOK.md": ("pause", "replay", "directly", "SLO"),
     }
@@ -52,3 +52,28 @@ def test_h3_11_migration_is_additive_forced_rls_and_guarded() -> None:
     assert "FORCE ROW LEVEL SECURITY" in text
     assert "reviewed forward fix" in text
     assert "drop_column" not in text
+
+
+def test_formal_h3_exit_and_ip_01_governance_gate_are_explicit() -> None:
+    index = (ROOT / "README_ARCHITECTURE.md").read_text()
+    status = (ROOT / "PROJECT_STATUS.md").read_text()
+    exit_report = (ROOT / "H3_EXIT_REPORT.md").read_text()
+    evidence = (ROOT / "H3_11_ACCEPTANCE_EVIDENCE.md").read_text()
+    decisions = (ROOT / "DECISIONS.md").read_text()
+    implementation = (ROOT / "IMPLEMENTATION_GUIDE.md").read_text()
+    normalized_index = " ".join(index.split())
+    normalized_status = " ".join(status.split())
+
+    assert "Formal H3 Exit is Accepted" in normalized_index
+    assert "H3-11 Platform Hardening and Formal H3 Exit is Accepted" in normalized_status
+    assert "**Decision:** Accepted through PR #46" in exit_report
+    assert "**Status:** Accepted and merged through PR #46" in evidence
+    assert "`0032_h3_platform_hardening`" in index
+    assert "ADR-034: Reuse the accepted H2 integration architecture" in decisions
+    assert "IP-01 Provider-Neutral Integration Layer Foundation" in implementation
+    assert (
+        "IP-01 Provider-Neutral Integration Layer Foundation is the only authorized"
+        in normalized_index
+    )
+    assert "Gmail OAuth, provider adapters, external connectors" in normalized_index
+    assert "UI, agents, and business logic remain unauthorized" in normalized_index

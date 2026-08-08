@@ -2,8 +2,8 @@
 
 **Owner:** Atlas Architecture Council
 
-**Decision:** Candidate acceptance; pending merge of the H3-11 pull request
-**Accepted migration baseline after merge:** `0032_h3_platform_hardening`
+**Decision:** Accepted through PR #46 at `93a01f4`
+**Accepted migration baseline:** `0032_h3_platform_hardening`
 
 ## Formal H3 Exit decision
 
@@ -12,9 +12,10 @@ observation, evaluation, operator-control, recovery, security, conformance, and
 evidence boundary. Every Gate A through Gate K criterion is traceable in
 `H3_EVIDENCE_MATRIX.md`; no unresolved critical or high threat remains.
 
-The formal decision is intentionally pending merge. In accordance with
-`H3_EXIT_DEFINITION.md`, Formal H3 Exit becomes Accepted only after this H3-11 pull
-request passes all protected checks, is reviewed, and is merged into `origin/master`.
+PR #46 passed its protected checks, was reviewed, and is merged into
+`origin/master` at `93a01f4`. In accordance with `H3_EXIT_DEFINITION.md`, every
+mandatory gate is satisfied and Formal H3 Exit is Accepted. Atlas Platform Complete
+is therefore effective on the protected default branch.
 
 ## Completed reusable platform baseline
 
@@ -27,6 +28,7 @@ mandatory across the complete platform.
 
 ## Boundary
 
-No H4, UI, provider, connector, external integration, or business agent is implemented
-or authorized by this report. A future business agent requires separate architecture,
-ownership, risk, permission, budget, evaluation, and implementation approval.
+This report does not itself authorize H4, UI, a provider, connector, external
+integration, or business agent. Post-H3 work requires separate authorization. ADR-034
+authorizes only the provider-neutral IP-01 Integration Layer Foundation after its
+governance pull request is accepted and merged.
