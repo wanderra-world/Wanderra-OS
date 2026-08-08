@@ -1,0 +1,60 @@
+from __future__ import annotations
+
+import ast
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
+MODULE = ROOT / "app" / "integration_layer"
+
+
+def _imports(path: Path) -> tuple[str, ...]:
+    tree = ast.parse(path.read_text())
+    values: list[str] = []
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import):
+            values.extend(alias.name for alias in node.names)
+        elif isinstance(node, ast.ImportFrom) and node.module:
+            values.append(node.module)
+    return tuple(values)
+
+
+def test_ip_01_is_provider_neutral_and_has_no_external_boundary() -> None:
+    assert MODULE.is_dir()
+    forbidden_imports = (
+        "google",
+        "googleapiclient",
+        "requests",
+        "httpx",
+        "app.integrations",
+        "app.email_capability",
+        "app.calendar_capability",
+        "app.storage_capability",
+    )
+    for path in MODULE.glob("*.py"):
+        assert not any(
+            imported.startswith(forbidden)
+            for imported in _imports(path)
+            for forbidden in forbidden_imports
+        )
+
+
+def test_ip_01_reuses_canonical_h2_models_and_adds_no_migration() -> None:
+    source = "\n".join(path.read_text() for path in MODULE.glob("*.py"))
+    assert "app.connections" in source
+    assert "app.connection_credentials" in source
+    assert "app.provider_capabilities" in source
+    assert "class Integration(" not in source
+    assert "class Provider(" not in source
+    assert "class Account(" not in source
+    assert "class Credential(" not in source
+    assert not (ROOT / "alembic" / "versions" / "0033_add_integration_layer.py").exists()
+
+
+def test_ip_01_governance_and_evidence_are_traceable() -> None:
+    index = (ROOT / "README_ARCHITECTURE.md").read_text()
+    status = (ROOT / "PROJECT_STATUS.md").read_text()
+    evidence = (ROOT / "IP_01_ACCEPTANCE_EVIDENCE.md").read_text()
+    assert "IP-01 Provider-Neutral Integration Layer Foundation" in index
+    assert "IP-01 Provider-Neutral Integration Layer Foundation" in status
+    assert "H2 canonical ownership map" in evidence
+    assert "No provider adapter" in evidence
