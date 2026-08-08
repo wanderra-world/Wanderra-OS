@@ -1,7 +1,7 @@
 # IP-01 Provider-Neutral Integration Layer Foundation Acceptance Evidence
 
 **Owner:** Atlas Platform Engineering  
-**Status:** Implementation complete; awaiting protected checks, review, and merge  
+**Status:** Accepted and merged through PR #48 at `4bee069`
 **Accepted baseline:** `0032_h3_platform_hardening`  
 **Migration:** None; IP-01 composes accepted H2 persistence
 
@@ -45,7 +45,8 @@ permission, audit, or routing model.
 - Ruff for Architecture Fitness and every IP-01 production/test file: **passed**.
 - Alembic remains at the accepted single head `0032_h3_platform_hardening`.
 - Production Docker build, application smoke, and durable-worker smoke: **passed**.
-- GitHub Required Gate: pending implementation pull request.
+- GitHub Architecture Fitness, Regression Tests, Docker Build and Smoke, and H0
+  Required Gate: **passed** before PR #48 merged into protected `master`.
 
 ## Security and compatibility
 

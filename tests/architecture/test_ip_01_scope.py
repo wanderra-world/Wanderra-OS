@@ -58,3 +58,38 @@ def test_ip_01_governance_and_evidence_are_traceable() -> None:
     assert "IP-01 Provider-Neutral Integration Layer Foundation" in status
     assert "H2 canonical ownership map" in evidence
     assert "No provider adapter" in evidence
+
+
+def test_ip_01_is_accepted_and_ip_02_is_the_only_authorized_next_slice() -> None:
+    index = " ".join((ROOT / "README_ARCHITECTURE.md").read_text().split())
+    status = " ".join((ROOT / "PROJECT_STATUS.md").read_text().split())
+    evidence = (ROOT / "IP_01_ACCEPTANCE_EVIDENCE.md").read_text()
+    decisions = " ".join((ROOT / "DECISIONS.md").read_text().split())
+    guide = (ROOT / "IMPLEMENTATION_GUIDE.md").read_text()
+
+    assert "IP-01 Provider-Neutral Integration Layer Foundation is Accepted" in index
+    assert "IP-01 Provider-Neutral Integration Layer Foundation is Accepted" in status
+    assert "**Status:** Accepted and merged through PR #48" in evidence
+    assert "GitHub Architecture Fitness, Regression Tests" in evidence
+    assert "IP-02 implementation authorization" in decisions
+    assert "IP-02 Gmail OAuth Workspace Connection is the only authorized" in index
+    assert "### IP-02 Gmail OAuth Workspace Connection" in guide
+    assert "`0032_h3_platform_hardening` remains the accepted migration baseline" in guide
+    for excluded in (
+        "Calendar",
+        "Drive",
+        "Contacts",
+        "WhatsApp",
+        "Stripe",
+        "LinkedIn",
+        "Facebook",
+        "Instagram",
+        "TikTok",
+        "YouTube",
+        "X",
+        "CRM",
+        "business agents",
+    ):
+        assert excluded in index
+    assert not (ROOT / "app" / "ip_02").exists()
+    assert not (ROOT / "alembic" / "versions" / "0033_add_ip_02.py").exists()

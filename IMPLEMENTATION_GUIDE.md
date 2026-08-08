@@ -324,6 +324,84 @@ support empty downgrade and guarded populated rollback under the existing migrat
 policy. Removing the composition boundary restores the accepted H2 behavior without
 credential, provider-state, or audit loss.
 
+### IP-02 Gmail OAuth Workspace Connection
+
+ADR-034 authorizes IP-02 as the only next implementation slice after this governance
+milestone is accepted and merged. Gmail is the first provider implementation over
+IP-01, not a new integration architecture.
+
+**Prerequisites**
+
+- IP-01 is Accepted and merged through PR #48 at `4bee069` with all protected checks
+  passing.
+- `0032_h3_platform_hardening` remains the accepted migration baseline because IP-01
+  added no migration.
+- H2 connection, encrypted credential, replay-safe OAuth transaction, Gmail capability
+  adapter/routing, authorization, audit, execution-context, and forced-RLS contracts
+  remain canonical.
+
+**Deliverables**
+
+- Workspace-bound Gmail authorization initiation and callback through the canonical
+  H2 OAuth transaction boundary and IP-01 Integration Layer.
+- Exactly one workspace owner for every Gmail connection, with multiple connections
+  and Google accounts supported independently per workspace.
+- Google account identity and provider/account consistency associated with the
+  canonical H2 connection rather than a global Gmail account.
+- Access and refresh credential material stored only through the existing managed
+  encrypted credential boundary; secrets never enter logs, audit payloads, events, or
+  API responses.
+- Minimum Gmail scopes mapped to existing email capability grants, with no Calendar,
+  Drive, Contacts, or unrelated Google scope.
+- Authorization, state, PKCE, issuer/account consistency, replay, expiry, revocation,
+  audit, and safe failure behavior through accepted H2/IP-01 contracts.
+
+**Excluded work**
+
+- Google Calendar, Drive, Contacts, or any combined Google Workspace scope expansion.
+- WhatsApp, Stripe, LinkedIn, Facebook, Instagram, TikTok, YouTube, X, CRM, social or
+  other provider implementation.
+- UI/product behavior, synchronization, webhooks, marketing automation, business
+  workflows, agents, or autonomous actions.
+- Parallel Gmail connection, credential, OAuth, permission, provider, routing, or
+  audit infrastructure.
+
+**Required tests**
+
+- OAuth initiation/callback, state, PKCE, issuer, expiry, replay, account mismatch,
+  scope minimization, revocation, and secret-redaction tests.
+- Authorized, unauthorized, inactive, disabled, revoked, missing-credential, and
+  provider/account mismatch tests through IP-01.
+- Multi-workspace and multi-account PostgreSQL/RLS tests proving no cross-workspace
+  connection, credential, OAuth transaction, capability, or audit access.
+- Existing Phase 1 Gmail compatibility and H2 email capability/routing regression.
+- Architecture Fitness rejecting provider leakage into IP-01/core and duplicate
+  integration/OAuth models.
+- Complete regression, Ruff, migration/rollback, Docker, application smoke,
+  durable-worker smoke, and protected required checks.
+
+**Exit criteria**
+
+- A separately authorized workspace can initiate and complete a replay-safe Gmail
+  OAuth connection using its own canonical connection, Google account, capability
+  grants, and encrypted credentials.
+- Independent workspaces and accounts cannot resolve, read, refresh, revoke, or use
+  one another's Gmail authorization.
+- Invalid state, replay, expiry, account/provider mismatch, scope gap, inactive
+  connection, or unavailable credential fails before provider capability use.
+- No secret appears in logs, audit, events, exceptions, fixtures, or responses.
+- Phase 1 and accepted H0-H3/IP-01 behavior remains backward compatible.
+- No excluded provider, UI, workflow, or business-agent functionality exists.
+- IP-02 acceptance evidence and all protected checks pass.
+
+**Rollback**
+
+IP-02 must preserve the accepted H2 legacy/shadow/canonical routing and credential
+recovery controls. Any strictly required migration must be additive, forced-RLS
+protected, support empty downgrade, and fail closed with a reviewed forward fix or
+export once protected authorization state exists. Disabling the IP-02 route restores
+the accepted pre-IP-02 path without credential loss or provider-side duplication.
+
 ### Historical H3: Minimum universal core (superseded by ADR-033)
 
 **Architecture purpose:**

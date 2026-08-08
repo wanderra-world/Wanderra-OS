@@ -44,17 +44,19 @@ its protected required checks passed and revision `0031_h3_agent_platform` is th
 prior accepted production migration baseline. H3-11 Platform Hardening and Formal H3
 Exit is Accepted and merged through PR #46 at `93a01f4`; its protected checks passed,
 revision `0032_h3_platform_hardening` is the accepted production migration baseline,
-and Formal H3 Exit is Accepted. The next authorized milestone after this governance
-synchronization is IP-01, the provider-neutral Integration Layer Foundation defined
-by `IMPLEMENTATION_GUIDE.md` and ADR-034. IP-01 reuses H2 and authorizes no provider
-implementation or external connector.
+and Formal H3 Exit is Accepted. IP-01 Provider-Neutral Integration Layer Foundation is
+Accepted and merged through PR #48 at `4bee069`; its protected checks passed and it
+added no migration, so `0032_h3_platform_hardening` remains the accepted production
+migration baseline. IP-02 Gmail OAuth Workspace Connection is the only authorized next
+implementation slice. IP-02 must reuse H2 and IP-01 and authorizes no other provider,
+UI, product workflow, or business-agent behavior.
 Gmail/Calendar/Drive authorization has been completed for the current Wanderra user,
 and live end-to-end verification has succeeded for email, calendar events, and the
 full Drive file lifecycle.
 
 ## Implemented capabilities
 
-### IP-01 Provider-Neutral Integration Layer Foundation (Awaiting review)
+### IP-01 Provider-Neutral Integration Layer Foundation (Accepted)
 
 - Workspace-aware, provider-neutral integration resolution over the accepted H2
   connection, account, capability, credential, authorization, and audit boundaries.

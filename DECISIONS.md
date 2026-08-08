@@ -471,7 +471,7 @@ and merge. This ADR does not authorize production code, H4 work, or a business a
 
 ## ADR-034: Reuse the accepted H2 integration architecture after Formal H3 Exit
 
-**Status:** Accepted upon merge of the Formal H3 Exit governance synchronization
+**Status:** Accepted through PR #47; IP-01 accepted through PR #48
 
 **Decision:** Post-H3 Integration Platform work extends the accepted H2 connection,
 credential, OAuth transaction, provider capability, mirror, routing, audit, encryption,
@@ -494,7 +494,18 @@ and migration paths. A narrowly gated composition milestone allows future provid
 to reuse the proven platform without duplicating models or prematurely authorizing an
 external connector.
 
-**Consequences:** H3 remains formally closed and no H4 stage is created. IP-01 is the
-only post-H3 implementation slice authorized by this decision. Gmail, Calendar,
-Drive, messaging, social, CRM, UI, external connectors, and business agents remain
-unauthorized until separately reviewed and approved.
+**IP-02 implementation authorization:** IP-01 is Accepted and merged through PR #48
+at `4bee069`, its protected checks passed, and it added no migration. IP-02 Gmail OAuth
+Workspace Connection is the only authorized next slice after this governance pull
+request is accepted and merged. IP-02 implements Gmail as the first provider adapter
+over IP-01 and reuses H2 connection, credential, OAuth transaction, capability,
+routing, encryption, audit, and RLS ownership. Each Gmail connection belongs to
+exactly one workspace; multiple workspaces and multiple Google accounts are supported
+without a global account assumption. Scope selection must be the minimum required for
+the approved Gmail capability operations.
+
+**Consequences:** H3 remains formally closed and no H4 stage is created. Calendar,
+Drive, Contacts, WhatsApp, Stripe, LinkedIn, Facebook, Instagram, TikTok, YouTube, X,
+CRM, all other providers, UI/product behavior, external business workflows, and
+business agents remain unauthorized. IP-02 cannot create parallel connection,
+credential, OAuth, provider, permission, routing, or audit models.
