@@ -4,8 +4,8 @@ The single entry point to the Atlas architecture documentation.
 
 **Owner:** Atlas Architecture Council  
 **Current phase:** Post-H3 Integration Platform
-**Status:** Formal H0, H1, H2, and H3 Exits accepted; IP-01 is the only authorized
-post-H3 implementation slice
+**Status:** Formal H0, H1, H2, and H3 Exits accepted; IP-01 accepted; IP-02 is the only
+authorized post-H3 implementation slice after this governance milestone merges
 **Last updated:** August 8, 2026
 
 ## Core principle
@@ -77,13 +77,16 @@ PR #24 is the formal architecture acceptance. H3-01 through H3-11 are accepted a
 merged, PR #46 completed all protected checks, and Formal H3 Exit is Accepted. The
 accepted production migration baseline is `0032_h3_platform_hardening`.
 
-### Post-H3 Integration Platform — IP-01 gate open
+### Post-H3 Integration Platform — IP-01 accepted; IP-02 gate open
 
 ADR-034 requires all post-H3 Integration Platform work to reuse the accepted H2
 connection, credential, OAuth transaction, provider capability, routing, encryption,
-audit, and RLS boundaries. The provider-neutral IP-01 Integration Layer Foundation is
-the only authorized implementation slice. Gmail OAuth and every provider adapter,
-external connector, UI, agent, and business behavior remain unauthorized.
+audit, and RLS boundaries. IP-01 Provider-Neutral Integration Layer Foundation is
+Accepted and merged through PR #48 at `4bee069`; its protected checks passed and it
+added no migration. IP-02 Gmail OAuth Workspace Connection is the only authorized next
+implementation slice after this governance pull request is accepted and merged. It
+must implement Gmail as the first workspace-aware provider over H2/IP-01 without a
+global Google account or parallel integration architecture.
 
 ## Recommended reading order
 
@@ -535,18 +538,17 @@ Accepted and merged through PR #46 at `93a01f4`; its protected checks passed and
 `0032_h3_platform_hardening` is the accepted production migration baseline. Formal H3
 Exit is Accepted and Atlas Platform Complete is effective on protected `master`.
 
-IP-01 Provider-Neutral Integration Layer Foundation is the only authorized
-implementation slice. It is
-governed by
-[IMPLEMENTATION_GUIDE.md](IMPLEMENTATION_GUIDE.md#ip-01-provider-neutral-integration-layer-foundation)
-and [ADR-034](DECISIONS.md#adr-034-reuse-the-accepted-h2-integration-architecture-after-formal-h3-exit),
-and must reuse the accepted H2 architecture. Gmail OAuth, provider adapters, external
-connectors, UI, agents, and business logic remain unauthorized. H4,
-provider-specific integrations, connectors, business agents, external integrations,
-and UI functionality remain unauthorized.
+IP-01 Provider-Neutral Integration Layer Foundation is Accepted and merged through PR
+#48 at `4bee069`, with no migration; `0032_h3_platform_hardening` remains the accepted
+production migration baseline. Its canonical implementation evidence is
+[IP_01_ACCEPTANCE_EVIDENCE.md](IP_01_ACCEPTANCE_EVIDENCE.md).
 
-IP-01 is implemented on its dedicated review branch without a migration. It composes
-the accepted H2 workspace connection, provider account, capability, encrypted
-credential metadata, authorization, execution-context, and immutable audit boundaries.
-Acceptance and merge remain pending. No later Integration Platform slice is
-authorized.
+After this governance pull request is accepted and merged, IP-02 Gmail OAuth Workspace
+Connection is the only authorized implementation slice. It is governed by
+[IMPLEMENTATION_GUIDE.md](IMPLEMENTATION_GUIDE.md#ip-02-gmail-oauth-workspace-connection)
+and [ADR-034](DECISIONS.md#adr-034-reuse-the-accepted-h2-integration-architecture-after-formal-h3-exit).
+Calendar, Drive, Contacts, WhatsApp, Stripe, LinkedIn, Facebook, Instagram, TikTok,
+YouTube, X, CRM, all other providers, UI/product behavior, business workflows, and
+business agents remain unauthorized. H4, provider-specific integrations outside
+IP-02, connectors outside IP-02, external integrations outside IP-02, and UI
+functionality remain unauthorized.
