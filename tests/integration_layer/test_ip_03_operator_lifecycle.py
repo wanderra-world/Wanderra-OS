@@ -6,7 +6,9 @@ import json
 import uuid
 from datetime import UTC, datetime, timedelta
 from types import SimpleNamespace
+from unittest.mock import AsyncMock
 
+import pytest
 from fastapi.routing import APIRoute
 
 from app.api.v1.gmail import router as legacy_router
@@ -14,6 +16,7 @@ from app.api.v1.gmail_connections import GmailConnectionResponse, _configuration
 from app.api.v1.gmail_connections import router as operator_router
 from app.core.config import Settings
 from app.integrations.gmail.operator import (
+    GmailConnectionLifecycleService,
     GmailConnectionState,
     GmailConnectionStatusService,
 )
@@ -112,6 +115,7 @@ def test_operator_response_contract_cannot_serialize_secrets() -> None:
         "provider",
         "provider_account_id",
         "state",
+        "version",
         "granted_scopes",
         "created_at",
         "updated_at",
@@ -169,5 +173,61 @@ def test_operator_routes_are_bounded_and_legacy_gmail_routes_remain_registered()
     assert operator_routes["/workspaces/{workspace_id}/connections/{connection_id}"] == {
         "GET"
     }
+    assert operator_routes[
+        "/workspaces/{workspace_id}/connections/{connection_id}/revoke"
+    ] == {"POST"}
+    assert operator_routes[
+        "/workspaces/{workspace_id}/connections/{connection_id}/emergency-disable"
+    ] == {"POST"}
     assert "/oauth/authorize" in legacy_routes
     assert "/oauth/callback" in legacy_routes
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    ("operation", "expected_status"),
+    [("revoke", "revoked"), ("emergency_disable", "closed")],
+)
+async def test_connection_availability_changes_credential_before_connection(
+    operation: str,
+    expected_status: str,
+) -> None:
+    workspace_id = uuid.uuid4()
+    connection = _connection("active")
+    connection.workspace_id = workspace_id
+    connection.version = 4
+    credential = SimpleNamespace(id=uuid.uuid4(), status="active")
+    service = object.__new__(GmailConnectionLifecycleService)
+    service._context = SimpleNamespace(tenant=SimpleNamespace(workspace_id=workspace_id))
+    service._credentials = SimpleNamespace(
+        latest_generation=AsyncMock(return_value=credential)
+    )
+    service._credential_lifecycle = SimpleNamespace(
+        revoke=AsyncMock(),
+        emergency_disable=AsyncMock(),
+    )
+    changed = SimpleNamespace(status=expected_status)
+    service._connections = SimpleNamespace(transition=AsyncMock(return_value=changed))
+
+    if operation == "revoke":
+        result = await service.revoke(connection, expected_version=4)
+        service._credential_lifecycle.revoke.assert_awaited_once_with(
+            credential_id=credential.id,
+            now=None,
+        )
+    else:
+        result = await service.emergency_disable(
+            connection,
+            expected_version=4,
+            incident_reference="incident-123",
+        )
+        service._credential_lifecycle.emergency_disable.assert_awaited_once_with(
+            credential_id=credential.id,
+            incident_reference="incident-123",
+            now=None,
+        )
+    assert result is changed
+    transition = service._connections.transition.await_args.kwargs
+    assert transition["connection_id"] == connection.id
+    assert transition["expected_version"] == 4
+    assert transition["target"].value == expected_status

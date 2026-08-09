@@ -10,8 +10,13 @@ from enum import StrEnum
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.connection_credentials.models import ConnectionCredential
 from app.connection_credentials.repository import ConnectionCredentialRepository
+from app.connection_credentials.service import ConnectionCredentialService
+from app.connections.contracts import ConnectionStatus
 from app.connections.models import Connection
+from app.connections.service import ConnectionService
+from app.encryption import KeyProvider
 from app.execution_context import (
     ActorContext,
     ExecutionContext,
@@ -48,6 +53,7 @@ class GmailConnectionView:
     provider: str
     provider_account_id: str
     state: GmailConnectionState
+    version: int
     granted_scopes: tuple[str, ...]
     created_at: datetime
     updated_at: datetime
@@ -157,6 +163,7 @@ class GmailConnectionStatusService:
             provider="gmail",
             provider_account_id=connection.provider_account_id,
             state=state,
+            version=connection.version,
             granted_scopes=tuple(sorted(connection.granted_scopes)),
             created_at=connection.created_at,
             updated_at=connection.updated_at,
@@ -198,3 +205,82 @@ class GmailConnectionStatusService:
         if transaction is not None and transaction.status in {"failed", "cancelled"}:
             return GmailConnectionState.INVALID
         return GmailConnectionState.INITIATED
+
+
+class GmailConnectionLifecycleService:
+    """Atomically revoke or emergency-disable one Gmail connection and credential."""
+
+    def __init__(
+        self,
+        session: AsyncSession,
+        context: ExecutionContext,
+        *,
+        key_provider: KeyProvider,
+    ) -> None:
+        self._context = context
+        self._credentials = ConnectionCredentialRepository(session, context)
+        self._credential_lifecycle = ConnectionCredentialService(
+            session,
+            context,
+            key_provider=key_provider,
+        )
+        self._connections = ConnectionService(session, context)
+
+    async def revoke(
+        self,
+        connection: Connection,
+        *,
+        expected_version: int,
+        now: datetime | None = None,
+    ) -> Connection:
+        credential = await self._require_active_credential(connection)
+        await self._credential_lifecycle.revoke(
+            credential_id=credential.id,
+            now=now,
+        )
+        return await self._connections.transition(
+            connection_id=connection.id,
+            expected_version=expected_version,
+            target=ConnectionStatus.REVOKED,
+            now=now,
+        )
+
+    async def emergency_disable(
+        self,
+        connection: Connection,
+        *,
+        expected_version: int,
+        incident_reference: str,
+        now: datetime | None = None,
+    ) -> Connection:
+        if not incident_reference.strip() or len(incident_reference) > 128:
+            raise GmailOperatorError("incident reference is invalid")
+        credential = await self._require_active_credential(connection)
+        await self._credential_lifecycle.emergency_disable(
+            credential_id=credential.id,
+            incident_reference=incident_reference.strip(),
+            now=now,
+        )
+        return await self._connections.transition(
+            connection_id=connection.id,
+            expected_version=expected_version,
+            target=ConnectionStatus.CLOSED,
+            now=now,
+        )
+
+    async def _require_active_credential(
+        self, connection: Connection
+    ) -> ConnectionCredential:
+        if (
+            connection.workspace_id != self._context.tenant.workspace_id
+            or connection.provider_key != "google_workspace"
+        ):
+            raise GmailOperatorError("Gmail connection is unavailable")
+        credential = await self._credentials.latest_generation(
+            connection.id,
+            "oauth_refresh_token",
+            for_update=True,
+        )
+        if credential is None or credential.status not in {"active", "shadow_verified"}:
+            raise GmailOperatorError("Gmail authorization is unavailable")
+        return credential

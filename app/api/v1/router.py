@@ -5,6 +5,7 @@ from app.api.v1.calendar import router as calendar_router
 from app.api.v1.drive import router as drive_router
 from app.api.v1.gmail import router as gmail_router
 from app.api.v1.gmail_connections import router as gmail_connections_router
+from app.api.v1.operator_auth import router as operator_auth_router
 
 router = APIRouter()
 router.include_router(atlas_router, prefix="/atlas", tags=["atlas"])
@@ -12,3 +13,4 @@ router.include_router(calendar_router, prefix="/calendar", tags=["calendar"])
 router.include_router(drive_router, prefix="/drive", tags=["drive"])
 router.include_router(gmail_router, prefix="/gmail", tags=["gmail"])
 router.include_router(gmail_connections_router, prefix="/gmail", tags=["gmail-connections"])
+router.include_router(operator_auth_router, prefix="/operator", tags=["operator-auth"])

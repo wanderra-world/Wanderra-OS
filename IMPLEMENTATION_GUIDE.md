@@ -475,18 +475,68 @@ provider state. Any required schema change must return to governance before code
 
 ### Gmail operational readiness / operator authentication and lifecycle plumbing
 
-ADR-034 authorizes this as the only next slice after the governance milestone that
-accepts IP-03 is reviewed and merged. The slice may close only the operational gaps
-required for one safe human-operated Gmail authorization by composing accepted
-identity/session, execution-context, membership, authorization, CSRF, managed KMS,
-connection/credential lifecycle, audit, and forced-RLS boundaries.
+ADR-034 authorizes this as the only next slice, and ADR-035 selects Google Identity as
+the initial trusted OIDC authentication authority. Runtime implementation may start
+after the ADR-035 governance decision is approved. The slice may close
+only the operational gaps required for one safe human-operated Gmail authorization by
+composing accepted identity/session, execution-context, membership, authorization,
+CSRF, managed KMS, connection/credential lifecycle, audit, and forced-RLS boundaries.
 
-The implementation MUST NOT create an authentication authority, allow unauthenticated
-session issuance, expose `IdentityLifecycleService.issue_session()` as a login bypass,
-change the accepted authentication model, modify IP-02/IP-03 OAuth contracts, or add
-IP-04, another provider, UI, workflow, mailbox expansion, or business-agent behavior.
-If no accepted authority can authenticate the initial operator, implementation must
-stop and return to architecture governance before adding runtime code.
+**Prerequisites**
+
+- Google Identity client configuration uses the accepted external-identity and secret
+  custody boundaries; no secret value is committed, returned, or logged.
+- The operator has an existing active canonical Atlas user, an accepted active Google
+  issuer/subject identity link, and active membership in the explicitly selected
+  workspace. The slice does not provision or auto-link these records.
+- IP-02/IP-03 remain unchanged and `0032_h3_platform_hardening` remains the accepted
+  migration baseline.
+
+**Deliverables**
+
+- A Google Identity OIDC Authorization Code Flow with PKCE using only `openid`,
+  `email`, and `profile`, with state, nonce, issuer, audience, signature, expiry, and
+  replay validation.
+- Fail-closed resolution of the validated issuer/subject to the existing active Atlas
+  user, followed by explicit workspace selection, active-membership verification, and
+  deterministic authorization.
+- Issuance, rotation, revocation, and expiry through the existing workspace-scoped
+  Atlas session lifecycle only after every authentication and authorization gate
+  succeeds.
+- Composition with the existing IP-03 initiation, callback, non-secret state, and
+  disable/revoke lifecycle without combining operator identity grants with Gmail
+  capability grants.
+
+**Required tests**
+
+- Negative tests for forged or invalid issuer, audience, signature, state, nonce,
+  PKCE, expiry, and replay, and for absent/revoked identity links or inactive users.
+- Membership, permission, explicit workspace selection, cross-workspace denial,
+  session rotation/revocation, CSRF, RLS, audit, and secret-redaction tests.
+- Proof that verified email alone cannot create, merge, or select a user and that
+  Gmail scopes or tokens cannot authenticate an Atlas operator.
+- Existing IP-01 through IP-03, Phase 1 Gmail, Architecture Fitness, PostgreSQL/RLS,
+  regression, Ruff, Docker, application smoke, durable-worker smoke, and protected
+  required checks.
+
+**Exit criteria**
+
+- One pre-linked operator can authenticate through Google Identity, select an
+  authorized workspace, receive the existing workspace-scoped Atlas session, and use
+  the accepted IP-03 lifecycle without secret disclosure.
+- Every authentication, identity-link, user, membership, authorization, session,
+  workspace-isolation, CSRF, and audit failure is fail-closed and tested.
+- No password, self-registration, automatic identity linking, local authentication
+  bypass, parallel identity/session model, schema change, or excluded capability is
+  introduced.
+
+The implementation MUST NOT create an authentication authority; it integrates the
+Google Identity authority selected by ADR-035 and MUST NOT add a local or parallel
+authority. It also MUST NOT allow unauthenticated session issuance, expose
+`IdentityLifecycleService.issue_session()` as a login bypass, modify IP-02/IP-03 OAuth
+contracts, or add IP-04, another provider, UI, workflow, mailbox expansion, or
+business-agent behavior. Google Identity authentication and Gmail authorization are
+separate transactions with separate scopes and credential custody.
 
 The accepted production migration baseline remains `0032_h3_platform_hardening`.
 Any claimed schema requirement must return to governance before implementation.

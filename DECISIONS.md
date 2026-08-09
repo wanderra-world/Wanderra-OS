@@ -535,3 +535,61 @@ issuance, turn `IdentityLifecycleService.issue_session()` into an authentication
 bypass, change the existing authentication model, or modify accepted IP-02/IP-03
 OAuth contracts. IP-04 and all other providers, UI, workflows, mailbox expansion,
 and business agents remain unauthorized.
+
+## ADR-035: Use Google Identity as the initial Atlas operator authentication authority
+
+**Status:** Accepted by explicit architecture direction; bounded runtime implementation
+is a review candidate on the ADR-035 branch
+
+**Extends:** ADR-023 without changing the canonical Atlas identity or session model
+
+**Decision:** Atlas will use Google Identity as its initial trusted external operator
+authentication authority through OpenID Connect Authorization Code Flow with PKCE.
+The authentication grant is identity-only and is separate from Gmail connection
+authorization. Atlas MUST validate the authorization response and identity claims
+before resolving the immutable Google issuer/subject pair to an existing active
+`ExternalIdentityLink` and canonical active Atlas `User`. Verified email is evidence
+for display and governed linking only; it MUST NOT create, merge, or select a user.
+
+After identity resolution, Atlas requires an explicit workspace selection, an active
+membership in that workspace, and the existing authorization checks. Only then may
+the existing workspace-scoped Atlas session lifecycle issue a session.
+`IdentityLifecycleService.issue_session()` remains a post-authentication primitive and
+MUST NOT be exposed as an unauthenticated bootstrap or login mechanism.
+
+The operator identity flow MUST use only the minimum identity scopes needed to
+authenticate (`openid`, `email`, and `profile`). Gmail capability scopes, tokens, and
+consent remain owned by the accepted IP-02/IP-03 connection flow and MUST NOT be used
+as proof of an Atlas login or combined with the operator authentication grant.
+
+**Security boundary:** The flow fails closed for invalid issuer, audience, signature,
+state, nonce, PKCE, expiry, replay, inactive user, absent/revoked identity link,
+inactive membership, unauthorized workspace, or revoked session. Workspace authority
+is derived only from Atlas membership and authorization state, never from Google
+claims. Existing CSRF, secure-cookie, revocation, audit, forced-RLS, and secret
+redaction requirements remain mandatory.
+
+**Why:** The accepted architecture needs a real authentication authority before a
+human can safely enter the IP-03 operator boundary. Google Identity supplies verified
+external identity while ADR-023 keeps Atlas—not Google—as the authority for canonical
+users, workspace membership, permissions, and session revocation.
+
+**Alternatives considered:**
+
+- unauthenticated use of `issue_session()`: rejected as an authentication bypass;
+- email-only lookup or automatic account creation: rejected because email is mutable
+  and cannot safely establish canonical identity or workspace authority;
+- local passwords or a second identity/session model: rejected because they duplicate
+  security-sensitive architecture and create a weaker parallel authority;
+- reuse of Gmail authorization tokens as an operator login: rejected because identity
+  authentication and provider capability authorization have different scopes,
+  lifecycles, custody, and revocation semantics.
+
+**Consequences:** The first runtime slice may add only the Google Identity adapter and
+the minimum application boundary needed to compose the accepted identity, membership,
+authorization, session, CSRF, audit, and RLS contracts. It may not add passwords,
+self-registration, automatic linking, local bypasses, a second identity store, or a
+second session model. Pre-provisioning or linking an operator identity remains a
+separately authorized administrative operation; the runtime login slice fails closed
+when no accepted link exists. This decision adds no schema or migration and does not
+authorize IP-04, UI expansion, another provider, workflow, or business-agent work.

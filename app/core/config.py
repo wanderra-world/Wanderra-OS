@@ -23,6 +23,9 @@ class Settings(BaseSettings):
     google_oauth_workspace_redirect_uri: str = (
         "http://localhost:8000/api/v1/gmail/connections/oauth/callback"
     )
+    google_operator_oidc_redirect_uri: str = (
+        "http://localhost:8000/api/v1/operator/auth/google/callback"
+    )
     gmail_credentials_encryption_key: SecretStr | None = None
     atlas_kms_provider: str | None = None
     atlas_kms_key_resource: str | None = None

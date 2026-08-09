@@ -146,8 +146,14 @@ ruff check .
 | `OPENAI_EMBEDDING_MODEL` | Model used to create semantic memory embeddings; defaults to `text-embedding-3-small` |
 | `GOOGLE_OAUTH_CLIENT_ID` | Google OAuth web client ID |
 | `GOOGLE_OAUTH_CLIENT_SECRET` | Google OAuth web client secret |
+| `GOOGLE_OAUTH_CLIENT_SECRET_FILE` | Google OAuth web-client JSON secret file; takes precedence over separate client variables |
 | `GOOGLE_OAUTH_REDIRECT_URI` | Registered OAuth callback URL |
+| `GOOGLE_OAUTH_WORKSPACE_REDIRECT_URI` | Registered workspace Gmail authorization callback URL |
+| `GOOGLE_OPERATOR_OIDC_REDIRECT_URI` | Registered Google Identity operator-login callback URL |
 | `GMAIL_CREDENTIALS_ENCRYPTION_KEY` | Fernet key used to encrypt Gmail OAuth credentials at rest |
+| `ATLAS_KMS_PROVIDER` | Managed envelope-encryption key provider |
+| `ATLAS_KMS_KEY_RESOURCE` | Managed KMS key resource; never a key value |
+| `ATLAS_KMS_KEY_VERSION` | Approved managed KMS key version |
 | `DATABASE_URL` | Async SQLAlchemy PostgreSQL connection URL |
 | `POSTGRES_DB` | Database name used by Docker Compose |
 | `POSTGRES_USER` | Database user used by Docker Compose |
