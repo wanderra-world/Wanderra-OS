@@ -2,7 +2,7 @@
 
 **Owner:** Atlas Platform Engineering
 
-**Status:** Candidate; pending protected pull-request review and merge
+**Status:** Accepted and merged through PR #54 at `37614bb`
 
 **Governing decision:** ADR-035
 
@@ -63,7 +63,17 @@ remain unchanged.
   file.
 - Production Docker image `atlas-adr035-ci` built successfully; application import
   smoke and durable-worker smoke passed.
-- Protected GitHub checks remain pending until the candidate pull request is opened.
+- PR #54 passed all required protected GitHub checks and merged into `master`.
+
+## Live operational verification
+
+After the separately approved ADR-036 ceremony established the initial immutable
+issuer/subject link, an ordinary ADR-035 browser callback resolved that existing link,
+verified the selected workspace membership and authorization, and issued one active
+OIDC-strength workspace session. Immutable audit evidence records successful
+`identity.operator_authenticated` and `identity.session_issued` actions. The bootstrap
+issued no session and is permanently disabled. No secret or immutable subject value
+is recorded in this evidence.
 
 ## Rollback
 

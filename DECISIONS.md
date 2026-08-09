@@ -536,10 +536,18 @@ bypass, change the existing authentication model, or modify accepted IP-02/IP-03
 OAuth contracts. IP-04 and all other providers, UI, workflows, mailbox expansion,
 and business agents remain unauthorized.
 
+**Gmail operational readiness acceptance:** The ADR-035 bounded runtime is Accepted
+and merged through PR #54 at `37614bb`, with all required protected checks passing and
+no migration. The ordinary Google OIDC flow has resolved the single accepted
+issuer/subject link, verified workspace authority, and issued the existing
+workspace-scoped session. ADR-036 was then executed exactly once to establish that
+initial link and is permanently disabled by its zero-link invariant. No subsequent
+Integration Platform runtime slice is authorized by this acceptance.
+
 ## ADR-035: Use Google Identity as the initial Atlas operator authentication authority
 
-**Status:** Accepted by explicit architecture direction; bounded runtime implementation
-is a review candidate on the ADR-035 branch
+**Status:** Accepted; bounded runtime implementation merged through PR #54 at
+`37614bb`
 
 **Extends:** ADR-023 without changing the canonical Atlas identity or session model
 
@@ -593,3 +601,40 @@ second session model. Pre-provisioning or linking an operator identity remains a
 separately authorized administrative operation; the runtime login slice fails closed
 when no accepted link exists. This decision adds no schema or migration and does not
 authorize IP-04, UI expansion, another provider, workflow, or business-agent work.
+
+## ADR-036: Permit one verified bootstrap of the initial Google operator identity
+
+**Status:** Accepted and executed once on August 9, 2026; the bootstrap is disabled
+
+**Extends:** ADR-023 and ADR-035 without changing the normal authentication boundary
+
+**Decision:** Atlas permits exactly one deployment-authority bootstrap ceremony for
+canonical user `d34c44c9-1ada-43ad-ad70-5ae9568df146` in workspace
+`874fc276-27be-557d-cd2c-179bed466907`. The ceremony MUST use the configured Google
+Web OAuth client and OIDC Authorization Code Flow with PKCE. It MUST verify state,
+nonce, PKCE, signature, issuer, audience, issued-at time, expiry, and replay before
+normalizing the issuer to `https://accounts.google.com` and capturing the immutable
+Google subject. Email MUST NOT select, create, merge, or bind a user.
+
+The ceremony MUST stop after verification and display only the normalized issuer,
+subject, and subject fingerprint. It MUST NOT create an `ExternalIdentityLink` until
+the human approver confirms that exact issuer and subject for the fixed canonical
+user. A successful commit creates exactly one link and immutable audit evidence, then
+terminates the one-shot listener. It MUST fail closed when any external identity link
+already exists, any target invariant changes, verification fails, approval does not
+match, or the ceremony expires. It MUST issue no Atlas session and retain no ID token,
+authorization code, state, nonce, PKCE verifier, access token, or client secret.
+
+**Why:** ADR-035 correctly prohibits unauthenticated linking, but a fresh deployment
+has no external identity and therefore cannot produce the first authenticated Atlas
+administrator session. A one-time, localhost-only deployment-authority ceremony is a
+narrow root-of-trust bootstrap; direct SQL, email matching, automatic linking, and a
+permanent public bootstrap endpoint would bypass the accepted evidence boundary.
+
+**Consequences:** The bootstrap is exposed only by an explicitly invoked one-shot
+administrative process bound to localhost. The normal application is stopped during
+the ceremony. The data precondition of zero external identity links makes a completed
+ceremony non-repeatable, and the process exits after success, denial, timeout, or
+error. The accepted migration baseline remains `0032_h3_platform_hardening`. ADR-036
+does not authorize a new user, password, session authority, Gmail authorization
+change, IP-04, another provider, UI, workflow, or business-agent functionality.

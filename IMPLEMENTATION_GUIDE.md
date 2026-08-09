@@ -541,6 +541,46 @@ separate transactions with separate scopes and credential custody.
 The accepted production migration baseline remains `0032_h3_platform_hardening`.
 Any claimed schema requirement must return to governance before implementation.
 
+### ADR-036 one-time initial identity-link bootstrap
+
+ADR-036 authorizes only a one-shot localhost administrative process for canonical
+user `d34c44c9-1ada-43ad-ad70-5ae9568df146` and workspace
+`874fc276-27be-557d-cd2c-179bed466907`. The normal application must be stopped while
+the ceremony owns the configured localhost operator callback.
+
+**Required sequence**
+
+1. Fail closed unless the database is at `0032_h3_platform_hardening`, the fixed user,
+   workspace, active membership, and `workspace_owner@1` role exist, and no external
+   identity link exists.
+2. Start a short-lived localhost listener and initiate the existing Google Identity
+   Authorization Code Flow with PKCE and identity-only scopes.
+3. Verify state, nonce, PKCE, signature, issuer, audience, time claims, and single-use
+   callback semantics; normalize the issuer to `https://accounts.google.com`.
+4. Display only the issuer, immutable subject, and SHA-256 subject fingerprint, then
+   wait for an exact second human approval. Do not persist before approval.
+5. Recheck every invariant in one transaction, create exactly one active
+   `ExternalIdentityLink`, append immutable workspace audit evidence, and commit.
+6. Exit after success, denial, timeout, or error and restart the normal application.
+   Ordinary ADR-035 login remains the only session-issuing path.
+
+**Required tests and exit criteria**
+
+- Unit tests cover fixed-target binding, zero-link precondition, approval matching,
+  redaction, timeout, replay, and fail-closed claim verification.
+- PostgreSQL tests prove exactly-one creation, workspace/user invariants, immutable
+  audit evidence, transaction rollback, and non-repeatability under concurrency.
+- Architecture Fitness prohibits an application-router bootstrap endpoint, email
+  lookup, session issuance, schema changes, and excluded capability work.
+- Existing ADR-035, Gmail, PostgreSQL/RLS, regression, Ruff, Docker, application, and
+  durable-worker gates remain green.
+- Completion requires the final human approval to name the exact verified issuer and
+  subject. Preparation approval alone cannot create the link.
+
+No migration is authorized. Direct SQL, a new user, automatic linking, password or
+session bootstrap, IP-04, UI, provider expansion, workflow, and business-agent work
+remain prohibited.
+
 ### Historical H3: Minimum universal core (superseded by ADR-033)
 
 **Architecture purpose:**
