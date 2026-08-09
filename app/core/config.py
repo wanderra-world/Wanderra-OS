@@ -20,6 +20,9 @@ class Settings(BaseSettings):
     google_oauth_client_secret: SecretStr | None = None
     google_oauth_client_secret_file: str = "secrets/google/client_secret.json"
     google_oauth_redirect_uri: str = "http://localhost:8000/api/v1/gmail/oauth/callback"
+    google_oauth_workspace_redirect_uri: str = (
+        "http://localhost:8000/api/v1/gmail/connections/oauth/callback"
+    )
     gmail_credentials_encryption_key: SecretStr | None = None
     atlas_kms_provider: str | None = None
     atlas_kms_key_resource: str | None = None

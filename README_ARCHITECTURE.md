@@ -90,8 +90,9 @@ managed credential generations, provider/account binding, refresh, capability gr
 audit evidence, and workspace isolation over H2/IP-01 without a global Google account
 or parallel integration architecture. It added no migration, so
 `0032_h3_platform_hardening` remains the accepted production migration baseline.
-IP-03 Operator-facing Gmail Connection Lifecycle is the only authorized next slice
-after this governance pull request is accepted and merged.
+IP-03 Operator-facing Gmail Connection Lifecycle remains the only authorized slice.
+The IP-03 implementation candidate is ready for review; it adds no migration and is
+not Accepted until its pull request and protected checks pass.
 
 ## Recommended reading order
 
@@ -527,6 +528,7 @@ enforcement is owned by `IMPLEMENTATION_GUIDE.md`.
 | [H3_EXIT_REPORT.md](H3_EXIT_REPORT.md) | Accepted Formal H3 Exit decision and completed platform baseline |
 | [IP_01_ACCEPTANCE_EVIDENCE.md](IP_01_ACCEPTANCE_EVIDENCE.md) | IP-01 provider-neutral Integration Layer implementation evidence |
 | [IP_02_ACCEPTANCE_EVIDENCE.md](IP_02_ACCEPTANCE_EVIDENCE.md) | Accepted IP-02 multi-workspace Gmail OAuth implementation evidence |
+| [IP_03_ACCEPTANCE_EVIDENCE.md](IP_03_ACCEPTANCE_EVIDENCE.md) | Candidate IP-03 operator Gmail lifecycle implementation evidence |
 
 ## Next action
 
