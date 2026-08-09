@@ -6,7 +6,9 @@ The single entry point to the Atlas architecture documentation.
 **Current phase:** Post-H3 Integration Platform
 **Status:** Formal H0, H1, H2, and H3 Exits accepted; IP-01, IP-02, and IP-03
 accepted; Gmail operational readiness / operator authentication and lifecycle
-plumbing is the only authorized next slice
+plumbing is the only authorized next slice; ADR-035 selects Google Identity as the
+initial operator authentication authority; its bounded runtime implementation is a
+review candidate
 **Last updated:** August 9, 2026
 
 ## Core principle
@@ -95,9 +97,14 @@ IP-03 Operator-facing Gmail Connection Lifecycle is Accepted and merged through 
 the H0 Required Gate passed. IP-03 added no migration, so
 `0032_h3_platform_hardening` remains the accepted production migration baseline.
 Gmail operational readiness / operator authentication and lifecycle plumbing is the
-only authorized next slice. It must reuse the canonical identity/session and Gmail
-connection lifecycle; it cannot issue unauthenticated sessions, invent an
-authentication authority, or alter accepted IP-02/IP-03 OAuth contracts.
+only authorized next slice. ADR-035 selects Google Identity as the initial trusted
+OIDC authority. The slice must authenticate the operator, resolve an existing
+issuer/subject identity link and canonical user, verify active workspace membership
+and authorization, and only then issue the existing workspace-scoped Atlas session.
+It cannot issue unauthenticated sessions, infer identity or workspace authority from
+email, add a second identity/session model, or alter accepted IP-02/IP-03 OAuth
+contracts. The bounded implementation is a review candidate and is not Accepted until
+its protected pull request is reviewed and merged.
 
 ## Recommended reading order
 
@@ -421,6 +428,7 @@ text and status remain canonical only in `DECISIONS.md`.
 | [ADR-031](DECISIONS.md#adr-031-enforce-architecture-invariants-with-fitness-tests) | Architecture fitness tests |
 | [ADR-033](DECISIONS.md#adr-033-consolidate-the-remaining-reusable-platform-foundation-into-h3) | H3 final-platform sequencing and post-H3 business-agent boundary |
 | [ADR-034](DECISIONS.md#adr-034-reuse-the-accepted-h2-integration-architecture-after-formal-h3-exit) | Post-H3 Integration Platform reuse and IP-01 authorization |
+| [ADR-035](DECISIONS.md#adr-035-use-google-identity-as-the-initial-atlas-operator-authentication-authority) | Initial Atlas operator authentication authority |
 
 ## P0 Architecture Gate
 
@@ -534,6 +542,7 @@ enforcement is owned by `IMPLEMENTATION_GUIDE.md`.
 | [IP_01_ACCEPTANCE_EVIDENCE.md](IP_01_ACCEPTANCE_EVIDENCE.md) | IP-01 provider-neutral Integration Layer implementation evidence |
 | [IP_02_ACCEPTANCE_EVIDENCE.md](IP_02_ACCEPTANCE_EVIDENCE.md) | Accepted IP-02 multi-workspace Gmail OAuth implementation evidence |
 | [IP_03_ACCEPTANCE_EVIDENCE.md](IP_03_ACCEPTANCE_EVIDENCE.md) | Accepted IP-03 operator Gmail lifecycle implementation evidence |
+| [GOOGLE_OPERATOR_AUTH_ACCEPTANCE_EVIDENCE.md](GOOGLE_OPERATOR_AUTH_ACCEPTANCE_EVIDENCE.md) | ADR-035 Google Identity operator-authentication implementation evidence |
 
 ## Next action
 
@@ -564,7 +573,11 @@ protected checks passed and it added no migration. It is governed by
 and [ADR-034](DECISIONS.md#adr-034-reuse-the-accepted-h2-integration-architecture-after-formal-h3-exit).
 Gmail operational readiness / operator authentication and lifecycle plumbing is the
 only authorized next implementation slice. It may begin only after this governance
-pull request is accepted and merged.
+decision is approved. ADR-035 requires Google Identity authentication,
+an existing issuer/subject identity link, an active canonical Atlas user, explicit
+workspace selection, active membership, and authorization before the existing Atlas
+session may be issued. Operator identity grants and Gmail capability grants remain
+separate.
 Calendar, Drive, Contacts, WhatsApp, Stripe, LinkedIn, Facebook, Instagram, TikTok,
 YouTube, X, CRM, all other providers, UI/product behavior, business workflows, and
 business agents remain unauthorized. H4, IP-04, provider-specific integrations beyond

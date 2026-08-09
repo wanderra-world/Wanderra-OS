@@ -148,6 +148,29 @@ authorization contracts are owned by
 [H0_FOUNDATION_SPEC.md](H0_FOUNDATION_SPEC.md#4-identity-and-session-lifecycle) and
 [H0_FOUNDATION_SPEC.md](H0_FOUNDATION_SPEC.md#5-authorization-contract).
 
+### Initial operator authentication authority
+
+ADR-035 selects Google Identity as the initial OpenID Connect authentication adapter
+for Atlas operators. It does not make Google the authority for Atlas users,
+memberships, permissions, workspace selection, or sessions. The canonical sequence is:
+
+1. complete Google Identity Authorization Code Flow with PKCE using identity-only
+   scopes and validate state, nonce, issuer, audience, signature, time claims, and
+   replay protections;
+2. resolve the validated issuer/subject pair through an existing active external
+   identity link to one existing active canonical Atlas user, without email-based
+   creation or merging;
+3. select one workspace explicitly and require an active canonical membership plus
+   the existing deterministic authorization decision;
+4. issue the existing workspace-scoped, revocable, server-side Atlas session and
+   preserve the existing CSRF, audit, RLS, and secret-redaction boundaries.
+
+The operator identity grant is separate from Gmail provider authorization. Gmail
+scopes or tokens never establish an Atlas login. The application must fail closed
+before session issuance if any identity, link, user, membership, workspace, or
+authorization prerequisite is invalid. No password authority, local bypass, parallel
+identity store, or parallel session mechanism is permitted.
+
 ## 8. Universal entity architecture
 
 The target system uses a universal identity layer without replacing typed operational

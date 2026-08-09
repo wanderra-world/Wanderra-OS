@@ -13,7 +13,13 @@ from pydantic import BaseModel, Field
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.connection_credentials.contracts import CredentialError
 from app.connections import CapabilityGrant, ConnectionCreate, ConnectionService
+from app.connections.contracts import (
+    ConnectionAuthorizationError,
+    ConnectionConcurrencyError,
+    ConnectionLifecycleError,
+)
 from app.core.config import Settings, get_settings
 from app.database.session import get_db_session
 from app.encryption import KeyReference
@@ -29,6 +35,7 @@ from app.integrations.gmail.oauth import (
     GmailOAuthProtocol,
 )
 from app.integrations.gmail.operator import (
+    GmailConnectionLifecycleService,
     GmailConnectionStatusService,
     GmailConnectionView,
     GmailOperatorContextFactory,
@@ -77,10 +84,19 @@ class GmailConnectionResponse(BaseModel):
     provider: str
     provider_account_id: str
     state: str
+    version: int
     granted_scopes: tuple[str, ...]
     created_at: datetime
     updated_at: datetime
     activated_at: datetime | None
+
+
+class GmailConnectionLifecycleRequest(BaseModel):
+    expected_version: int = Field(ge=1)
+
+
+class GmailEmergencyDisableRequest(GmailConnectionLifecycleRequest):
+    incident_reference: str = Field(min_length=1, max_length=128)
 
 
 def _configuration(settings: Settings) -> GmailOAuthConfiguration:
@@ -361,6 +377,133 @@ async def verify_gmail_connection(
         return _response(await GmailConnectionStatusService(session, context).get(connection))
 
 
+@router.post(
+    "/workspaces/{workspace_id}/connections/{connection_id}/revoke",
+    response_model=GmailConnectionResponse,
+)
+async def revoke_gmail_connection(
+    workspace_id: uuid.UUID,
+    connection_id: uuid.UUID,
+    request: GmailConnectionLifecycleRequest,
+    session: Annotated[AsyncSession, Depends(get_db_session)],
+    atlas_session: Annotated[str | None, Cookie(alias="__Host-atlas_session")] = None,
+    csrf_cookie: Annotated[str | None, Cookie(alias="__Host-atlas_csrf")] = None,
+    csrf_header: Annotated[str | None, Header(alias="X-CSRF-Token")] = None,
+    request_id: Annotated[str, Header(alias="X-Request-ID")] = "request",
+    correlation_id: Annotated[str, Header(alias="X-Correlation-ID")] = "correlation",
+) -> GmailConnectionResponse:
+    return await _change_connection_availability(
+        workspace_id=workspace_id,
+        connection_id=connection_id,
+        expected_version=request.expected_version,
+        incident_reference=None,
+        session=session,
+        atlas_session=atlas_session,
+        csrf_cookie=csrf_cookie,
+        csrf_header=csrf_header,
+        request_id=request_id,
+        correlation_id=correlation_id,
+    )
+
+
+@router.post(
+    "/workspaces/{workspace_id}/connections/{connection_id}/emergency-disable",
+    response_model=GmailConnectionResponse,
+)
+async def emergency_disable_gmail_connection(
+    workspace_id: uuid.UUID,
+    connection_id: uuid.UUID,
+    request: GmailEmergencyDisableRequest,
+    session: Annotated[AsyncSession, Depends(get_db_session)],
+    atlas_session: Annotated[str | None, Cookie(alias="__Host-atlas_session")] = None,
+    csrf_cookie: Annotated[str | None, Cookie(alias="__Host-atlas_csrf")] = None,
+    csrf_header: Annotated[str | None, Header(alias="X-CSRF-Token")] = None,
+    request_id: Annotated[str, Header(alias="X-Request-ID")] = "request",
+    correlation_id: Annotated[str, Header(alias="X-Correlation-ID")] = "correlation",
+) -> GmailConnectionResponse:
+    return await _change_connection_availability(
+        workspace_id=workspace_id,
+        connection_id=connection_id,
+        expected_version=request.expected_version,
+        incident_reference=request.incident_reference,
+        session=session,
+        atlas_session=atlas_session,
+        csrf_cookie=csrf_cookie,
+        csrf_header=csrf_header,
+        request_id=request_id,
+        correlation_id=correlation_id,
+    )
+
+
+async def _change_connection_availability(
+    *,
+    workspace_id: uuid.UUID,
+    connection_id: uuid.UUID,
+    expected_version: int,
+    incident_reference: str | None,
+    session: AsyncSession,
+    atlas_session: str | None,
+    csrf_cookie: str | None,
+    csrf_header: str | None,
+    request_id: str,
+    correlation_id: str,
+) -> GmailConnectionResponse:
+    try:
+        validate_csrf(csrf_cookie, csrf_header)
+    except InvalidSessionError as error:
+        raise HTTPException(status.HTTP_403_FORBIDDEN, "CSRF validation failed.") from error
+    try:
+        async with session.begin():
+            context = await _operator_context(
+                session,
+                workspace_id=workspace_id,
+                raw_session=atlas_session,
+                request_id=request_id,
+                correlation_id=correlation_id,
+            )
+            connection = await ConnectionService(session, context).get(
+                connection_id=connection_id
+            )
+            try:
+                key_provider = key_provider_from_settings(get_settings())
+            except RuntimeError as error:
+                raise HTTPException(
+                    status.HTTP_503_SERVICE_UNAVAILABLE,
+                    "Managed connection security is unavailable.",
+                ) from error
+            lifecycle = GmailConnectionLifecycleService(
+                session,
+                context,
+                key_provider=key_provider,
+            )
+            if incident_reference is None:
+                changed = await lifecycle.revoke(
+                    connection,
+                    expected_version=expected_version,
+                )
+            else:
+                changed = await lifecycle.emergency_disable(
+                    connection,
+                    expected_version=expected_version,
+                    incident_reference=incident_reference,
+                )
+            return _response(
+                await GmailConnectionStatusService(session, context).get(changed)
+            )
+    except ConnectionAuthorizationError as error:
+        raise HTTPException(status.HTTP_403_FORBIDDEN, "Connection change was denied.") from error
+    except (
+        ConnectionConcurrencyError,
+        ConnectionLifecycleError,
+        CredentialError,
+        GmailOperatorError,
+    ) as error:
+        raise HTTPException(
+            status.HTTP_409_CONFLICT,
+            "Connection availability could not be changed.",
+        ) from error
+
+
 def _response(view: GmailConnectionView) -> GmailConnectionResponse:
     return GmailConnectionResponse(
         connection_id=view.connection_id,
@@ -368,6 +511,7 @@ def _response(view: GmailConnectionView) -> GmailConnectionResponse:
         provider=view.provider,
         provider_account_id=view.provider_account_id,
         state=view.state.value,
+        version=view.version,
         granted_scopes=view.granted_scopes,
         created_at=view.created_at,
         updated_at=view.updated_at,
