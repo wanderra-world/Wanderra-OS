@@ -402,6 +402,77 @@ protected, support empty downgrade, and fail closed with a reviewed forward fix 
 export once protected authorization state exists. Disabling the IP-02 route restores
 the accepted pre-IP-02 path without credential loss or provider-side duplication.
 
+### IP-03 Operator-facing Gmail Connection Lifecycle
+
+ADR-034 authorizes IP-03 as the only next implementation slice after the governance
+milestone accepting IP-02 is reviewed and merged. IP-03 exposes the already accepted
+IP-02 composition to an authorized operator; it does not create another OAuth or
+integration architecture.
+
+**Prerequisites**
+
+- IP-02 is Accepted and merged through PR #50 at `92de174`, with all protected checks
+  passing.
+- `0032_h3_platform_hardening` remains the accepted migration baseline because IP-02
+  added no migration.
+- Canonical identity/session, execution context, workspace membership, authorization,
+  connection, OAuth transaction, encrypted credential, audit, and forced-RLS
+  boundaries remain mandatory.
+
+**Deliverables**
+
+- An authenticated and authorized operator boundary that initiates Gmail OAuth for
+  one explicitly selected workspace-owned canonical connection.
+- Callback completion through the accepted IP-02/H2 single-use state and PKCE flow;
+  callback state, not an untrusted workspace parameter, selects the transaction.
+- A workspace-scoped connection-state query returning only identifiers, lifecycle
+  status, provider-account display identity, granted capability/scope metadata, and
+  timestamps that are approved for operator disclosure.
+- Deterministic error translation for unauthorized, cross-workspace, invalid,
+  expired, replayed, revoked, disabled, mismatched, or unavailable authorization.
+- Existing audit/outbox evidence for initiation, completion, failure, and state reads,
+  without secret or provider-payload disclosure.
+
+**Excluded work**
+
+- New OAuth, connection, credential, provider, identity, session, tenant, permission,
+  routing, audit, or encryption models.
+- Calendar, Drive, Contacts, WhatsApp, Stripe, CRM, social networks, or any additional
+  provider capability.
+- UI/product work, synchronization, webhooks, workflows, business agents, or mailbox
+  operations beyond existing accepted compatibility behavior.
+
+**Required tests**
+
+- Authenticated operator, membership, permission, workspace binding, and capability
+  grant tests before OAuth initiation or state access.
+- Callback state/PKCE/issuer/redirect/expiry/replay tests through the real application
+  boundary, including provider/account mismatch and safe provider failures.
+- PostgreSQL/RLS tests for multiple workspaces and Google accounts, proving no
+  cross-workspace connection, transaction, credential, audit, or status access.
+- Response, exception, logging, audit, and outbox redaction tests.
+- Phase 1 Gmail and accepted IP-01/IP-02 regression, Architecture Fitness, Ruff,
+  Docker, application smoke, durable-worker smoke, and protected required checks.
+
+**Exit criteria**
+
+- An authorized operator can initiate and complete Gmail OAuth for one selected
+  workspace connection and verify its non-secret resulting state.
+- An operator in another workspace cannot discover, initiate, complete, or inspect
+  that connection or its authorization.
+- No token, client secret, authorization code, state secret, PKCE verifier,
+  ciphertext, decrypted credential, or raw provider payload is returned or logged.
+- No excluded provider, UI, workflow, mailbox expansion, or business-agent behavior
+  exists; all existing contracts remain backward compatible.
+- IP-03 acceptance evidence and all protected checks pass.
+
+**Rollback**
+
+IP-03 adds no persistence unless a separately reviewed existing-contract gap proves
+it unavoidable. Disabling or reverting its operator boundary restores accepted IP-02
+behavior without deleting connections, credentials, transactions, audit evidence, or
+provider state. Any required schema change must return to governance before code.
+
 ### Historical H3: Minimum universal core (superseded by ADR-033)
 
 **Architecture purpose:**

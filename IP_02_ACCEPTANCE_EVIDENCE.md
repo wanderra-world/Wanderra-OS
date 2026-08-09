@@ -1,7 +1,7 @@
 # IP-02 Gmail OAuth Workspace Connection Acceptance Evidence
 
 **Owner:** Atlas Platform Engineering
-**Status:** Candidate; awaiting pull-request review and protected checks
+**Status:** Accepted and merged through PR #50 at `92de174`
 **Accepted baseline:** `0032_h3_platform_hardening`
 **Migration:** None; IP-02 reuses accepted H2 persistence
 
@@ -45,7 +45,12 @@ verified Google account matches the workspace-owned connection's provider accoun
   account mismatch, immutable audit evidence, and cross-workspace denial.
 - Architecture Fitness proves the no-migration baseline and rejects duplicate OAuth or
   credential infrastructure and future-provider scope.
-- Final local and protected CI results are recorded in the pull request before review.
+- Complete PostgreSQL-backed Architecture Fitness: **324 passed**.
+- Complete non-architecture regression suite: **326 passed** with the existing single
+  Starlette/httpx deprecation warning.
+- Ruff, production Docker build, application smoke, and durable-worker smoke: passed.
+- GitHub Architecture Fitness, Regression Tests, Docker Build and Smoke, and H0
+  Required Gate: passed before PR #50 merged into protected `master`.
 
 ## Compatibility and exclusions
 

@@ -72,6 +72,10 @@ def test_formal_h3_exit_and_ip_01_governance_gate_are_explicit() -> None:
     assert "ADR-034: Reuse the accepted H2 integration architecture" in decisions
     assert "IP-01 Provider-Neutral Integration Layer Foundation" in implementation
     assert "IP-01 Provider-Neutral Integration Layer Foundation is Accepted" in normalized_index
-    assert "IP-02 Gmail OAuth Workspace Connection is the only authorized" in normalized_index
+    assert "IP-02 Gmail OAuth Workspace Connection is Accepted" in normalized_index
+    assert (
+        "IP-03 Operator-facing Gmail Connection Lifecycle is the only authorized"
+        in normalized_index
+    )
     assert "UI/product behavior, business workflows" in normalized_index
     assert "business agents remain unauthorized" in normalized_index
