@@ -472,7 +472,7 @@ and merge. This ADR does not authorize production code, H4 work, or a business a
 ## ADR-034: Reuse the accepted H2 integration architecture after Formal H3 Exit
 
 **Status:** Accepted through PR #47; IP-01 accepted through PR #48; IP-02 accepted
-through PR #50
+through PR #50; IP-03 accepted through PR #52
 
 **Decision:** Post-H3 Integration Platform work extends the accepted H2 connection,
 credential, OAuth transaction, provider capability, mirror, routing, audit, encryption,
@@ -521,3 +521,17 @@ CRM, all other providers, UI/product behavior, external business workflows, and
 business agents remain unauthorized. IP-03 cannot create parallel connection,
 credential, OAuth, provider, permission, routing, audit, identity, session, or tenant
 models and cannot expose credential material or provider payloads.
+
+**Gmail operational readiness authorization:** IP-03 is Accepted and merged through
+PR #52 at `6a5eccd`; Architecture Fitness, Regression Tests, Docker Build and Smoke,
+and the H0 Required Gate passed, and no migration was added. Gmail operational
+readiness / operator authentication and lifecycle plumbing is the only authorized
+next slice after this governance pull request is accepted and merged. It may compose
+the accepted canonical identity/session, execution-context, workspace membership,
+authorization, CSRF, managed KMS, connection lifecycle, credential lifecycle, audit,
+and forced-RLS boundaries solely to make the accepted Gmail flow operable by a human.
+It MUST NOT invent an authentication authority, expose unauthenticated session
+issuance, turn `IdentityLifecycleService.issue_session()` into an authentication
+bypass, change the existing authentication model, or modify accepted IP-02/IP-03
+OAuth contracts. IP-04 and all other providers, UI, workflows, mailbox expansion,
+and business agents remain unauthorized.

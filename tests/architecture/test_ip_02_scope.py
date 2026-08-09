@@ -48,7 +48,7 @@ def test_ip_02_does_not_authorize_future_slices() -> None:
         assert excluded in evidence
 
 
-def test_ip_02_is_accepted_and_only_ip_03_is_authorized() -> None:
+def test_ip_02_and_ip_03_are_accepted_and_only_readiness_is_authorized() -> None:
     index = " ".join((ROOT / "README_ARCHITECTURE.md").read_text().split())
     status = " ".join((ROOT / "PROJECT_STATUS.md").read_text().split())
     evidence = (ROOT / "IP_02_ACCEPTANCE_EVIDENCE.md").read_text()
@@ -59,6 +59,11 @@ def test_ip_02_is_accepted_and_only_ip_03_is_authorized() -> None:
     assert "IP-02 Gmail OAuth Workspace Connection is Accepted" in status
     assert "**Status:** Accepted and merged through PR #50 at `92de174`" in evidence
     assert "IP-03 implementation authorization" in decisions
-    assert "IP-03 Operator-facing Gmail Connection Lifecycle is the only authorized" in index
+    assert "IP-03 Operator-facing Gmail Connection Lifecycle is Accepted" in index
+    assert (
+        "Gmail operational readiness / operator authentication and lifecycle plumbing "
+        "is the only authorized next slice"
+        in index
+    )
     assert "### IP-03 Operator-facing Gmail Connection Lifecycle" in guide
     assert not (ROOT / "alembic" / "versions" / "0033_ip_03.py").exists()

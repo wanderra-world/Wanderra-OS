@@ -52,10 +52,12 @@ through PR #50 at `92de174`; its protected checks passed. Its implementation
 reuses H2 and IP-01 for workspace binding, replay-safe OAuth, encrypted credentials,
 provider/account validation, refresh, RLS, authorization, and audit evidence. It added
 no migration, so `0032_h3_platform_hardening` remains the accepted baseline. IP-03
-Operator-facing Gmail Connection Lifecycle is the only authorized slice. Its
-implementation candidate adds the authenticated operator boundary and no migration;
-it remains subject to pull-request review and protected checks. No other provider,
-UI, product workflow, or business-agent behavior is authorized.
+Operator-facing Gmail Connection Lifecycle is Accepted and merged through PR #52 at
+`6a5eccd`; its Architecture Fitness, Regression Tests, Docker Build and Smoke, and H0
+Required Gate passed. It added no migration. Gmail operational readiness / operator
+authentication and lifecycle plumbing is the only authorized next slice after this
+governance pull request merges. No IP-04, other provider, UI, product workflow, or
+business-agent behavior is authorized.
 Gmail/Calendar/Drive authorization has been completed for the current Wanderra user,
 and live end-to-end verification has succeeded for email, calendar events, and the
 full Drive file lifecycle.
@@ -86,7 +88,7 @@ full Drive file lifecycle.
 - The candidate adds no migration and does not alter the Phase 1 Gmail API.
 - Acceptance evidence: `IP_02_ACCEPTANCE_EVIDENCE.md`.
 
-### IP-03 Operator-facing Gmail Connection Lifecycle (Implementation candidate)
+### IP-03 Operator-facing Gmail Connection Lifecycle (Accepted)
 
 - The bounded slice exposes authenticated operator initiation, callback completion,
   and non-secret connection-state verification over accepted IP-01/IP-02/H2 contracts.

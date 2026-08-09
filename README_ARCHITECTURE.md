@@ -4,9 +4,9 @@ The single entry point to the Atlas architecture documentation.
 
 **Owner:** Atlas Architecture Council  
 **Current phase:** Post-H3 Integration Platform
-**Status:** Formal H0, H1, H2, and H3 Exits accepted; IP-01 and IP-02 accepted; IP-03
-is the only authorized post-H3 implementation slice after this governance milestone
-merges
+**Status:** Formal H0, H1, H2, and H3 Exits accepted; IP-01, IP-02, and IP-03
+accepted; Gmail operational readiness / operator authentication and lifecycle
+plumbing is the only authorized next slice
 **Last updated:** August 9, 2026
 
 ## Core principle
@@ -78,7 +78,7 @@ PR #24 is the formal architecture acceptance. H3-01 through H3-11 are accepted a
 merged, PR #46 completed all protected checks, and Formal H3 Exit is Accepted. The
 accepted production migration baseline is `0032_h3_platform_hardening`.
 
-### Post-H3 Integration Platform — IP-01 and IP-02 accepted; IP-03 gate open
+### Post-H3 Integration Platform — IP-01 through IP-03 accepted
 
 ADR-034 requires all post-H3 Integration Platform work to reuse the accepted H2
 connection, credential, OAuth transaction, provider capability, routing, encryption,
@@ -90,9 +90,14 @@ managed credential generations, provider/account binding, refresh, capability gr
 audit evidence, and workspace isolation over H2/IP-01 without a global Google account
 or parallel integration architecture. It added no migration, so
 `0032_h3_platform_hardening` remains the accepted production migration baseline.
-IP-03 Operator-facing Gmail Connection Lifecycle remains the only authorized slice.
-The IP-03 implementation candidate is ready for review; it adds no migration and is
-not Accepted until its pull request and protected checks pass.
+IP-03 Operator-facing Gmail Connection Lifecycle is Accepted and merged through PR
+#52 at `6a5eccd`; Architecture Fitness, Regression Tests, Docker Build and Smoke, and
+the H0 Required Gate passed. IP-03 added no migration, so
+`0032_h3_platform_hardening` remains the accepted production migration baseline.
+Gmail operational readiness / operator authentication and lifecycle plumbing is the
+only authorized next slice. It must reuse the canonical identity/session and Gmail
+connection lifecycle; it cannot issue unauthenticated sessions, invent an
+authentication authority, or alter accepted IP-02/IP-03 OAuth contracts.
 
 ## Recommended reading order
 
@@ -528,7 +533,7 @@ enforcement is owned by `IMPLEMENTATION_GUIDE.md`.
 | [H3_EXIT_REPORT.md](H3_EXIT_REPORT.md) | Accepted Formal H3 Exit decision and completed platform baseline |
 | [IP_01_ACCEPTANCE_EVIDENCE.md](IP_01_ACCEPTANCE_EVIDENCE.md) | IP-01 provider-neutral Integration Layer implementation evidence |
 | [IP_02_ACCEPTANCE_EVIDENCE.md](IP_02_ACCEPTANCE_EVIDENCE.md) | Accepted IP-02 multi-workspace Gmail OAuth implementation evidence |
-| [IP_03_ACCEPTANCE_EVIDENCE.md](IP_03_ACCEPTANCE_EVIDENCE.md) | Candidate IP-03 operator Gmail lifecycle implementation evidence |
+| [IP_03_ACCEPTANCE_EVIDENCE.md](IP_03_ACCEPTANCE_EVIDENCE.md) | Accepted IP-03 operator Gmail lifecycle implementation evidence |
 
 ## Next action
 
@@ -552,13 +557,16 @@ production migration baseline. Its canonical implementation evidence is
 [IP_01_ACCEPTANCE_EVIDENCE.md](IP_01_ACCEPTANCE_EVIDENCE.md).
 
 IP-02 Gmail OAuth Workspace Connection is Accepted and merged through PR #50 at
-`92de174`; its protected checks passed and it added no migration. After this governance
-pull request is accepted and merged, IP-03 Operator-facing Gmail Connection Lifecycle
-is the only authorized implementation slice. It is governed by
+`92de174`; its protected checks passed and it added no migration. IP-03 Operator-facing
+Gmail Connection Lifecycle is Accepted and merged through PR #52 at `6a5eccd`; its
+protected checks passed and it added no migration. It is governed by
 [IMPLEMENTATION_GUIDE.md](IMPLEMENTATION_GUIDE.md#ip-03-operator-facing-gmail-connection-lifecycle)
 and [ADR-034](DECISIONS.md#adr-034-reuse-the-accepted-h2-integration-architecture-after-formal-h3-exit).
+Gmail operational readiness / operator authentication and lifecycle plumbing is the
+only authorized next implementation slice. It may begin only after this governance
+pull request is accepted and merged.
 Calendar, Drive, Contacts, WhatsApp, Stripe, LinkedIn, Facebook, Instagram, TikTok,
 YouTube, X, CRM, all other providers, UI/product behavior, business workflows, and
-business agents remain unauthorized. H4, provider-specific integrations outside
-IP-03, connectors outside IP-03, external integrations outside IP-03, and UI
-functionality remain unauthorized.
+business agents remain unauthorized. H4, IP-04, provider-specific integrations beyond
+the accepted Gmail boundary, connectors, external integrations, and UI functionality
+remain unauthorized.

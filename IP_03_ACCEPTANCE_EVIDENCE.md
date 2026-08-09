@@ -1,7 +1,7 @@
 # IP-03 Operator-facing Gmail Connection Lifecycle Acceptance Evidence
 
 **Owner:** Atlas Platform Engineering
-**Status:** Implementation candidate; pending pull-request review and protected checks
+**Status:** Accepted and merged through PR #52 at `6a5eccd`
 **Accepted baseline:** `0032_h3_platform_hardening`
 **Migration:** None; IP-03 composes accepted H2/IP-01/IP-02 persistence
 
@@ -65,7 +65,8 @@ deny use and require reauthorization.
   Starlette/httpx deprecation warning.
 - Ruff passed for the complete Architecture Fitness suite and every changed Python
   file. Production Docker build, application smoke, and durable-worker smoke passed.
-- Protected GitHub checks remain required before this candidate can be accepted.
+- GitHub Architecture Fitness, Regression Tests, Docker Build and Smoke, and H0
+  Required Gate passed before PR #52 merged into protected `master`.
 
 ## Compatibility and exclusions
 

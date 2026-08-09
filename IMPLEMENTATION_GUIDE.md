@@ -473,6 +473,24 @@ it unavoidable. Disabling or reverting its operator boundary restores accepted I
 behavior without deleting connections, credentials, transactions, audit evidence, or
 provider state. Any required schema change must return to governance before code.
 
+### Gmail operational readiness / operator authentication and lifecycle plumbing
+
+ADR-034 authorizes this as the only next slice after the governance milestone that
+accepts IP-03 is reviewed and merged. The slice may close only the operational gaps
+required for one safe human-operated Gmail authorization by composing accepted
+identity/session, execution-context, membership, authorization, CSRF, managed KMS,
+connection/credential lifecycle, audit, and forced-RLS boundaries.
+
+The implementation MUST NOT create an authentication authority, allow unauthenticated
+session issuance, expose `IdentityLifecycleService.issue_session()` as a login bypass,
+change the accepted authentication model, modify IP-02/IP-03 OAuth contracts, or add
+IP-04, another provider, UI, workflow, mailbox expansion, or business-agent behavior.
+If no accepted authority can authenticate the initial operator, implementation must
+stop and return to architecture governance before adding runtime code.
+
+The accepted production migration baseline remains `0032_h3_platform_hardening`.
+Any claimed schema requirement must return to governance before implementation.
+
 ### Historical H3: Minimum universal core (superseded by ADR-033)
 
 **Architecture purpose:**
