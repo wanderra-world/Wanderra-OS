@@ -471,7 +471,8 @@ and merge. This ADR does not authorize production code, H4 work, or a business a
 
 ## ADR-034: Reuse the accepted H2 integration architecture after Formal H3 Exit
 
-**Status:** Accepted through PR #47; IP-01 accepted through PR #48
+**Status:** Accepted through PR #47; IP-01 accepted through PR #48; IP-02 accepted
+through PR #50
 
 **Decision:** Post-H3 Integration Platform work extends the accepted H2 connection,
 credential, OAuth transaction, provider capability, mirror, routing, audit, encryption,
@@ -504,8 +505,19 @@ exactly one workspace; multiple workspaces and multiple Google accounts are supp
 without a global account assumption. Scope selection must be the minimum required for
 the approved Gmail capability operations.
 
+**IP-03 implementation authorization:** IP-02 is Accepted and merged through PR #50
+at `92de174`, all protected checks passed, and it added no migration. IP-03
+Operator-facing Gmail Connection Lifecycle is the only authorized next slice after
+this governance pull request is accepted and merged. IP-03 may expose authenticated,
+authorized operator application/API boundaries to initiate the accepted IP-02 Gmail
+OAuth flow for one explicitly selected workspace-owned connection, complete its
+replay-safe callback, and return only non-secret connection state. It must reuse
+IP-01/IP-02 and the canonical H2 execution-context, authorization, OAuth transaction,
+credential, connection, audit, encryption, and RLS boundaries.
+
 **Consequences:** H3 remains formally closed and no H4 stage is created. Calendar,
 Drive, Contacts, WhatsApp, Stripe, LinkedIn, Facebook, Instagram, TikTok, YouTube, X,
 CRM, all other providers, UI/product behavior, external business workflows, and
-business agents remain unauthorized. IP-02 cannot create parallel connection,
-credential, OAuth, provider, permission, routing, or audit models.
+business agents remain unauthorized. IP-03 cannot create parallel connection,
+credential, OAuth, provider, permission, routing, audit, identity, session, or tenant
+models and cannot expose credential material or provider payloads.

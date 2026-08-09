@@ -47,12 +47,14 @@ revision `0032_h3_platform_hardening` is the accepted production migration basel
 and Formal H3 Exit is Accepted. IP-01 Provider-Neutral Integration Layer Foundation is
 Accepted and merged through PR #48 at `4bee069`; its protected checks passed and it
 added no migration, so `0032_h3_platform_hardening` remains the accepted production
-migration baseline. IP-02 Gmail OAuth Workspace Connection is the only authorized next
-implementation slice and is in implementation review. Its candidate implementation
+migration baseline. IP-02 Gmail OAuth Workspace Connection is Accepted and merged
+through PR #50 at `92de174`; its protected checks passed. Its implementation
 reuses H2 and IP-01 for workspace binding, replay-safe OAuth, encrypted credentials,
-provider/account validation, refresh, RLS, authorization, and audit evidence. IP-02
-authorizes no other provider, UI, product workflow, or business-agent behavior and is
-not Accepted until its dedicated pull request is reviewed and merged.
+provider/account validation, refresh, RLS, authorization, and audit evidence. It added
+no migration, so `0032_h3_platform_hardening` remains the accepted baseline. IP-03
+Operator-facing Gmail Connection Lifecycle is the only authorized next slice after
+this governance milestone merges. No other provider, UI, product workflow, or
+business-agent behavior is authorized.
 Gmail/Calendar/Drive authorization has been completed for the current Wanderra user,
 and live end-to-end verification has succeeded for email, calendar events, and the
 full Drive file lifecycle.
@@ -69,7 +71,7 @@ full Drive file lifecycle.
   business-agent behavior.
 - Acceptance evidence: `IP_01_ACCEPTANCE_EVIDENCE.md`.
 
-### IP-02 Gmail OAuth Workspace Connection (Candidate)
+### IP-02 Gmail OAuth Workspace Connection (Accepted)
 
 - Gmail is the first concrete provider adapter over the accepted H2/IP-01 boundaries.
 - Each canonical Gmail connection belongs to exactly one workspace and one declared
@@ -82,6 +84,13 @@ full Drive file lifecycle.
   disabled, mismatched, or invalid.
 - The candidate adds no migration and does not alter the Phase 1 Gmail API.
 - Acceptance evidence: `IP_02_ACCEPTANCE_EVIDENCE.md`.
+
+### IP-03 Operator-facing Gmail Connection Lifecycle (Authorized, not implemented)
+
+- The bounded slice exposes authenticated operator initiation, callback completion,
+  and non-secret connection-state verification over accepted IP-01/IP-02/H2 contracts.
+- It authorizes no parallel OAuth or credential storage, schema migration, provider
+  expansion, UI/product work, workflow, mailbox expansion, or business agent.
 
 ### H3-11 Platform Hardening and Formal H3 Exit (Accepted)
 

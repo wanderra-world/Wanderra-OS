@@ -4,9 +4,10 @@ The single entry point to the Atlas architecture documentation.
 
 **Owner:** Atlas Architecture Council  
 **Current phase:** Post-H3 Integration Platform
-**Status:** Formal H0, H1, H2, and H3 Exits accepted; IP-01 accepted; IP-02 is the only
-authorized post-H3 implementation slice and is in implementation review
-**Last updated:** August 8, 2026
+**Status:** Formal H0, H1, H2, and H3 Exits accepted; IP-01 and IP-02 accepted; IP-03
+is the only authorized post-H3 implementation slice after this governance milestone
+merges
+**Last updated:** August 9, 2026
 
 ## Core principle
 
@@ -77,18 +78,20 @@ PR #24 is the formal architecture acceptance. H3-01 through H3-11 are accepted a
 merged, PR #46 completed all protected checks, and Formal H3 Exit is Accepted. The
 accepted production migration baseline is `0032_h3_platform_hardening`.
 
-### Post-H3 Integration Platform — IP-01 accepted; IP-02 in implementation review
+### Post-H3 Integration Platform — IP-01 and IP-02 accepted; IP-03 gate open
 
 ADR-034 requires all post-H3 Integration Platform work to reuse the accepted H2
 connection, credential, OAuth transaction, provider capability, routing, encryption,
 audit, and RLS boundaries. IP-01 Provider-Neutral Integration Layer Foundation is
 Accepted and merged through PR #48 at `4bee069`; its protected checks passed and it
-added no migration. IP-02 Gmail OAuth Workspace Connection is the only authorized
-implementation slice. Its candidate implementation composes Gmail authorization,
+added no migration. IP-02 Gmail OAuth Workspace Connection is Accepted and merged
+through PR #50 at `92de174`; its protected checks passed. Its implementation composes Gmail authorization,
 managed credential generations, provider/account binding, refresh, capability grants,
 audit evidence, and workspace isolation over H2/IP-01 without a global Google account
-or parallel integration architecture. IP-02 is not Accepted until its dedicated pull
-request and protected evidence are reviewed and merged.
+or parallel integration architecture. It added no migration, so
+`0032_h3_platform_hardening` remains the accepted production migration baseline.
+IP-03 Operator-facing Gmail Connection Lifecycle is the only authorized next slice
+after this governance pull request is accepted and merged.
 
 ## Recommended reading order
 
@@ -523,6 +526,7 @@ enforcement is owned by `IMPLEMENTATION_GUIDE.md`.
 | [H3_OPERATIONS_RUNBOOK.md](H3_OPERATIONS_RUNBOOK.md) | Provider-neutral H3 incident, operator-control, and recovery procedure |
 | [H3_EXIT_REPORT.md](H3_EXIT_REPORT.md) | Accepted Formal H3 Exit decision and completed platform baseline |
 | [IP_01_ACCEPTANCE_EVIDENCE.md](IP_01_ACCEPTANCE_EVIDENCE.md) | IP-01 provider-neutral Integration Layer implementation evidence |
+| [IP_02_ACCEPTANCE_EVIDENCE.md](IP_02_ACCEPTANCE_EVIDENCE.md) | Accepted IP-02 multi-workspace Gmail OAuth implementation evidence |
 
 ## Next action
 
@@ -545,12 +549,14 @@ IP-01 Provider-Neutral Integration Layer Foundation is Accepted and merged throu
 production migration baseline. Its canonical implementation evidence is
 [IP_01_ACCEPTANCE_EVIDENCE.md](IP_01_ACCEPTANCE_EVIDENCE.md).
 
-After this governance pull request is accepted and merged, IP-02 Gmail OAuth Workspace
-Connection is the only authorized implementation slice. It is governed by
-[IMPLEMENTATION_GUIDE.md](IMPLEMENTATION_GUIDE.md#ip-02-gmail-oauth-workspace-connection)
+IP-02 Gmail OAuth Workspace Connection is Accepted and merged through PR #50 at
+`92de174`; its protected checks passed and it added no migration. After this governance
+pull request is accepted and merged, IP-03 Operator-facing Gmail Connection Lifecycle
+is the only authorized implementation slice. It is governed by
+[IMPLEMENTATION_GUIDE.md](IMPLEMENTATION_GUIDE.md#ip-03-operator-facing-gmail-connection-lifecycle)
 and [ADR-034](DECISIONS.md#adr-034-reuse-the-accepted-h2-integration-architecture-after-formal-h3-exit).
 Calendar, Drive, Contacts, WhatsApp, Stripe, LinkedIn, Facebook, Instagram, TikTok,
 YouTube, X, CRM, all other providers, UI/product behavior, business workflows, and
 business agents remain unauthorized. H4, provider-specific integrations outside
-IP-02, connectors outside IP-02, external integrations outside IP-02, and UI
+IP-03, connectors outside IP-03, external integrations outside IP-03, and UI
 functionality remain unauthorized.

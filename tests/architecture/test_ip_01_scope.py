@@ -60,7 +60,7 @@ def test_ip_01_governance_and_evidence_are_traceable() -> None:
     assert "No provider adapter" in evidence
 
 
-def test_ip_01_is_accepted_and_ip_02_is_the_only_authorized_next_slice() -> None:
+def test_ip_01_and_ip_02_are_accepted_and_ip_03_is_authorized() -> None:
     index = " ".join((ROOT / "README_ARCHITECTURE.md").read_text().split())
     status = " ".join((ROOT / "PROJECT_STATUS.md").read_text().split())
     evidence = (ROOT / "IP_01_ACCEPTANCE_EVIDENCE.md").read_text()
@@ -72,7 +72,8 @@ def test_ip_01_is_accepted_and_ip_02_is_the_only_authorized_next_slice() -> None
     assert "**Status:** Accepted and merged through PR #48" in evidence
     assert "GitHub Architecture Fitness, Regression Tests" in evidence
     assert "IP-02 implementation authorization" in decisions
-    assert "IP-02 Gmail OAuth Workspace Connection is the only authorized" in index
+    assert "IP-02 Gmail OAuth Workspace Connection is Accepted" in index
+    assert "IP-03 Operator-facing Gmail Connection Lifecycle is the only authorized" in index
     assert "### IP-02 Gmail OAuth Workspace Connection" in guide
     assert "`0032_h3_platform_hardening` remains the accepted migration baseline" in guide
     for excluded in (
