@@ -59,15 +59,23 @@ def test_ip_03_keeps_later_scope_unauthorized() -> None:
         assert excluded in evidence
 
 
-def test_ip_03_candidate_is_traceable_without_claiming_acceptance() -> None:
+def test_ip_03_is_accepted_and_only_gmail_readiness_is_authorized() -> None:
     index = (ROOT / "README_ARCHITECTURE.md").read_text()
     status = (ROOT / "PROJECT_STATUS.md").read_text()
     evidence = " ".join((ROOT / "IP_03_ACCEPTANCE_EVIDENCE.md").read_text().split())
 
-    assert "IP-03 implementation candidate is ready for review" in index
+    assert "IP-03 Operator-facing Gmail Connection Lifecycle is Accepted" in index
+    assert "IP-03 Operator-facing Gmail Connection Lifecycle (Accepted)" in status
+    assert "Accepted and merged through PR #52 at `6a5eccd`" in evidence
+    assert "Gmail operational readiness authorization" in (
+        ROOT / "DECISIONS.md"
+    ).read_text()
     assert (
-        "IP-03 Operator-facing Gmail Connection Lifecycle (Implementation candidate)"
-        in status
+        "Gmail operational readiness / operator authentication and lifecycle plumbing "
+        "is the only authorized next slice"
+        in " ".join(index.split())
     )
-    assert "pending pull-request review and protected checks" in evidence
+    assert "MUST NOT create an authentication authority" in (
+        ROOT / "IMPLEMENTATION_GUIDE.md"
+    ).read_text()
     assert "No live Gmail authorization is claimed" in evidence
