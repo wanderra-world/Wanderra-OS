@@ -70,11 +70,10 @@ def test_ip_03_is_accepted_and_only_gmail_readiness_is_authorized() -> None:
     assert "Gmail operational readiness authorization" in (
         ROOT / "DECISIONS.md"
     ).read_text()
-    assert (
-        "Gmail operational readiness / operator authentication and lifecycle plumbing "
-        "is the only authorized next slice"
-        in " ".join(index.split())
-    )
+    normalized_index = " ".join(index.split())
+    assert "Gmail operational readiness / operator authentication" in normalized_index
+    assert "Accepted through PR #54" in normalized_index
+    assert "No subsequent Integration Platform runtime slice is authorized" in normalized_index
     assert "MUST NOT create an authentication authority" in (
         ROOT / "IMPLEMENTATION_GUIDE.md"
     ).read_text()

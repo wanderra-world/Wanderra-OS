@@ -171,6 +171,17 @@ before session issuance if any identity, link, user, membership, workspace, or
 authorization prerequisite is invalid. No password authority, local bypass, parallel
 identity store, or parallel session mechanism is permitted.
 
+### Initial external-identity bootstrap
+
+ADR-036 owns the sole exception needed to establish the first operator identity link.
+It permits a localhost-only, explicitly invoked, one-shot deployment-authority
+ceremony for one fixed existing canonical user and workspace. The ceremony uses the
+same verified Google OIDC and PKCE boundary as ADR-035, pauses before persistence for
+approval of the exact normalized issuer and immutable subject, creates exactly one
+audited link, issues no session, and becomes non-repeatable once any external identity
+link exists. Direct SQL, email matching, automatic linking, and a permanent bootstrap
+HTTP route remain prohibited.
+
 ## 8. Universal entity architecture
 
 The target system uses a universal identity layer without replacing typed operational

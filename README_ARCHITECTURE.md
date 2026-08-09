@@ -6,9 +6,10 @@ The single entry point to the Atlas architecture documentation.
 **Current phase:** Post-H3 Integration Platform
 **Status:** Formal H0, H1, H2, and H3 Exits accepted; IP-01, IP-02, and IP-03
 accepted; Gmail operational readiness / operator authentication and lifecycle
-plumbing is the only authorized next slice; ADR-035 selects Google Identity as the
-initial operator authentication authority; its bounded runtime implementation is a
-review candidate
+plumbing is Accepted through PR #54; ADR-035 selects Google Identity as the
+initial operator authentication authority; its bounded runtime implementation is
+Accepted and merged through PR #54; ADR-036 authorizes only the one-time initial Google identity-link
+bootstrap, which completed once and is now disabled
 **Last updated:** August 9, 2026
 
 ## Core principle
@@ -103,8 +104,26 @@ issuer/subject identity link and canonical user, verify active workspace members
 and authorization, and only then issue the existing workspace-scoped Atlas session.
 It cannot issue unauthenticated sessions, infer identity or workspace authority from
 email, add a second identity/session model, or alter accepted IP-02/IP-03 OAuth
-contracts. The bounded implementation is a review candidate and is not Accepted until
-its protected pull request is reviewed and merged.
+contracts. The bounded implementation is Accepted and merged through PR #54 at
+`37614bb`.
+
+ADR-036 authorizes one localhost-only deployment-authority ceremony to establish the
+first Google `ExternalIdentityLink` for canonical user
+`d34c44c9-1ada-43ad-ad70-5ae9568df146` and workspace
+`874fc276-27be-557d-cd2c-179bed466907`. It is the only authorized bootstrap work. The
+ceremony verifies Google OIDC and pauses for explicit approval of the exact normalized
+issuer and immutable subject before creating exactly one audited link. It cannot
+match by email, create a user or session, expose a permanent bootstrap route, or
+authorize IP-04 or later work.
+
+The ADR-036 ceremony completed once on August 9, 2026 after exact issuer/subject
+approval. It created external identity link
+`ce24da2a-653d-4a26-8c38-b6edd323a58c` and immutable audit event
+`d60bc81f-6948-4792-b23f-e905cf86fe1f`. The audit chain verified, no session was
+issued by the ceremony, and the zero-link precondition now permanently denies replay.
+The subsequent ordinary ADR-035 login resolved the accepted link and issued the
+existing workspace-scoped session. No subsequent Integration Platform runtime slice,
+including IP-04, is authorized.
 
 ## Recommended reading order
 
@@ -429,6 +448,7 @@ text and status remain canonical only in `DECISIONS.md`.
 | [ADR-033](DECISIONS.md#adr-033-consolidate-the-remaining-reusable-platform-foundation-into-h3) | H3 final-platform sequencing and post-H3 business-agent boundary |
 | [ADR-034](DECISIONS.md#adr-034-reuse-the-accepted-h2-integration-architecture-after-formal-h3-exit) | Post-H3 Integration Platform reuse and IP-01 authorization |
 | [ADR-035](DECISIONS.md#adr-035-use-google-identity-as-the-initial-atlas-operator-authentication-authority) | Initial Atlas operator authentication authority |
+| [ADR-036](DECISIONS.md#adr-036-permit-one-verified-bootstrap-of-the-initial-google-operator-identity) | One-time initial Google identity-link bootstrap |
 
 ## P0 Architecture Gate
 
@@ -571,13 +591,13 @@ Gmail Connection Lifecycle is Accepted and merged through PR #52 at `6a5eccd`; i
 protected checks passed and it added no migration. It is governed by
 [IMPLEMENTATION_GUIDE.md](IMPLEMENTATION_GUIDE.md#ip-03-operator-facing-gmail-connection-lifecycle)
 and [ADR-034](DECISIONS.md#adr-034-reuse-the-accepted-h2-integration-architecture-after-formal-h3-exit).
-Gmail operational readiness / operator authentication and lifecycle plumbing is the
-only authorized next implementation slice. It may begin only after this governance
-decision is approved. ADR-035 requires Google Identity authentication,
+Gmail operational readiness / operator authentication and lifecycle plumbing is
+Accepted through PR #54 at `37614bb`. ADR-035 requires Google Identity authentication,
 an existing issuer/subject identity link, an active canonical Atlas user, explicit
 workspace selection, active membership, and authorization before the existing Atlas
 session may be issued. Operator identity grants and Gmail capability grants remain
-separate.
+separate. ADR-036 completed once, created the initial audited identity link, and is
+permanently disabled. No subsequent Integration Platform runtime slice is authorized.
 Calendar, Drive, Contacts, WhatsApp, Stripe, LinkedIn, Facebook, Instagram, TikTok,
 YouTube, X, CRM, all other providers, UI/product behavior, business workflows, and
 business agents remain unauthorized. H4, IP-04, provider-specific integrations beyond

@@ -74,11 +74,9 @@ def test_ip_01_and_ip_02_are_accepted_and_ip_03_is_authorized() -> None:
     assert "IP-02 implementation authorization" in decisions
     assert "IP-02 Gmail OAuth Workspace Connection is Accepted" in index
     assert "IP-03 Operator-facing Gmail Connection Lifecycle is Accepted" in index
-    assert (
-        "Gmail operational readiness / operator authentication and lifecycle plumbing "
-        "is the only authorized next slice"
-        in index
-    )
+    assert "Gmail operational readiness / operator authentication" in index
+    assert "Accepted through PR #54" in index
+    assert "No subsequent Integration Platform runtime slice is authorized" in index
     assert "### IP-02 Gmail OAuth Workspace Connection" in guide
     assert "`0032_h3_platform_hardening` remains the accepted migration baseline" in guide
     for excluded in (

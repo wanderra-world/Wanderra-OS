@@ -55,23 +55,30 @@ no migration, so `0032_h3_platform_hardening` remains the accepted baseline. IP-
 Operator-facing Gmail Connection Lifecycle is Accepted and merged through PR #52 at
 `6a5eccd`; its Architecture Fitness, Regression Tests, Docker Build and Smoke, and H0
 Required Gate passed. It added no migration. Gmail operational readiness / operator
-authentication and lifecycle plumbing is the only authorized next slice. ADR-035
+authentication and lifecycle plumbing is Accepted through PR #54. ADR-035
 selects Google Identity OIDC as the initial trusted external operator authentication
-authority. Its bounded runtime implementation is a review candidate and is not
-Accepted until its protected pull request merges. It resolves a validated
+authority. Its bounded runtime implementation is Accepted and merged through PR #54
+at `37614bb`. It resolves a validated
 issuer/subject to an existing active
 canonical Atlas user, require explicit workspace selection plus active membership and
 authorization, and only then issue the existing workspace-scoped Atlas session.
 Operator identity grants remain separate from Gmail capability grants. This governance
 slice adds no schema or migration and does not change Gmail credential custody. No
 IP-04, other provider, UI, product workflow, or business-agent behavior is authorized.
+ADR-036 is Accepted for preparation of exactly one localhost-only bootstrap ceremony
+for canonical user `d34c44c9-1ada-43ad-ad70-5ae9568df146` and workspace
+`874fc276-27be-557d-cd2c-179bed466907`. The ceremony completed once after exact
+Google-verified issuer/subject approval, created one audited active link, issued no
+session, and is now disabled by its zero-link invariant. It added no migration and
+authorizes no later slice.
+No subsequent Integration Platform runtime slice, including IP-04, is authorized.
 Gmail/Calendar/Drive authorization has been completed for the current Wanderra user,
 and live end-to-end verification has succeeded for email, calendar events, and the
 full Drive file lifecycle.
 
 ## Implemented capabilities
 
-### Google Identity Operator Authentication (ADR-035 Candidate)
+### Google Identity Operator Authentication (ADR-035 Accepted)
 
 - Identity-only Google OIDC Authorization Code Flow with S256 PKCE, signed short-lived
   state cookie, nonce, issuer, audience, signature, lifetime, and replay controls.
@@ -83,8 +90,13 @@ full Drive file lifecycle.
   session revocation, and secret-free API responses.
 - Authenticated Gmail connection revoke and emergency-disable controls over existing
   encrypted credential and connection lifecycle services.
-- No migration; `0032_h3_platform_hardening` remains the accepted baseline. Candidate
-  evidence: `GOOGLE_OPERATOR_AUTH_ACCEPTANCE_EVIDENCE.md`.
+- The initial audited `ExternalIdentityLink` was established by the completed,
+  disabled ADR-036 ceremony. An ordinary ADR-035 browser callback then resolved that
+  link and issued an active OIDC-strength workspace session with successful
+  `identity.operator_authenticated` and `identity.session_issued` audit evidence.
+- No migration; `0032_h3_platform_hardening` remains the accepted baseline.
+  Acceptance evidence: `GOOGLE_OPERATOR_AUTH_ACCEPTANCE_EVIDENCE.md` and
+  `ADR_036_BOOTSTRAP_ACCEPTANCE_EVIDENCE.md`.
 
 ### IP-01 Provider-Neutral Integration Layer Foundation (Accepted)
 
